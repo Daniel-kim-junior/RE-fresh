@@ -1,4 +1,3 @@
-import makeCalDom from './pages/calendar/Calendar.js';
 /*
     Daniel Kim
     
@@ -9,4 +8,3 @@ import makeCalDom from './pages/calendar/Calendar.js';
     2023-04-17
 */
 
-document.body.onload = makeCalDom;

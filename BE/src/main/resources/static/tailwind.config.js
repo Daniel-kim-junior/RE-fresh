@@ -7,7 +7,16 @@ module.exports = {
     './src/**/*.{js,jsx,ts,tsx,vue,css,html}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'current': '#262626',
+        'not-current': '#E2E2E2',
+        'holiday': '#DC143C',
+      },
+      height: {
+        '128': '42rem',
+      }
+    },
   },
   plugins: [],
 }
