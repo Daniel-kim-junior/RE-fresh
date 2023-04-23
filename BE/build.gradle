@@ -1,0 +1,140 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.10'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	// jacoco id
+	id 'jacoco'
+	id 'com.github.node-gradle.node' version '3.4.0'    // 이거 추가
+}
+jacoco {
+	// jacoco version
+	toolVersion '0.8.8'
+}
+
+node {
+	version = '16.8.0'
+	npmVersion = '8.4.0'
+	download = true
+	nodeProjectDir = file('${projectDir}/src/main/resources/static')
+}
+
+
+test {
+	useJUnitPlatform()
+	finalizedBy 'jacocoTestReport'
+	jacoco {
+		destinationFile = file("$buildDir/jacoco/jacoco.exec")
+	}
+}
+jacocoTestReport {
+	reports {
+		// 원하는 리포트를 켜고 끌 수 있습니다.
+		html.enabled true
+		xml.enabled false
+		csv.enabled false
+
+//  각 리포트 타입마다 리포트 저장 경로를 설정할 수 있습니다.
+		html.destination file("src/jacoco/jacoco.html")
+// xml.destination file("src/jacoco/jacoco.xml")
+	}
+	// exclude main classes
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: ['**/ManageSystemApplication.class', '**/*Config.class'])
+		}))
+	}
+	finalizedBy 'jacocoTestCoverageVerification'
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			enabled = true // 활성화
+			element = 'CLASS' // 클래스 단위로 커버리지 체크
+			// includes = []
+
+			// 라인 커버리지 제한을 80%로 설정
+			limit {
+				counter = 'LINE'
+				value = 'COVEREDRATIO'
+				minimum = 0.0
+			}
+
+			// 브랜치 커버리지 제한을 80%로 설정
+			limit {
+				counter = 'BRANCH'
+				value = 'COVEREDRATIO'
+				minimum = 0.0
+			}
+
+			// 빈 줄을 제외한 코드의 라인수를 최대 200라인으로 제한합니다.
+			limit {
+				counter = 'LINE'
+				value = 'TOTALCOUNT'
+				maximum = 200
+			}
+
+			excludes = []
+		}
+
+		// 여러 개의 rule 정의 가능
+		rule {
+		}
+	}
+//	exclude Main Class
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: ['**/ManageSystemApplication.class', '**/*Config.class'])
+		}))
+	}
+}
+
+task copyFrontLib(type: Copy) {
+	from "${projectDir}/src/main/resources/static"
+	into "${projectDir}/build/resources/main/static/."
+}
+
+
+group = 'TKO'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.0'
+	compileOnly 'org.projectlombok:lombok'
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.32'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-aop:2.7.3'
+
+
+	testImplementation 'com.h2database:h2' // 테스트 코드 작성시 사용할 DB(H2)
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.0'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+// npm 통합 빌드
+//task buildAdmin(type: NpmTask) {
+//	args = ['run', 'build']
+//}
+//
+//processResources.dependsOn 'buildAdmin'

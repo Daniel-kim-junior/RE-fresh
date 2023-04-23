@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="refresh.ManageSystem.repository.HolidayRepository">
+  <select id="findHoliday" resultType="HolidayServiceDTO" parameterType="HolidayDbModel">
+    select cast(substr(loc_date, 7, 2) as unsigned) as day, substr(date_name, 2, CHAR_LENGTH(date_name) - 2) as dateName from holiday where substr(loc_date, 1, 4) = #{year} and substr(loc_date, 5, 2) = #{month}
+    order by day;
+  </select>
+  <insert id="insertHoliday" parameterType="HolidayApiModel">
+    INSERT INTO HOLIDAY (date_name, loc_date) VALUES (#{dateName}, #{locDate})
+  </insert>
+  <delete id="removeHolidayTable">
+    DELETE FROM HOLIDAY
+  </delete>
+</mapper>
