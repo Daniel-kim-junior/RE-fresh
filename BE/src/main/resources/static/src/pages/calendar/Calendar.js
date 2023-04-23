@@ -15,25 +15,26 @@ export default function Calendar() {
   buttons.addEventListener('click', (e) => {
     if (e.target.id === 'prev') {
       if (month === 1) {
-        if(inValidDate(year - 1)) return;
+        if (inValidDate(year - 1)) return;
         setMonth(12);
         setYear(year - 1);
       } else {
         setMonth(month - 1);
+        setYear(year);
       }
     } else if (e.target.id === 'next') {
       if (month === 12) {
-        if(inValidDate(year + 1)) return;
+        if (inValidDate(year + 1)) return;
         setMonth(1);
         setYear(year + 1);
       } else {
+        setYear(year);
         setMonth(month + 1);
       }
     }
-    header.innerHTML = makeHeader();
   });
 
-  function makeHeader() {
+  function makeHeader(year, month) {
     return `<h1 class="text-2xl font-bold text-center text-gray-800 py-2">${year}년 ${month}월</h1>`
   }
 
@@ -42,9 +43,9 @@ export default function Calendar() {
       const response = await getCalendarData(year, month);
       const cal = makeCalendar(response);
       setCalendar(cal);
-    }    
+    }
     fetchCal(year, month);
-    header.innerHTML = makeHeader();
+    header.innerHTML = makeHeader(year, month);
   });
 
   function inValidDate(year) {
