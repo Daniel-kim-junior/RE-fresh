@@ -19,6 +19,4 @@ import lombok.ToString;
 public class HolidayDbModel {
     @NonNull private String year;
     @NonNull private String month;
-
-
 }

@@ -1,6 +1,6 @@
 import getCalendarData from '../../api/CalendarApi.js';
 import { useState } from './MyHook.js';
-import onLoad from './MyHook.js';
+import { debounceButtonEvent, onLoad } from './MyHook.js';
 
 /*
   Daniel Kim
@@ -27,7 +27,7 @@ export default function Calendar() {
   const m = date.getMonth() + 1;
   const buttons = document.querySelector('#button-container');
   const header = document.querySelector('#calendar-header');
-
+  
 
   /*
     Daniel Kim
@@ -40,49 +40,9 @@ export default function Calendar() {
     2023-04-23
   */
   const [calendar, setCalendar] = useState([]);
-  const [mdy, setMdy] = useState({year: y, month: m});
+  const [mdy, setMdy] = useState({ year: y, month: m });
   const { year, month } = mdy;
 
-  /*
-    Daniel Kim
-
-    버튼을 클릭했을 때 이전 달, 다음 달을 보여주기 위한 함수
-    이전 달을 보여주기 위해서는 현재 달이 1월이면 년도를 -1 해주고
-    월을 12월로 바꿔준다. (setState를 사용하여 state를 변경)
-    다음 달을 보여주기 위해서는 현재 달이 12월이면 년도를 +1 해주고
-    월을 1월로 바꿔준다. (setState를 사용하여 state를 변경)
-    년도가 2023년보다 크거나 2021년보다 작으면 return 한다.(유효하지 않은 년도)
-
-    2023-04-23
-  */
-  
-  buttons.addEventListener('click', (e) => {
-    if (e.target.id === 'prev') {
-      if (month === 1) {
-        if (inValidDate(year - 1)) return;
-        setMdy({ year: year - 1, month: 12 });
-      } else {
-        setMdy({ year, month: month - 1 })
-      }
-    } else if (e.target.id === 'next') {
-      if (month === 12) {
-        if (inValidDate(year + 1)) return;
-        setMdy({ year: year + 1, month: 1 });
-      } else {
-        setMdy({ year, month: month + 1 });
-      }
-    }
-  });
-  /*
-    Daniel Kim
-
-    달력의 헤더를 만들어주는 함수
-
-    2023-04-23
-  */
-  function makeHeader(year, month) {
-    return `<h1 class="text-2xl font-bold text-center text-gray-800 py-2">${year}년 ${month}월</h1>`
-  }
   /*
     Daniel Kim
 
@@ -100,22 +60,69 @@ export default function Calendar() {
       const cal = makeCalendar(response);
       setCalendar(cal);
       header.innerHTML = makeHeader(year, month);
-    } catch(error) {
+    } catch (error) {
       console.error(error);
-    }
+    } 
   });
   /*
     Daniel Kim
 
-    calendar year, month가 현재 날짜보다 1년 이상 차이나거나
-    현재 년도보다 작으면 true를 반환한다.(유효하지 않은 년도)
+    버튼을 클릭했을 때 이전 달, 다음 달을 보여주기 위한 함수들
+    이전 달을 보여주기 위해서는 현재 달이 1월이면 년도를 -1 해주고
+    월을 12월로 바꿔준다. (setState를 사용하여 state를 변경)
+    다음 달을 보여주기 위해서는 현재 달이 12월이면 년도를 +1 해주고
+    월을 1월로 바꿔준다. (setState를 사용하여 state를 변경)
+    년도가 2023년보다 크거나 2021년보다 작으면 return 한다.(유효하지 않은 년도)
 
     2023-04-23
   */
-  function inValidDate(year) {
-    if (year > y + 1 || year < y) return true;
-    return false;
+    const handlePrevClick = () => {
+      if (month === 1) {
+        setMdy({year: year - 1, month: 12});
+      } else {
+        setMdy({year: year, month: month - 1});
+      }
+    }
+  
+    const handleNextClick = () => {
+      if (month === 12) {
+        setMdy({year: year + 1, month: 1});
+      } else {
+        setMdy({year: year, month: month + 1});
+      }
+    }
+    
+  /*
+    Daniel Kim
+
+    버튼을 클릭했을 때 이전 달, 다음 달을 보여주기 위한 함수
+    이전 달의 버튼을 눌렀을 때 함수 호출을 debounceButtonEvent 함수를 통해
+    250ms 이내에 또 다른 이전 달 버튼을 누르면 시간 경과 후에 처리한다.
+    (250ms 경과하면 이벤트들을 한번에 처리)
+
+    2023-04-24
+  */
+  buttons.addEventListener('click', function (e) {
+    let callBack;
+    if (e.target.id === 'prev') {
+      callBack = debounceButtonEvent(handlePrevClick, 250, this);
+      callBack();
+    } else if (e.target.id === 'next') {
+      callBack = debounceButtonEvent(handleNextClick, 250, this);
+      callBack();
+    }
+  }, { once: true });
+  /*
+    Daniel Kim
+
+    달력의 헤더를 만들어주는 함수
+
+    2023-04-23
+  */
+  function makeHeader(year, month) {
+    return `<h1 class="text-2xl font-bold text-center text-gray-800 py-2">${year}년 ${month}월</h1>`
   }
+  
   /*
     Daniel Kim
 
@@ -163,7 +170,7 @@ export default function Calendar() {
       cnt++;
       }
     }
-    dom += '</tr>'
+    dom += `</tr>`;
     return dom;
   }
 

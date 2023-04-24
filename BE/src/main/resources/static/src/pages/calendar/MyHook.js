@@ -53,9 +53,26 @@ function MyHook() {
       _render();
     }
     options.currentStateKey += 1;
-    return [ state, setState];
+    return [state, setState];
   }
 
+  /*
+    Daniel Kim
+
+    debounceFrame 함수는 렌더링 최적화를 위해 사용한다.
+    이전 frame의 callback을 취소하고 다음 frame의 callback을 실행한다.
+    cancelAnimationFrame 함수는 nextFrameCallback request id를 취소한다.
+    requestAnimationFrame 함수는 callback 함수를 다음 frame에 실행한다.
+
+    2023-04-23
+*/
+function debounceFrame(callback) {
+  let nextFrameCallback = -1;
+  return () => {
+    cancelAnimationFrame(nextFrameCallback);
+    nextFrameCallback = requestAnimationFrame(callback);
+  }
+}
   /*
     Daniel Kim
 
@@ -89,36 +106,40 @@ function MyHook() {
     _render();
   }
 
+
   return { useState, render };
 }
 /*
-    Daniel Kim
+  Daniel Kim
 
-    debounceFrame 함수는 렌더링 최적화를 위해 사용한다.
-    이전 frame의 callback을 취소하고 다음 frame의 callback을 실행한다.
-    cancelAnimationFrame 함수는 nextFrameCallback request id를 취소한다.
-    requestAnimationFrame 함수는 callback 함수를 다음 frame에 실행한다.
+  debounceButtonEvent 함수는 버튼 이벤트를 최적화하기 위해 사용한다.
+  이전 timer를 취소하고 다음 timer를 실행한다.
+  clearTimeout 함수는 timer를 취소한다.
+  setTimeout 함수는 callback 함수를 delay 시간 후에 실행한다.
 
-    2023-04-23
+  2023-04-24
 */
-  function debounceFrame(callback) {
-    let nextFrameCallback = -1;
-    return () => {
-      cancelAnimationFrame(nextFrameCallback);
-      nextFrameCallback = requestAnimationFrame(callback);
-    }
+function debounceButtonEvent(callback, delay, context) {
+  let timer = null;
+  return () => {
+    const args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      callback.apply(context, args);
+    }, delay);
   }
+}
 /*
-    Daniel Kim
+  Daniel Kim
 
-    onLoad 함수는 callback 함수를 실행하여 Rest API를 호출
-    state를 변경한다.
+  onLoad 함수는 callback 함수를 실행하여 Rest API를 호출
+  state를 변경한다.
 
-    2023-04-23
+  2023-04-23
 */
-export default function onLoad(callback) { 
+function onLoad(callback) { 
   callback();
 }
 
-
+export { onLoad, debounceButtonEvent };
 export const { useState, render } = MyHook();
