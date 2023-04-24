@@ -8,7 +8,7 @@
     
     2023-04-16
 */
-function CalendarHook() {
+function MyHook() {
   /*
     Daniel Kim
    
@@ -121,4 +121,4 @@ export default function onLoad(callback) {
 }
 
 
-export const { useState, render } = CalendarHook();
+export const { useState, render } = MyHook();

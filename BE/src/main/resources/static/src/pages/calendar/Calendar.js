@@ -1,6 +1,6 @@
 import getCalendarData from '../../api/CalendarApi.js';
-import { useState } from './CalendarHook.js';
-import onLoad from './CalendarHook.js';
+import { useState } from './MyHook.js';
+import onLoad from './MyHook.js';
 
 /*
   Daniel Kim
