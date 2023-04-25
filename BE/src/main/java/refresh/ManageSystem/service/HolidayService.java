@@ -131,10 +131,10 @@ public class HolidayService {
         if(dep == 3) {
             JsonNode jn = jsonNode.get("item");
             if(jn instanceof ArrayNode) {
-                for(JsonNode tmp :jn) {
+                for(JsonNode tmp: jn) {
                     result.add(HolidayApiModel.builder()
-                                       .dateName(jn.get("dateName").toString())
-                                       .locDate(jn.get("locdate").toString()).build());
+                                       .dateName(tmp.get("dateName").toString())
+                                       .locDate(tmp.get("locdate").toString()).build());
                 }
             } else if(jn instanceof ObjectNode){
                 result.add(HolidayApiModel.builder()

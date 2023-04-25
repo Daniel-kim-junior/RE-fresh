@@ -95,7 +95,7 @@ task copyFrontLib(type: Copy) {
 }
 
 
-group = 'TKO'
+group = 'refresh'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 

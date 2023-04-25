@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+  <script th:src="@{/src/api/calendarApi.js}" type="module"></script>
   <script th:src="@{/src/index.js}" type="module"></script>
-  <script th:src="@{/src/pages/calendar/Calendar.js}" type="module"></script>
+  <script th:src="@{/src/pages/calendar/render.js}" type="module"></script>
   <link rel="stylesheet" th:href="@{/dist/output.css}" />
   <body>
-    <header th:replace="@{/fragments/Header.html} :: headerFragment" />
+    <header th:replace="@{/fragments/header.html} :: headerFragment"></header>
     <main>
-      <div id="calendar-load" th:replace="@{/pages/calendar/Calendar.html} :: calendar"></div>
+      <div id="calendar-load" th:replace="@{/pages/calendar/calendar.html} :: calendar"></div>
     </main>
   </body>
 </html>

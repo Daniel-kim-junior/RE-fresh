@@ -5,51 +5,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="/src/index.js"></script>
+    <script src="/src/pages/calendar/render.js" type="module"></script>
+    <script src="/src/index.js" type="module"></script>
     <link rel="stylesheet" href="/dist/output.css" />
   </head>
   <body>
+    <header id="calendar-header"></header>
     <main id="calendar" th:fragment="calendar">
       <section>
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-          <div class="flex items-center justify-between py-2 px-3 bg-gray-200">
-            <button class="text-gray-600 hover:text-gray-700">
-              <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12H20V10H10.83l4.58-4.59z" />
-              </svg>
-            </button>
-            <div class="text-gray-800 font-medium">April 2023</div>
-            <button class="text-gray-600 hover:text-gray-700">
-              <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-                <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12H4v2h9.17l-4.58 4.59z" />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div>
-          <table class="border px-1 px-2 bg-white">
-            <thead class="border px-4 py-2 bg-black-950">
+        <div class="w-3/5 h-128">
+          <table class="border-2 border-red-100 px-2 bg-white table-fixed w-full h-full">
+            <thead class="border-2 border-red-100 px-4 py-2 bg-black-950">
               <tr>
-                <th class="border px-4 py-2">S</th>
-                <th class="border px-4 py-2">M</th>
-                <th class="border px-4 py-2">T</th>
-                <th class="border px-4 py-2">W</th>
-                <th class="border px-4 py-2">T</th>
-                <th class="border px-4 py-2">F</th>
-                <th class="border px-4 py-2">S</th>
+                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Sun</th>
+                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Mon</th>
+                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Tue</th>
+                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Wed</th>
+                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Thu</th>
+                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Fri</th>
+                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Sat</th>
               </tr>
             </thead>
-            <tbody id="main-container"></tbody>
-            <div id="button-container">
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                전 달
-              </button>
-              <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                다음 달
-              </button>
-            </div>
+            <tbody id="app" class="px-10 py-20"></tbody>
           </table>
         </div>
+        <div id="button-container">
+          <button
+            id="prev"
+            class="border bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          >
+            이전 달
+          </button>
+          <button
+            id="next"
+            class="border bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          >
+            다음 달
+          </button>
+        </ㅇ>
       </section>
     </main>
   </body>
