@@ -50,9 +50,6 @@ class CalendarServiceTest {
         boolean b1 = CalendarService.binarySearch(holidayServiceDTOS, 5);
         boolean b2 = CalendarService.binarySearch(holidayServiceDTOS, 27);
         boolean b3 = CalendarService.binarySearch(holidayServiceDTOS, 10);
-        System.out.println(b1);
-        System.out.println(b2);
-        System.out.println(b3);
 
         assertThat(b1).isTrue();
         assertThat(b2).isTrue();

@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     index : './src/index.js',
-    calendar: './src/pages/calendar/Calendar.js'
+    calendar: './src/pages/calendar/render.js'
   },
   output: {
     path : path.resolve(__dirname, 'dist'), // 경로
@@ -34,9 +34,9 @@ module.exports = {
       file: 'dist/index.html'
     }),
     new HtmlWebpackPlugin({
-      filename : 'Calendar.html',
-      template: 'src/pages/calendar/Calendar.html',
-      file: 'dist/pages/calendar/Calendar.html'
+      filename : 'calendar.html',
+      template: 'src/pages/calendar/calendar.html',
+      file: 'dist/pages/calendar/calendar.html'
     })
   ]
 };

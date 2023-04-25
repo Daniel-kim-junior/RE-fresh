@@ -1,6 +1,6 @@
-import getCalendarData from '../../api/CalendarApi.js';
-import { useState } from './MyHook.js';
-import { debounceButtonEvent, onLoad } from './MyHook.js';
+import getCalendarData from '../../api/calendarApi.js';
+import { useState } from './hook.js';
+import { debounceButtonEvent, onLoad } from './hook.js';
 
 /*
   Daniel Kim
@@ -10,7 +10,7 @@ import { debounceButtonEvent, onLoad } from './MyHook.js';
   2023-04-23
 */
 
-export default function Calendar() {
+export default function calendar() {
   /*
     Daniel Kim
 
@@ -102,7 +102,8 @@ export default function Calendar() {
 
     2023-04-24
   */
-  buttons.addEventListener('click', function (e) {
+  buttons.onclick = clickEvent;
+  function clickEvent(e) {
     let callBack;
     if (e.target.id === 'prev') {
       callBack = debounceButtonEvent(handlePrevClick, 250, this);
@@ -111,7 +112,7 @@ export default function Calendar() {
       callBack = debounceButtonEvent(handleNextClick, 250, this);
       callBack();
     }
-  }, { once: true });
+  }
   /*
     Daniel Kim
 
@@ -134,6 +135,7 @@ export default function Calendar() {
     return hoName === '평일' || hoName === '' || hoName === '일요일'
     ? false : true;
   }
+  
   /*
     Daniel Kim
 
@@ -173,6 +175,5 @@ export default function Calendar() {
     dom += `</tr>`;
     return dom;
   }
-
   return calendar;
 }

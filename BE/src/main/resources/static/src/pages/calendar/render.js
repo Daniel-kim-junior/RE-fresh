@@ -1,5 +1,5 @@
-import { render } from "./MyHook.js";
-import { calendar } from "./App.js";
+import { render } from "./hook.js";
+import { $app } from "./app.js";
 
 /*
   Daniel Kim
@@ -9,4 +9,4 @@ import { calendar } from "./App.js";
 
   2023-04-24
 */
-render(calendar, document.querySelector("#App"));
+render($app, document.querySelector("#app"));

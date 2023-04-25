@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="/src/pages/calendar/Main.js" type="module"></script>
+    <script src="/src/pages/calendar/render.js" type="module"></script>
     <script src="/src/index.js" type="module"></script>
     <link rel="stylesheet" href="/dist/output.css" />
   </head>
@@ -26,9 +26,23 @@
                 <th class="border-2 border-red-100 px-4 py-2 w-1/7">Sat</th>
               </tr>
             </thead>
-            <tbody id="App" class="px-10 py-20"></tbody>
+            <tbody id="app" class="px-10 py-20"></tbody>
           </table>
         </div>
+        <div id="button-container">
+          <button
+            id="prev"
+            class="border bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          >
+            이전 달
+          </button>
+          <button
+            id="next"
+            class="border bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+          >
+            다음 달
+          </button>
+        </ㅇ>
       </section>
     </main>
   </body>

@@ -8,7 +8,7 @@
     
     2023-04-16
 */
-function MyHook() {
+function Hook() {
   /*
     Daniel Kim
    
@@ -46,8 +46,8 @@ function MyHook() {
     const state = states[key];
   
     const setState = (newState) => {
-      if (states[key] === newState) return;
-      if (JSON.stringify(options.states[key]) === JSON.stringify(newState)) return;
+      if (state === newState) return;
+      if (JSON.stringify(state) === JSON.stringify(newState)) return;
 
       states[key] = newState;
       _render();
@@ -142,4 +142,4 @@ function onLoad(callback) {
 }
 
 export { onLoad, debounceButtonEvent };
-export const { useState, render } = MyHook();
+export const { useState, render } = Hook();

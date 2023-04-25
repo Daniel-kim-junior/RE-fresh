@@ -490,8 +490,8 @@ video {
 .table-fixed {
   table-layout: fixed;
 }
-.rounded {
-  border-radius: 0.25rem;
+.rounded-full {
+  border-radius: 9999px;
 }
 .border {
   border-width: 1px;
@@ -510,10 +510,6 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
-.px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
 }
 .px-10 {
   padding-left: 2.5rem;
