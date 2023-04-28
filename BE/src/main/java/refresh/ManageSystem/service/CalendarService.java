@@ -29,6 +29,7 @@ public class CalendarService {
      * @return List<Integer>
      * 연도와 월을 파라미터로 받아 현재 달 정보와 전 달의 정보를 이용해
      * 이번 달의 정보를 생성하는 메소드
+     * 연차 집계 데이터 리스트를 가져와서 연차 집계 데이터를 이번 달 달력에 표시한다.
      *
      * 2023-04-19
      */
@@ -71,7 +72,9 @@ public class CalendarService {
         }
 
         List<AnnualCalVO>annualCalData = annualService.getAnnualCalData(strYear, strMonth);
-        int minimumDay = annualCalData.get(0).getDay();
+
+        int minimumDay = annualCalData.isEmpty() ? 0 : annualCalData.get(0).getDay();
+
         int dayCount = 0;
 
         // 이번달 정보 생성 (요일 정보, 휴일 정보, 이번 달 표시 정보)
@@ -79,9 +82,10 @@ public class CalendarService {
             curDay = curDay == 7 ? 0 : curDay;
             CalendarServiceDTOBuilder builder = CalendarServiceDTO.builder();
 
-            if(dayIdx >= minimumDay) {
+            if(dayIdx >= minimumDay && minimumDay > 0) {
                 builder.sumCount(annualCalData.get(dayCount++).getSumCount());
             }
+
             if(binarySearch(holidayDataList, dayIdx)) {
                                   builder.day(dayIdx++)
                                   .hoName(holidayName);
@@ -92,6 +96,7 @@ public class CalendarService {
                     builder.day(dayIdx++).hoName("평일");
                 }
             }
+
             result.add(builder.build());
             curDay++;
         }

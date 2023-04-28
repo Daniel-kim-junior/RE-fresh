@@ -1,9 +1,6 @@
 package refresh.ManageSystem.service;
-
 import static org.assertj.core.api.Assertions.*;
-
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,12 +15,11 @@ class AnnualServiceTest {
 
 
     @Test
-    void 월_연차_집계_정보() {
-        List<AnnualCalVO> annualCalData = annualService.getAnnualCalData("2023", "04");
-        for(AnnualCalVO an: annualCalData) {
-            System.out.println(an);
-        }
-//        assertThat(annualCalData.size()).isEqualTo(31);
+    void 월_연차_집계_정보_확인() {
+        List<AnnualCalVO> annualCalData1 = annualService.getAnnualCalData("2010", "5");
+        assertThat(annualCalData1).isEmpty();
 
+        List<AnnualCalVO> annualCalData2 = annualService.getAnnualCalData("2023", "4");
+        assertThat(annualCalData2.size()).isEqualTo(5);
     }
 }

@@ -7,11 +7,18 @@ import refresh.ManageSystem.model.AnnualCalModel;
 import refresh.ManageSystem.repository.AnnualRepository;
 import refresh.ManageSystem.vo.AnnualCalVO;
 
+/**
+ * Daniel Kim
+ *
+ * getAnnualCalData: AnnualCalModel을 통해 연차 집계 데이터를 가져옴(연, 월)
+ * 현재는 memeber2 고정 유저의 부서 연차 집계 데이터만 가져온다.
+ *
+ * 2023-04-28
+ */
 @Service
 public class AnnualService {
     @Autowired
     private AnnualRepository annualRepository;
-
     @Autowired
     private DepartmentService departmentService;
 
@@ -20,8 +27,7 @@ public class AnnualService {
                                                          builder()
                                                          .year(year)
                                                          .month(month)
-                                                         .departmentName(String.valueOf(
-                                                                 departmentService.getDepartmentNameById("member2")))
+                                                         .departmentName(departmentService.getDepartmentNameById("member2").get())
                                                          .build());
     }
 

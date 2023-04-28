@@ -10,8 +10,8 @@ import lombok.ToString;
  * Daniel Kim
  *
  * Holiday 테이블에 접근하는 Request DAO
- * year : 년 월 데이터
- * month
+ * year : 연도
+ * month : 월
  *
  * 2023-04-18
  */

@@ -27,13 +27,11 @@ import refresh.ManageSystem.service.CalendarService;
 @CrossOrigin
 class CalendarRestController {
     @Autowired
-    private AnnualService annualService;
-    @Autowired
     private CalendarService calendarService;
     /**
      * Daniel Kim
      *
-     * @param year : 현재 년도로 설정해주는 추가 작업 예정(클라이언트), Request Validation 추가 예정(백엔드)
+     * @param year : Request Validation 추가 예정(백엔드)
      * @param month
      * @return
      * @throws JsonProcessingException
@@ -44,7 +42,6 @@ class CalendarRestController {
     List<CalendarServiceDTO> getCalendar(@RequestParam String year, @RequestParam String month)
             throws JsonProcessingException {
         List<CalendarServiceDTO> calRst = calendarService.updateCalendar(year, month);
-
         return calRst;
     }
 
