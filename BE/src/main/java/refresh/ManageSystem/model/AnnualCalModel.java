@@ -1,22 +1,21 @@
 package refresh.ManageSystem.model;
-
 import lombok.Builder;
 import lombok.Getter;
-
 import lombok.NonNull;
 import lombok.ToString;
 
 /**
  * Daniel Kim
  *
- * Holiday 테이블에 접근하는 Request DAO
- * year : 연도
- * month : 월
+ * year: 년도
+ * month: 달
+ * departmentName: 부서 이름
  *
- * 2023-04-18
+ * 2023-04-28
  */
-@Getter @ToString @Builder
-public class HolidayDbModel {
+@ToString @Getter @Builder
+public class AnnualCalModel {
     @NonNull private String year;
     @NonNull private String month;
+    @NonNull private String departmentName;
 }

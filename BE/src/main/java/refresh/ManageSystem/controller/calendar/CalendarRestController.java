@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import refresh.ManageSystem.service.AnnualService;
 import refresh.ManageSystem.dto.CalendarServiceDTO;
 import refresh.ManageSystem.service.CalendarService;
-import refresh.ManageSystem.service.HolidayService;
+
 /**
  * Daniel Kim
  *
@@ -30,7 +31,7 @@ class CalendarRestController {
     /**
      * Daniel Kim
      *
-     * @param year : 현재 년도로 설정해주는 추가 작업 예정(클라이언트), Request Validation 추가 예정(백엔드)
+     * @param year : Request Validation 추가 예정(백엔드)
      * @param month
      * @return
      * @throws JsonProcessingException
@@ -43,5 +44,6 @@ class CalendarRestController {
         List<CalendarServiceDTO> calRst = calendarService.updateCalendar(year, month);
         return calRst;
     }
+
 
 }

@@ -4,20 +4,15 @@ package refresh.ManageSystem.service;
 import static org.assertj.core.api.Assertions.*;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import refresh.ManageSystem.dto.CalendarServiceDTO;
-import refresh.ManageSystem.dto.HolidayServiceDTO;
+import refresh.ManageSystem.vo.HolidayServiceVO;
 
 /**
  * Daniel Kim
@@ -40,13 +35,14 @@ class CalendarServiceTest {
      * 2023-04-15
      */
     void 달력_list_계산() {
-        List<CalendarServiceDTO> list = calendarService.updateCalendar("2023", "05");
-        assertThat(list.size()).isEqualTo(35);
+        List<CalendarServiceDTO> list = calendarService.updateCalendar("2023", "04");
+
+        assertThat(list.size()).isEqualTo(42);
     }
 
     @Test
     void 이분_탐색_결과() {
-        List<HolidayServiceDTO> holidayServiceDTOS = holidayService.holidayDBData("2023", "05");
+        List<HolidayServiceVO> holidayServiceDTOS = holidayService.holidayDBData("2023", "05");
         boolean b1 = CalendarService.binarySearch(holidayServiceDTOS, 5);
         boolean b2 = CalendarService.binarySearch(holidayServiceDTOS, 27);
         boolean b3 = CalendarService.binarySearch(holidayServiceDTOS, 10);

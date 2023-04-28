@@ -1,6 +1,4 @@
 package refresh.ManageSystem.controller;
-
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +18,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class CalendarControllerTest {
+class CalendarRestControllerTest {
     @Autowired
     private MockMvc mvc;
 
     @Test
-    void 파라미터없는_요청() throws Exception {
-        mvc.perform(get("/calendar"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    void 파라미터있는_요청() throws Exception {
+    void 파라미터_요청() throws Exception {
         mvc.perform(get("/calendar?year=2023&month=5"))
                 .andExpect(status().isOk());
     }

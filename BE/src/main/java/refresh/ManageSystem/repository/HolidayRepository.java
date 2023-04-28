@@ -1,9 +1,9 @@
 package refresh.ManageSystem.repository;
 import java.util.List;
-import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
-import refresh.ManageSystem.dto.HolidayServiceDTO;
+import refresh.ManageSystem.vo.HolidayServiceVO;
 import refresh.ManageSystem.model.HolidayApiModel;
 import refresh.ManageSystem.model.HolidayDbModel;
 
@@ -20,6 +20,6 @@ import refresh.ManageSystem.model.HolidayDbModel;
 public interface HolidayRepository {
 
     void insertHoliday(HolidayApiModel holiday);
-    List<HolidayServiceDTO> findHoliday(HolidayDbModel holidayDbModel);
+    List<HolidayServiceVO> findHoliday(HolidayDbModel holidayDbModel);
     void removeHolidayTable();
 }

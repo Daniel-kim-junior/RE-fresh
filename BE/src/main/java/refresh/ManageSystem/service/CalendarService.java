@@ -1,13 +1,16 @@
 package refresh.ManageSystem.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import refresh.ManageSystem.dto.CalendarServiceDTO;
-import refresh.ManageSystem.dto.HolidayServiceDTO;
+import refresh.ManageSystem.dto.CalendarServiceDTO.CalendarServiceDTOBuilder;
+import refresh.ManageSystem.vo.AnnualCalVO;
+import refresh.ManageSystem.vo.HolidayServiceVO;
 
 /**
  * Daniel Kim
@@ -26,16 +29,21 @@ public class CalendarService {
      * @return List<Integer>
      * 연도와 월을 파라미터로 받아 현재 달 정보와 전 달의 정보를 이용해
      * 이번 달의 정보를 생성하는 메소드
+     * 연차 집계 데이터 리스트를 가져와서 연차 집계 데이터를 이번 달 달력에 표시한다.
      *
      * 2023-04-19
      */
     private static String holidayName;
+
+    @Autowired
+    private AnnualService annualService;
     @Autowired
     private HolidayService holidayService;
     public List<CalendarServiceDTO> updateCalendar(String strYear, String strMonth) {
         List<CalendarServiceDTO> result = new ArrayList<>();
         int year = Integer.parseInt(strYear);
         int month = Integer.parseInt(strMonth);
+
 
         // 현재 달 정보
         int dayIdx = 1;
@@ -53,44 +61,51 @@ public class CalendarService {
         int nextEnd = 6 - curEndDayOfWeek(year, month);
 
         // 휴일 정보
-        List<HolidayServiceDTO> holidayDataList = holidayService.holidayDBData(strYear, strMonth);
+        List<HolidayServiceVO> holidayDataList = holidayService.holidayDBData(strYear, strMonth);
 
         // 전달 정보 생성
         while(preStart <= preEnd) {
             result.add(CalendarServiceDTO.builder()
-                               .day(preStart++)
-                               .hoName("")
-                               .build());
+                                         .day(preStart++)
+                                         .hoName("")
+                                         .build());
         }
+
+        List<AnnualCalVO>annualCalData = annualService.getAnnualCalData(strYear, strMonth);
+
+        int minimumDay = annualCalData.isEmpty() ? 0 : annualCalData.get(0).getDay();
+
+        int dayCount = 0;
 
         // 이번달 정보 생성 (요일 정보, 휴일 정보, 이번 달 표시 정보)
         while(dayIdx <= curEnd) {
             curDay = curDay == 7 ? 0 : curDay;
+            CalendarServiceDTOBuilder builder = CalendarServiceDTO.builder();
+
+            if(dayIdx >= minimumDay && minimumDay > 0) {
+                builder.sumCount(annualCalData.get(dayCount++).getSumCount());
+            }
+
             if(binarySearch(holidayDataList, dayIdx)) {
-                result.add(CalendarServiceDTO.builder()
-                                   .day(dayIdx++)
-                                   .hoName(holidayName)
-                                             .build());
+                                  builder.day(dayIdx++)
+                                  .hoName(holidayName);
             } else {
                 if(curDay == 0) {
-                    result.add(CalendarServiceDTO.builder()
-                                                 .day(dayIdx++)
-                                                 .hoName("일요일")
-                                                 .build());
+                    builder.day(dayIdx++).hoName("일요일");
                 } else {
-                    result.add(CalendarServiceDTO.builder()
-                                       .day(dayIdx++)
-                                       .hoName("평일").build());
+                    builder.day(dayIdx++).hoName("평일");
                 }
             }
+
+            result.add(builder.build());
             curDay++;
         }
         // 다음달 정보 생성
         while(nextDay <= nextEnd) {
             result.add(CalendarServiceDTO.builder()
-                               .day(nextDay++)
-                               .hoName("")
-                               .build());
+                                         .day(nextDay++)
+                                         .hoName("")
+                                         .build());
         }
         return result;
     }
@@ -105,7 +120,7 @@ public class CalendarService {
      *
      * 2023-04-22
      */
-    public static boolean binarySearch(List<HolidayServiceDTO> holidayDataList, int dayIdx) {
+    public static boolean binarySearch(List<HolidayServiceVO> holidayDataList, int dayIdx) {
         int left = 0;
         int right = holidayDataList.size() - 1;
         int mid;
@@ -125,7 +140,6 @@ public class CalendarService {
         }
         return false;
     }
-
     /**
      * Daniel Kim
      *
