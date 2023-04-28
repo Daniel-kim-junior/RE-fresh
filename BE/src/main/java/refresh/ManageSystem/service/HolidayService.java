@@ -1,9 +1,8 @@
 package refresh.ManageSystem.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -19,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import refresh.ManageSystem.dto.HolidayServiceDTO;
+import refresh.ManageSystem.vo.HolidayServiceVO;
 import refresh.ManageSystem.model.HolidayApiModel;
 import refresh.ManageSystem.model.HolidayDbModel;
 import refresh.ManageSystem.repository.HolidayRepository;
@@ -154,7 +153,7 @@ public class HolidayService {
      *
      * 2023-04-18
      */
-    public List<HolidayServiceDTO> holidayDBData(String strYear, String strMonth) {
+    public List<HolidayServiceVO> holidayDBData(String strYear, String strMonth) {
         int month = Integer.parseInt(strMonth);
         String monthStr = month < 10 ? "0"+month : String.valueOf(month);
         return holidayRepository.findHoliday(HolidayDbModel.builder()

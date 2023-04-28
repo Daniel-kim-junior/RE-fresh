@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import refresh.ManageSystem.service.AnnualService;
 import refresh.ManageSystem.dto.CalendarServiceDTO;
 import refresh.ManageSystem.service.CalendarService;
-import refresh.ManageSystem.service.HolidayService;
+
 /**
  * Daniel Kim
  *
@@ -25,6 +26,8 @@ import refresh.ManageSystem.service.HolidayService;
 @RequestMapping("/calendar")
 @CrossOrigin
 class CalendarRestController {
+    @Autowired
+    private AnnualService annualService;
     @Autowired
     private CalendarService calendarService;
     /**
@@ -41,7 +44,9 @@ class CalendarRestController {
     List<CalendarServiceDTO> getCalendar(@RequestParam String year, @RequestParam String month)
             throws JsonProcessingException {
         List<CalendarServiceDTO> calRst = calendarService.updateCalendar(year, month);
+
         return calRst;
     }
+
 
 }

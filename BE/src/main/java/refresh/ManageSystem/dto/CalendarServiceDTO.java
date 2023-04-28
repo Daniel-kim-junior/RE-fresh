@@ -1,9 +1,12 @@
 package refresh.ManageSystem.dto;
 
+import java.util.List;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
+import refresh.ManageSystem.vo.AnnualServiceVO;
 
 /**
  * Daniel Kim
@@ -18,4 +21,7 @@ import lombok.ToString;
 public class CalendarServiceDTO {
     private int day;
     @NonNull private String hoName;
+    private List<AnnualServiceVO> annualList;
+
+    private int sumCount;
 }

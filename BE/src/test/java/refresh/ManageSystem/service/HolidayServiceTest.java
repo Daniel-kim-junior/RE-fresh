@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import refresh.ManageSystem.dto.HolidayServiceDTO;
+import refresh.ManageSystem.vo.HolidayServiceVO;
 
 /**
  * Daniel Kim
@@ -34,7 +34,7 @@ class HolidayServiceTest {
     void 휴일_정보_DB_에서_가져오기() {
         String year = "2023";
         String month = "12";
-        List<HolidayServiceDTO> holidayList = holidayService.holidayDBData(year, month);
+        List<HolidayServiceVO> holidayList = holidayService.holidayDBData(year, month);
 
     }
 }
