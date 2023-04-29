@@ -1,5 +1,5 @@
 import { render } from "./hook.js";
-import { $app } from "./app.js";
+import { $App } from "./app.js";
 
 /*
   Daniel Kim
@@ -9,4 +9,4 @@ import { $app } from "./app.js";
 
   2023-04-24
 */
-render($app, document.querySelector("#app"));
+render($App, document.querySelector("#app"));

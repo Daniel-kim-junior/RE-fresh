@@ -10,39 +10,37 @@
     <link rel="stylesheet" href="/dist/output.css" />
   </head>
   <body>
-    <header id="calendar-header"></header>
-    <main id="calendar" th:fragment="calendar">
-      <section>
-        <div class="w-3/5 h-128">
-          <table class="border-2 border-red-100 px-2 bg-white table-fixed w-full h-full">
-            <thead class="border-2 border-red-100 px-4 py-2 bg-black-950">
-              <tr>
-                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Sun</th>
-                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Mon</th>
-                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Tue</th>
-                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Wed</th>
-                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Thu</th>
-                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Fri</th>
-                <th class="border-2 border-red-100 px-4 py-2 w-1/7">Sat</th>
-              </tr>
-            </thead>
-            <tbody id="app" class="px-10 py-20"></tbody>
-          </table>
-        </div>
-        <div id="button-container">
+    <main id="calendar" class="flex h-screen justify-evenly">
+      <section class="m-auto">
+        <div id="button-container" class="flex w-screen items-center justify-around">
           <button
             id="prev"
-            class="border bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l w-15 h-10"
           >
-            이전 달
+            Prev
           </button>
+          <header id="calendar-header"></header>
           <button
             id="next"
-            class="border bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r w-15 h-10"
           >
-            다음 달
+            Next
           </button>
-        </ㅇ>
+        </div>
+        <table class="border-2 border-slate-600 px-2 bg-white table-fixed w-full h-full">
+          <thead class="border-2 border-slate-600 px-4 py-2 bg-slate-400">
+            <tr>
+              <th class="border-2 border-slate-600 px-4 py-2 w-1/7 text-holiday">일요일</th>
+              <th class="border-2 border-slate-600 px-4 py-2 w-1/7">월요일</th>
+              <th class="border-2 border-slate-600 px-4 py-2 w-1/7">화요일</th>
+              <th class="border-2 border-slate-600 px-4 py-2 w-1/7">수요일</th>
+              <th class="border-2 border-slate-600 px-4 py-2 w-1/7">목요일</th>
+              <th class="border-2 border-slate-600 px-4 py-2 w-1/7">금요일</th>
+              <th class="border-2 border-slate-600 px-4 py-2 w-1/7">토요일</th>
+            </tr>
+          </thead>
+          <tbody id="app" class="px-10 py-20"></tbody>
+        </table>
       </section>
     </main>
   </body>

@@ -10,7 +10,7 @@ import { debounceButtonEvent, onLoad } from './hook.js';
   2023-04-23
 */
 
-export default function calendar() {
+export default function Calendar() {
   /*
     Daniel Kim
 
@@ -28,7 +28,6 @@ export default function calendar() {
   const buttons = document.querySelector('#button-container');
   const header = document.querySelector('#calendar-header');
   
-
   /*
     Daniel Kim
 
@@ -62,7 +61,7 @@ export default function calendar() {
       header.innerHTML = makeHeader(year, month);
     } catch (error) {
       console.error(error);
-    } 
+    }
   });
   /*
     Daniel Kim
@@ -76,21 +75,21 @@ export default function calendar() {
 
     2023-04-23
   */
-    const handlePrevClick = () => {
-      if (month === 1) {
-        setMdy({year: year - 1, month: 12});
-      } else {
-        setMdy({year: year, month: month - 1});
-      }
+  const handlePrevClick = () => {
+    if (month === 1) {
+      setMdy({ year: year - 1, month: 12 });
+    } else {
+      setMdy({ year: year, month: month - 1 });
     }
+  }
   
-    const handleNextClick = () => {
-      if (month === 12) {
-        setMdy({year: year + 1, month: 1});
-      } else {
-        setMdy({year: year, month: month + 1});
-      }
+  const handleNextClick = () => {
+    if (month === 12) {
+      setMdy({ year: year + 1, month: 1 });
+    } else {
+      setMdy({ year: year, month: month + 1 });
     }
+  }
     
   /*
     Daniel Kim
@@ -131,9 +130,9 @@ export default function calendar() {
 
     2023-04-23
   */
-  function isSpecialDay (hoName) {
+  function isSpecialDay(hoName) {
     return hoName === '평일' || hoName === '' || hoName === '일요일'
-    ? false : true;
+      ? false : true;
   }
   
   /*
@@ -155,25 +154,27 @@ export default function calendar() {
       } else {
         fontStyle = 'text-holiday';
       }
+
       if (parseInt(i / 7) === cnt) {
-        dom += `<td class="border-2 border-red-100 w-20 h-20">
-          <div class="h-full block align-top text-left py-2 px-4">
-            <div class=${fontStyle}>${calendar[i].day}</div>
-              ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs">${calendar[i].hoName}</div>` : ''}
-          </div>
+        dom += `<td class="border-2 border-slate-600 w-20 h-20 relative">
+            <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
+              ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
+            ${calendar[i].sumCount !== 0 ?`<div class="text-sm/3 absolute bottom-3 right-3">&#128652; ${calendar[i].sumCount}명</div>` : ''}
         </td>`;
+        
       } else {
-      dom += `</tr><tr><td class=" border-2 border-red-100 w-20 h-20">
-      <div class="h-full block align-top text-left py-2 px-4">
-        <div class=${fontStyle}>${calendar[i].day}</div>
-          ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs">${calendar[i].hoName}</div>` : ''}
-        </div>
+        dom += `</tr><tr><td class=" border-2 border-slate-600 w-20 h-20 relative">
+        <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
+          ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
+          ${calendar[i].sumCount !== 0 ? `<div class="text-sm/3 absolute bottom-3 right-3">&#128652; ${calendar[i].sumCount}명</div>` : ''}
       </td>`;
-      cnt++;
-      }
+        cnt++;
+      } 
     }
-    dom += `</tr>`;
+    dom += '</tr>';
     return dom;
   }
+
+
   return calendar;
 }

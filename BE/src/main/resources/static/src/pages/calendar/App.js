@@ -1,4 +1,4 @@
-import calendar from './calendar.js';
+import Calendar from './calendar.js';
 /*
   Daniel Kim
   
@@ -7,6 +7,6 @@ import calendar from './calendar.js';
   2023-04-23
 */
 
-export const $app = () => `
-  ${calendar()}
+export const $App = () => `
+  ${Calendar()}
 `

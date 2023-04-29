@@ -103,6 +103,7 @@ function debounceFrame(callback) {
   function render(rootComponent, root) {
     options.root = root;
     options.rootComponent = rootComponent;
+    console.log(rootComponent);
     _render();
   }
 
