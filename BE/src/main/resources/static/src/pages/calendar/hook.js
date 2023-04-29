@@ -100,10 +100,15 @@ function debounceFrame(callback) {
 
     2023-04-16
   */
-  function render(rootComponent, root) {
+  function render(rootComponent, root, mockHandler) {
     options.root = root;
     options.rootComponent = rootComponent;
-    _render();
+    setTimeout(() => {
+      _render();
+      if (mockHandler) {
+        mockHandler();
+      }
+    }, 500);   
   }
 
 

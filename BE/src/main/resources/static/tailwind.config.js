@@ -14,7 +14,11 @@ module.exports = {
         'holiday': '#DC143C',
       },
       height: {
-        '128': '42rem',
+        '128': '50rem',
+        'ss': '0.2rem',
+      },
+      width: {
+        '128': '80rem'
       }
     },
   },
