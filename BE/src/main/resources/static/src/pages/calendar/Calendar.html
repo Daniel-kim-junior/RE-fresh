@@ -6,44 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <script src="/src/pages/calendar/render.js" type="module"></script>
-    <script src="/src/index.js" type="module"></script>
     <link rel="stylesheet" href="/dist/output.css" />
   </head>
   <body>
-    <main id="calendar" class="flex h-screen justify-evenly flex-col">
-      <div id="button-container" class="flex w-screen items-center justify-around">
-        <button
-          id="prev"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l w-15 h-10"
-        >
-          Prev
-        </button>
-        <header id="calendar-header"></header>
-        <header id="mock-header"><h1>달력</h1></header>
-        <button
-          id="next"
-          class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r w-15 h-10"
-        >
-          Next
-        </button>
+    <main id="calendar" class="fixed top-0 left-0 flex h-screen justify-evenly flex-col">
+      <div id="header-container" class="flex w-screen items-center justify-center">
+        <button id="prev-btn" disabled class="mx-10 hover:-translate-y-1 hover:scale-110"></button>
+        <div id="calendar-header"></div>
+        <button id="next-btn" disabled class="mx-10 hover:-translate-y-1 hover:scale-110"></button>
       </div>
       <section class="m-auto flex">
         <table class="border-2 border-slate-600 px-2 bg-white w-128 h-128">
-          <thead class="border-2 border-slate-600 px-4 py-2 bg-black-950">
+          <thead class="border-2 border-slate-600 px-4 py-2 bg-black-600">
             <tr>
-              <th class="border-2 text-holiday bg-zinc-400 border-slate-600 px-4 py-2 w-1/7">
+              <th class="border-2 text-holiday bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">
                 Sun
               </th>
-              <th class="border-2 bg-zinc-400 border-slate-600 px-4 py-2 w-1/7">Mon</th>
-              <th class="border-2 bg-zinc-400 border-slate-600 px-4 py-2 w-1/7">Tue</th>
-              <th class="border-2 bg-zinc-400 border-slate-600 px-4 py-2 w-1/7">Wed</th>
-              <th class="border-2 bg-zinc-400 border-slate-600 px-4 py-2 w-1/7">Thu</th>
-              <th class="border-2 bg-zinc-400 border-slate-600 px-4 py-2 w-1/7">Fri</th>
-              <th class="border-2 bg-zinc-400 border-slate-600 px-4 py-2 w-1/7">Sat</th>
+              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Mon</th>
+              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Tue</th>
+              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Wed</th>
+              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Thu</th>
+              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Fri</th>
+              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Sat</th>
             </tr>
           </thead>
           <tbody id="app" class="px-10 py-20"></tbody>
-          <tbody id="mock" class="px-10 py-20 dark:bg-gray-200">
+          <tbody id="mock-table" class="px-10 py-20 dark:bg-gray-200">
             <tr>
               <td class="border-2 border-slate-600 w-20 h-20"></td>
               <td class="border-2 border-slate-600 w-20 h-20"></td>

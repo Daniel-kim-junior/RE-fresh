@@ -25,7 +25,7 @@ export default function Calendar() {
   const date = new Date();
   const y = date.getFullYear();
   const m = date.getMonth() + 1;
-  const buttons = document.querySelector('#button-container');
+  const buttons = document.querySelector('#header-container');
   const header = document.querySelector('#calendar-header');
   
   /*
@@ -104,10 +104,10 @@ export default function Calendar() {
   buttons.onclick = clickEvent;
   function clickEvent(e) {
     let callBack;
-    if (e.target.id === 'prev') {
+    if (e.target.id === 'prev-btn') {
       callBack = debounceButtonEvent(handlePrevClick, 250, this);
       callBack();
-    } else if (e.target.id === 'next') {
+    } else if (e.target.id === 'next-btn') {
       callBack = debounceButtonEvent(handleNextClick, 250, this);
       callBack();
     }
@@ -159,14 +159,14 @@ export default function Calendar() {
         dom += `<td class="border-2 border-slate-600 w-20 h-20 relative">
             <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
               ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
-            ${calendar[i].sumCount !== 0 ?`<div class="text-sm/3 absolute bottom-3 right-3">&#128652; ${calendar[i].sumCount}명</div>` : ''}
+            ${calendar[i].sumCount !== 0 ?`<div class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
         </td>`;
         
       } else {
         dom += `</tr><tr><td class=" border-2 border-slate-600 w-20 h-20 relative">
         <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
           ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
-          ${calendar[i].sumCount !== 0 ? `<div class="text-sm/3 absolute bottom-3 right-3">&#128652; ${calendar[i].sumCount}명</div>` : ''}
+          ${calendar[i].sumCount !== 0 ? `<div class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
       </td>`;
         cnt++;
       } 

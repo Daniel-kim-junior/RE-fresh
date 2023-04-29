@@ -21,8 +21,6 @@ function Hook() {
 
     2023-04-16
    */
-  const mock = document.getElementById("mock");
-  const spinner = document.getElementById("loading-spinner");
   const options = {
     currentStateKey: 0,
     renderCount: 0,
@@ -102,13 +100,14 @@ function debounceFrame(callback) {
 
     2023-04-16
   */
-  function render(rootComponent, root) {
+  function render(rootComponent, root, mockHandler) {
     options.root = root;
     options.rootComponent = rootComponent;
     setTimeout(() => {
       _render();
-      mock.style.display = 'none';
-      spinner.style.display = 'none';
+      if (mockHandler) {
+        mockHandler();
+      }
     }, 500);   
   }
 
