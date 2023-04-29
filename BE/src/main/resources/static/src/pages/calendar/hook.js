@@ -21,6 +21,8 @@ function Hook() {
 
     2023-04-16
    */
+  const mock = document.getElementById("mock");
+  const spinner = document.getElementById("loading-spinner");
   const options = {
     currentStateKey: 0,
     renderCount: 0,
@@ -103,8 +105,11 @@ function debounceFrame(callback) {
   function render(rootComponent, root) {
     options.root = root;
     options.rootComponent = rootComponent;
-    console.log(rootComponent);
-    _render();
+    setTimeout(() => {
+      _render();
+      mock.style.display = 'none';
+      spinner.style.display = 'none';
+    }, 500);   
   }
 
 

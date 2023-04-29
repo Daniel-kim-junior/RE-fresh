@@ -9,4 +9,11 @@ import { $App } from "./app.js";
 
   2023-04-24
 */
+const app = document.getElementById("app");
+const mock = document.getElementById("mock");
 render($App, document.querySelector("#app"));
+console.log(app);
+
+if (app.innerHTML.trim() !== "") {
+  mock.style.display = "none";
+}
