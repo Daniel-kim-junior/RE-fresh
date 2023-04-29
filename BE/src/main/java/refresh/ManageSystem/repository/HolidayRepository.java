@@ -4,8 +4,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import refresh.ManageSystem.vo.HolidayServiceVO;
-import refresh.ManageSystem.model.HolidayApiModel;
-import refresh.ManageSystem.model.HolidayDbModel;
+import refresh.ManageSystem.dao.HolidayApiDAO;
+import refresh.ManageSystem.dao.HolidayDbDAO;
 
 /**
  * Daniel Kim
@@ -19,7 +19,7 @@ import refresh.ManageSystem.model.HolidayDbModel;
 @Mapper
 public interface HolidayRepository {
 
-    void insertHoliday(HolidayApiModel holiday);
-    List<HolidayServiceVO> findHoliday(HolidayDbModel holidayDbModel);
+    void insertHoliday(HolidayApiDAO holiday);
+    List<HolidayServiceVO> findHoliday(HolidayDbDAO holidayDbModel);
     void removeHolidayTable();
 }

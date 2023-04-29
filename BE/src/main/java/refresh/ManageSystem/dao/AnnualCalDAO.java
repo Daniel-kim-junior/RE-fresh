@@ -1,4 +1,4 @@
-package refresh.ManageSystem.model;
+package refresh.ManageSystem.dao;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
@@ -14,7 +14,7 @@ import lombok.ToString;
  * 2023-04-28
  */
 @ToString @Getter @Builder
-public class AnnualCalModel {
+public class AnnualCalDAO {
     @NonNull private String year;
     @NonNull private String month;
     @NonNull private String departmentName;

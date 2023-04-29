@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="refresh.ManageSystem.repository.AnnualRepository">
-  <select id="getAnnualCalData" resultType="AnnualCalVO" parameterType="AnnualCalModel">
+  <select id="getAnnualCalData" resultType="AnnualCalVO" parameterType="AnnualCalDAO">
     select cast(day(annual_date) as unsigned) as day, sum_count from annual_count where year(annual_date) = #{year} and month(annual_date) = #{month} and
     department_uid in (select department_uid from department where department_name = #{departmentName}) order by day asc;
+  </select>
+  <select id="getAnnualDataByName" resultType="AnnualDataByNameVO" parameterType="String">
+    select mem.member_name, start_date, end_date from annual as ann join member as mem on ann.member_uid = mem.member_uid where mem.member_name like concat('%', #{value}, '%')
   </select>
 </mapper>

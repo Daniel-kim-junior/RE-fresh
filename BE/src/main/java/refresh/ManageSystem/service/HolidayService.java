@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import refresh.ManageSystem.vo.HolidayServiceVO;
-import refresh.ManageSystem.model.HolidayApiModel;
-import refresh.ManageSystem.model.HolidayDbModel;
+import refresh.ManageSystem.dao.HolidayApiDAO;
+import refresh.ManageSystem.dao.HolidayDbDAO;
 import refresh.ManageSystem.repository.HolidayRepository;
 /**
  * Daniel kim
@@ -38,7 +38,7 @@ public class HolidayService {
     private HolidayRepository holidayRepository;
     @Value("${service-key}")
     private String serviceKey;
-    private static List<HolidayApiModel> result;
+    private static List<HolidayApiDAO> result;
     private final static String array[] = {"response", "body", "items"};
     /**
      * Daniel Kim
@@ -83,7 +83,7 @@ public class HolidayService {
                 curMonth++;
             }
 
-            for(HolidayApiModel hdt : result) {
+            for(HolidayApiDAO hdt : result) {
                 holidayRepository.insertHoliday(hdt);
             }
 
@@ -131,14 +131,14 @@ public class HolidayService {
             JsonNode jn = jsonNode.get("item");
             if(jn instanceof ArrayNode) {
                 for(JsonNode tmp: jn) {
-                    result.add(HolidayApiModel.builder()
-                                       .dateName(tmp.get("dateName").toString())
-                                       .locDate(tmp.get("locdate").toString()).build());
+                    result.add(HolidayApiDAO.builder()
+                                            .dateName(tmp.get("dateName").toString())
+                                            .locDate(tmp.get("locdate").toString()).build());
                 }
             } else if(jn instanceof ObjectNode){
-                result.add(HolidayApiModel.builder()
-                                   .dateName(jn.get("dateName").toString())
-                                   .locDate(jn.get("locdate").toString()).build());
+                result.add(HolidayApiDAO.builder()
+                                        .dateName(jn.get("dateName").toString())
+                                        .locDate(jn.get("locdate").toString()).build());
             }
             return;
         }
@@ -156,10 +156,10 @@ public class HolidayService {
     public List<HolidayServiceVO> holidayDBData(String strYear, String strMonth) {
         int month = Integer.parseInt(strMonth);
         String monthStr = month < 10 ? "0"+month : String.valueOf(month);
-        return holidayRepository.findHoliday(HolidayDbModel.builder()
-                                                     .month(monthStr)
-                                                     .year(strYear)
-                                                           .build());
+        return holidayRepository.findHoliday(HolidayDbDAO.builder()
+                                                         .month(monthStr)
+                                                         .year(strYear)
+                                                         .build());
     }
 
 }

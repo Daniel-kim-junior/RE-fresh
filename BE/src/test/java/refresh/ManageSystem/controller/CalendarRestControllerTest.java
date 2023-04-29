@@ -12,7 +12,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 /**
  * Daniel Kim
- * CalenderController("/calendar) 테스트
+ *
+ * CalenderRestController("/calendar) 테스트
+ * CalendarRestController("/calendar/annual") 테스트
+ *
  * 2023-04-17
  */
 @ExtendWith(SpringExtension.class)
@@ -22,9 +25,31 @@ class CalendarRestControllerTest {
     @Autowired
     private MockMvc mvc;
 
+    /**
+     * Daniel Kim
+     *
+     * 달력 정보 가져오기(연 월)
+     * @throws Exception
+     *
+     * 2023-04-17
+     */
     @Test
-    void 파라미터_요청() throws Exception {
+    void 달력_파라미터_요청() throws Exception {
         mvc.perform(get("/calendar?year=2023&month=5"))
+                .andExpect(status().isOk());
+    }
+
+    /**
+     * Daniel Kim
+     *
+     * 이름을 통해 연차 정보 가져오기
+     * @throws Exception
+     *
+     * 2023-04-29
+     */
+    @Test
+    void 이름_파라미터_요청() throws Exception {
+        mvc.perform(get("/calendar/annual"))
                 .andExpect(status().isOk());
     }
 }

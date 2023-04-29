@@ -474,9 +474,6 @@ video {
   white-space: nowrap;
   border-width: 0;
 }
-.fixed {
-  position: fixed;
-}
 .absolute {
   position: absolute;
 }
@@ -529,17 +526,17 @@ video {
 .h-128 {
   height: 50rem;
 }
-.h-20 {
-  height: 5rem;
+.h-32 {
+  height: 8rem;
 }
 .h-8 {
   height: 2rem;
 }
+.h-auto {
+  height: auto;
+}
 .h-full {
   height: 100%;
-}
-.h-screen {
-  height: 100vh;
 }
 .w-128 {
   width: 80rem;

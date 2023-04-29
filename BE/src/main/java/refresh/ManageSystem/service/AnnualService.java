@@ -3,9 +3,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import refresh.ManageSystem.model.AnnualCalModel;
+import refresh.ManageSystem.dao.AnnualCalDAO;
 import refresh.ManageSystem.repository.AnnualRepository;
 import refresh.ManageSystem.vo.AnnualCalVO;
+import refresh.ManageSystem.vo.AnnualDataByNameVO;
 
 /**
  * Daniel Kim
@@ -23,12 +24,15 @@ public class AnnualService {
     private DepartmentService departmentService;
 
     public List<AnnualCalVO> getAnnualCalData(String year, String month) {
-        return annualRepository.getAnnualCalData(AnnualCalModel.
+        return annualRepository.getAnnualCalData(AnnualCalDAO.
                                                          builder()
                                                          .year(year)
                                                          .month(month)
                                                          .departmentName(departmentService.getDepartmentNameById("member2").get())
                                                          .build());
+    }
+    public List<AnnualDataByNameVO> getAnnualDataByName(String name) {
+        return annualRepository.getAnnualDataByName(name);
     }
 
 

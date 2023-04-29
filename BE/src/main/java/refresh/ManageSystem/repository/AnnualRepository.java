@@ -2,8 +2,9 @@ package refresh.ManageSystem.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import refresh.ManageSystem.model.AnnualCalModel;
+import refresh.ManageSystem.dao.AnnualCalDAO;
 import refresh.ManageSystem.vo.AnnualCalVO;
+import refresh.ManageSystem.vo.AnnualDataByNameVO;
 
 /**
  * Daniel Kim
@@ -14,5 +15,7 @@ import refresh.ManageSystem.vo.AnnualCalVO;
  */
 @Mapper
 public interface AnnualRepository {
-     List<AnnualCalVO> getAnnualCalData(AnnualCalModel ac);
+     List<AnnualCalVO> getAnnualCalData(AnnualCalDAO ac);
+
+    List<AnnualDataByNameVO> getAnnualDataByName(String name);
 }

@@ -1,4 +1,4 @@
-package refresh.ManageSystem.model;
+package refresh.ManageSystem.dao;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import lombok.ToString;
  * 2023-04-18
  */
 @ToString @Getter @Builder
-public class HolidayApiModel {
+public class HolidayApiDAO {
     @NonNull private String locDate;
     @NonNull private String dateName;
 

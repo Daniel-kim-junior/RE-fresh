@@ -138,14 +138,14 @@ export default function Calendar() {
       }
 
       if (parseInt(i / 7) === cnt) {
-        dom += `<td class="border-2 border-slate-600 w-20 h-20 relative">
+        dom += `<td class="border-2 border-slate-600 w-20 h-32 relative">
             <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
               ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
             ${calendar[i].sumCount !== 0 ?`<div class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
         </td>`;
         
       } else {
-        dom += `</tr><tr><td class=" border-2 border-slate-600 w-20 h-20 relative">
+        dom += `</tr><tr><td class=" border-2 border-slate-600 w-20 h-32 relative">
         <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
           ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
           ${calendar[i].sumCount !== 0 ? `<div class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
