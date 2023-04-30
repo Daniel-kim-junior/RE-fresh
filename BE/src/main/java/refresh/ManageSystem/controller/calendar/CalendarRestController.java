@@ -50,17 +50,22 @@ class CalendarRestController {
     /**
      * Daniel Kim
      *
-     * @param name : 이름을 통해 연차 정보 가져오기
+     * @param name : 사원 이름을 통해 연차 정보 가져오기, 부서 이름을 통해 연차 정보 가져오기
+     *
      * @return
      * @throws JsonProcessingException
      *
-     * 2023-04-19
+     * 2023-04-29
      */
-    @GetMapping("/annual")
-    List<AnnualDataByFilterVO> getAnnualCalendar(String name, int start, int end) {
-
-
+    @GetMapping("/memberName")
+    List<AnnualDataByFilterVO> getAnnualCalendarByMemberName(String name, int start, int end) {
         return annualService.getAnnualDataByName(name, start, end);
     }
+
+    @GetMapping("/department")
+    List<AnnualDataByFilterVO> getAnnualCalendarByDepartment(String name, int start, int end) {
+        return annualService.getAnnualDataByDepartment(name, start, end);
+    }
+
 
 }
