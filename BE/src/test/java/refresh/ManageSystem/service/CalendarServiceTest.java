@@ -26,7 +26,7 @@ class CalendarServiceTest {
     private CalendarService calendarService;
     @Autowired
     private HolidayService holidayService;
-    @Test
+
     /**
      * Daniel Kim
      *
@@ -34,12 +34,21 @@ class CalendarServiceTest {
      *
      * 2023-04-15
      */
+    @Test
     void 달력_list_계산() {
         List<CalendarServiceDTO> list = calendarService.updateCalendar("2023", "04");
 
         assertThat(list.size()).isEqualTo(42);
     }
 
+    /**
+     * Daniel Kim
+     *
+     * DB에서 가져온 공휴일 데이터를 이분 탐색을 통해
+     * 제대로 들어왔는지 확인하는 메소드
+     *
+     * 2023-04-15
+     */
     @Test
     void 이분_탐색_결과() {
         List<HolidayServiceVO> holidayServiceDTOS = holidayService.holidayDBData("2023", "05");
@@ -73,7 +82,6 @@ class CalendarServiceTest {
         int preMonthEnd4 = calendarService.calendarEnd(2016, 2);
         assertThat(preMonthEnd4).isEqualTo(29);
     }
-
     @Test
     /**
      * Daniel Kim
@@ -98,9 +106,6 @@ class CalendarServiceTest {
 
 
     }
-
-
-
     /**
      * Daniel Kim
      *

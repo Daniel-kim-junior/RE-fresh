@@ -57,13 +57,13 @@ class CalendarRestController {
      *
      * 2023-04-29
      */
-    @GetMapping("/memberName")
-    List<AnnualDataByFilterVO> getAnnualCalendarByMemberName(String name, int start, int end) {
+    @GetMapping("/member")
+    List<AnnualDataByFilterVO> getAnnualCalendarByMemberName(@RequestParam String name, @RequestParam int start, @RequestParam int end) {
         return annualService.getAnnualDataByName(name, start, end);
     }
 
     @GetMapping("/department")
-    List<AnnualDataByFilterVO> getAnnualCalendarByDepartment(String name, int start, int end) {
+    List<AnnualDataByFilterVO> getAnnualCalendarByDepartment(@RequestParam String name, @RequestParam int start,@RequestParam int end) {
         return annualService.getAnnualDataByDepartment(name, start, end);
     }
 

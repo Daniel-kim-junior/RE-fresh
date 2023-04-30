@@ -48,8 +48,14 @@ class CalendarRestControllerTest {
      * 2023-04-29
      */
     @Test
-    void 이름_파라미터_요청() throws Exception {
-        mvc.perform(get("/calendar/annual"))
+    void 멤버_이름_연차_정보_요청() throws Exception {
+        mvc.perform(get("/calendar/member?name=김다니엘&start=0&end=10"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void 부서_이름_연차_정보_요청() throws Exception {
+        mvc.perform(get("/calendar/department?name=개발팀&start=0&end=10"))
                 .andExpect(status().isOk());
     }
 }

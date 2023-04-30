@@ -5,17 +5,28 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import refresh.ManageSystem.dao.AnnualDataByNameDAO;
 import refresh.ManageSystem.vo.AnnualCalVO;
 import refresh.ManageSystem.vo.AnnualDataByFilterVO;
 
+/**
+ * Daniel Kim
+ *
+ * 연차 관련 서비스 테스트 클래스
+ *
+ * 2023-04-28
+ */
 @SpringBootTest
 class AnnualServiceTest {
 
     @Autowired
     private AnnualService annualService;
-
-
+    /**
+     * Daniel Kim
+     *
+     * 연차 집계 정보를 가져오는 테스트
+     *
+     * 2023-04-29
+     */
     @Test
     void 월_연차_집계_정보_확인() {
         List<AnnualCalVO> annualCalData1 = annualService.getAnnualCalData("2010", "5");
@@ -25,6 +36,13 @@ class AnnualServiceTest {
         assertThat(annualCalData2.size()).isEqualTo(5);
     }
 
+    /**
+     * Daniel Kim
+     *
+     * 사원 이름으로 연차 필터링 정보를 가져오는 테스트
+     *
+     * 2023-04-29
+     */
     @Test
     void 사원_이름_연차_검색() {
         List<AnnualDataByFilterVO> annual1 = annualService.getAnnualDataByName("강감", 0, 10);
@@ -41,7 +59,13 @@ class AnnualServiceTest {
         List<AnnualDataByFilterVO> annual4 = annualService.getAnnualDataByName("", 0, 10);
         assertThat(annual3.size()).isEqualTo(0);
     }
-
+    /**
+     * Daniel Kim
+     *
+     * 부서 이름으로 연차 필터링 정보를 가져오는 테스트
+     *
+     * 2023-04-29
+     */
     @Test
     void 부서_이름_연차_검색() {
         List<AnnualDataByFilterVO> annual1 = annualService.getAnnualDataByDepartment("개발팀", 0, 10);
