@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import refresh.ManageSystem.dao.AnnualDataByNameDAO;
 import refresh.ManageSystem.vo.AnnualCalVO;
-import refresh.ManageSystem.vo.AnnualDataByNameVO;
+import refresh.ManageSystem.vo.AnnualDataByFilterVO;
 
 @SpringBootTest
 class AnnualServiceTest {
@@ -25,19 +26,29 @@ class AnnualServiceTest {
     }
 
     @Test
-    void 사원_연차_확인() {
-        List<AnnualDataByNameVO> annual1 = annualService.getAnnualDataByName("강감");
+    void 사원_이름_연차_검색() {
+        List<AnnualDataByFilterVO> annual1 = annualService.getAnnualDataByName("강감", 0, 10);
         assertThat(annual1.size()).isEqualTo(1);
 
-        List<AnnualDataByNameVO> annual2 = annualService.getAnnualDataByName("박영희");
+        List<AnnualDataByFilterVO> annual2 = annualService.getAnnualDataByName("박영희", 0, 10);
         assertThat(annual2.size()).isEqualTo(0);
 
         // 없는 사람
-        List<AnnualDataByNameVO> annual3 = annualService.getAnnualDataByName("로버트");
+        List<AnnualDataByFilterVO> annual3 = annualService.getAnnualDataByName("로버트", 0, 10);
         assertThat(annual3.size()).isEqualTo(0);
 
         // 빈 문자열
-        List<AnnualDataByNameVO> annual4 = annualService.getAnnualDataByName("");
+        List<AnnualDataByFilterVO> annual4 = annualService.getAnnualDataByName("", 0, 10);
         assertThat(annual3.size()).isEqualTo(0);
     }
+
+    @Test
+    void 부서_이름_연차_검색() {
+        List<AnnualDataByFilterVO> annual1 = annualService.getAnnualDataByDepartment("개발팀", 0, 10);
+        assertThat(annual1.size()).isEqualTo(3);
+
+        List<AnnualDataByFilterVO> annual2 = annualService.getAnnualDataByDepartment("인사팀", 0, 10);
+        assertThat(annual2.size()).isEqualTo(0);
+    }
+
 }

@@ -5,7 +5,12 @@
     select cast(day(annual_date) as unsigned) as day, sum_count from annual_count where year(annual_date) = #{year} and month(annual_date) = #{month} and
     department_uid in (select department_uid from department where department_name = #{departmentName}) order by day asc;
   </select>
-  <select id="getAnnualDataByName" resultType="AnnualDataByNameVO" parameterType="String">
-    select mem.member_name, start_date, end_date from annual as ann join member as mem on ann.member_uid = mem.member_uid where mem.member_name like concat('%', #{value}, '%')
+  <select id="getAnnualDataByName" resultType="AnnualDataByFilterVO" parameterType="AnnualDataByNameDAO">
+    select mem.member_name, start_date, end_date from annual as ann join member as mem on ann.member_uid = mem.member_uid where mem.member_name like concat('%', #{memberName}, '%')
+    limit #{pageStart}, #{pageEnd}
+  </select>
+  <select id="getAnnualDataByDepartment" resultType="AnnualDataByFilterVO" parameterType="AnnualDataByDepartDAO">
+    select mem.member_name, start_date, end_date from annual as ann join member as mem on ann.member_uid = mem.member_uid
+    where mem.department_uid in (select department_uid from department where department_name = #{departmentName}) limit #{pageStart}, #{pageEnd}
   </select>
 </mapper>

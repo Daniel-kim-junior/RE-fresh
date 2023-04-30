@@ -3,8 +3,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import refresh.ManageSystem.dao.AnnualCalDAO;
+import refresh.ManageSystem.dao.AnnualDataByDepartDAO;
+import refresh.ManageSystem.dao.AnnualDataByNameDAO;
 import refresh.ManageSystem.vo.AnnualCalVO;
-import refresh.ManageSystem.vo.AnnualDataByNameVO;
+import refresh.ManageSystem.vo.AnnualDataByFilterVO;
 
 /**
  * Daniel Kim
@@ -15,7 +17,9 @@ import refresh.ManageSystem.vo.AnnualDataByNameVO;
  */
 @Mapper
 public interface AnnualRepository {
-     List<AnnualCalVO> getAnnualCalData(AnnualCalDAO ac);
+     List<AnnualCalVO> getAnnualCalData(AnnualCalDAO dao);
 
-    List<AnnualDataByNameVO> getAnnualDataByName(String name);
+    List<AnnualDataByFilterVO> getAnnualDataByName(AnnualDataByNameDAO dao);
+
+    List<AnnualDataByFilterVO> getAnnualDataByDepartment(AnnualDataByDepartDAO dao);
 }

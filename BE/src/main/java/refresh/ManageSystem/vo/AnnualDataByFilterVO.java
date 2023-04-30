@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter @ToString
-public class AnnualDataByNameVO {
+public class AnnualDataByFilterVO {
     private String memberName;
     private LocalDate startDate;
     private LocalDate endDate;

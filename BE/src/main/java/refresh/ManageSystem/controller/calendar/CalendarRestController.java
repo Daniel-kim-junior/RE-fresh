@@ -11,7 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import refresh.ManageSystem.service.AnnualService;
 import refresh.ManageSystem.dto.CalendarServiceDTO;
 import refresh.ManageSystem.service.CalendarService;
-import refresh.ManageSystem.vo.AnnualDataByNameVO;
+import refresh.ManageSystem.vo.AnnualDataByFilterVO;
 
 /**
  * Daniel Kim
@@ -57,10 +57,10 @@ class CalendarRestController {
      * 2023-04-19
      */
     @GetMapping("/annual")
-    List<AnnualDataByNameVO> getAnnualCalendar(String name) {
+    List<AnnualDataByFilterVO> getAnnualCalendar(String name, int start, int end) {
 
 
-        return annualService.getAnnualDataByName(name);
+        return annualService.getAnnualDataByName(name, start, end);
     }
 
 }

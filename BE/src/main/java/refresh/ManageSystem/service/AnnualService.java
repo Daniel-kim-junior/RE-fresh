@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import refresh.ManageSystem.dao.AnnualCalDAO;
+import refresh.ManageSystem.dao.AnnualDataByDepartDAO;
+import refresh.ManageSystem.dao.AnnualDataByNameDAO;
 import refresh.ManageSystem.repository.AnnualRepository;
 import refresh.ManageSystem.vo.AnnualCalVO;
-import refresh.ManageSystem.vo.AnnualDataByNameVO;
+import refresh.ManageSystem.vo.AnnualDataByFilterVO;
 
 /**
  * Daniel Kim
@@ -31,8 +33,21 @@ public class AnnualService {
                                                          .departmentName(departmentService.getDepartmentNameById("member2").get())
                                                          .build());
     }
-    public List<AnnualDataByNameVO> getAnnualDataByName(String name) {
-        return annualRepository.getAnnualDataByName(name);
+    public List<AnnualDataByFilterVO> getAnnualDataByName(String name, int start, int end) {
+        return annualRepository.getAnnualDataByName(AnnualDataByNameDAO.
+                                                         builder()
+                                                         .memberName(name)
+                                                         .pageStart(start)
+                                                         .pageEnd(end)
+                                                         .build());
+    }
+
+    public List<AnnualDataByFilterVO> getAnnualDataByDepartment(String departmentName, int start, int end) {
+        return annualRepository.getAnnualDataByDepartment(AnnualDataByDepartDAO.
+                                                         builder()
+                                                         .departmentName(departmentName)
+                                                         .pageStart(start).pageEnd(end)
+                                                         .build());
     }
 
 
