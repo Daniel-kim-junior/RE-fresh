@@ -2,10 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: {
-    index : './src/index.js',
-    calendar: './src/pages/calendar/render.js'
-  },
+
   output: {
     path : path.resolve(__dirname, 'dist'), // 경로
     filename : '[name].bundle.js', // 파일명

@@ -1,4 +1,4 @@
-package refresh.ManageSystem.model;
+package refresh.ManageSystem.dao;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import lombok.ToString;
  * 2023-04-18
  */
 @Getter @ToString @Builder
-public class HolidayDbModel {
+public class HolidayDbDAO {
     @NonNull private String year;
     @NonNull private String month;
 }

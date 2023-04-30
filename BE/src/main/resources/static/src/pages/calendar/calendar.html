@@ -9,14 +9,15 @@
     <link rel="stylesheet" href="/dist/output.css" />
   </head>
   <body>
-    <main id="calendar" class="fixed top-0 left-0 flex h-screen justify-evenly flex-col">
+    <main id="calendar" class="top-0 left-0 flex justify-evenly flex-col">
       <div id="header-container" class="flex w-screen items-center justify-center">
         <button id="prev-btn" disabled class="mx-10 hover:-translate-y-1 hover:scale-110"></button>
         <div id="calendar-header"></div>
         <button id="next-btn" disabled class="mx-10 hover:-translate-y-1 hover:scale-110"></button>
       </div>
+
       <section class="m-auto flex">
-        <table class="border-2 border-slate-600 px-2 bg-white w-128 h-128">
+        <table class="border-2 border-slate-600 px-2 bg-white w-128 h-auto">
           <thead class="border-2 border-slate-600 px-4 py-2 bg-black-600">
             <tr>
               <th class="border-2 text-holiday bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">
@@ -33,58 +34,58 @@
           <tbody id="app" class="px-10 py-20"></tbody>
           <tbody id="mock-table" class="px-10 py-20 dark:bg-gray-200">
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
             </tr>
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
             </tr>
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
             </tr>
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
             </tr>
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
             </tr>
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
-              <td class="border-2 border-slate-600 w-20 h-20"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-2 border-slate-600 w-20 h-32"></td>
             </tr>
             <div
               id="loading-spinner"
@@ -112,9 +113,73 @@
           </tbody>
         </table>
         <aside class="border border-stone-800" class="w-128">
-          <ul>
-            <li>하이</li>
-            <li>슈고</li>
+          <h3 class="mb-5 text-lg font-medium text-gray-900 dark:text-white">
+            How much do you expect to use each month?
+          </h3>
+          <ul class="grid w-full gap-6 md:grid-cols-2">
+            <li>
+              <input
+                type="radio"
+                id="hosting-small"
+                name="hosting"
+                value="hosting-small"
+                class="hidden peer"
+                required
+              />
+              <label
+                for="hosting-small"
+                class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+              >
+                <div class="block">
+                  <div class="w-full text-lg font-semibold">0-50 MB</div>
+                  <div class="w-full">Good for small websites</div>
+                </div>
+                <svg
+                  aria-hidden="true"
+                  class="w-6 h-6 ml-3"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </label>
+            </li>
+            <li>
+              <input
+                type="radio"
+                id="hosting-big"
+                name="hosting"
+                value="hosting-big"
+                class="hidden peer"
+              />
+              <label
+                for="hosting-big"
+                class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700"
+              >
+                <div class="block">
+                  <div class="w-full text-lg font-semibold">500-1000 MB</div>
+                  <div class="w-full">Good for large websites</div>
+                </div>
+                <svg
+                  aria-hidden="true"
+                  class="w-6 h-6 ml-3"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </label>
+            </li>
           </ul>
         </aside>
       </section>
