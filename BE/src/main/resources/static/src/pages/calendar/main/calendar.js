@@ -1,4 +1,4 @@
-import getCalendarData from '../../api/calendarApi.js';
+import { getCalendarData } from '../../../api/calendarApi.js';
 import { useState } from './hook.js';
 import { debounceButtonEvent, onLoad } from './hook.js';
 
@@ -108,6 +108,8 @@ export default function Calendar() {
   function makeHeader(year, month) {
     return `<h1 class="text-2xl font-bold text-center text-gray-800 py-2">${year}년 ${month}월</h1>`
   }
+
+
   
   /*
     Daniel Kim

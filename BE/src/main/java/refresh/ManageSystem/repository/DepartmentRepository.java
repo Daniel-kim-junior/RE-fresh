@@ -1,4 +1,5 @@
 package refresh.ManageSystem.repository;
+import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,4 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface DepartmentRepository {
     Optional<String> getDepartmentNameById(String memberId);
     Optional<Integer> getDepartmentTotalById(String memberId);
+
+    List<String> getDepartmentNameList();
 }

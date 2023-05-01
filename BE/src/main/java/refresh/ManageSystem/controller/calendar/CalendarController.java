@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CalendarController {
     @GetMapping("/v1")
     String get() {
-        return "/index";
+        return "/pages/calendar/calendar";
     }
 }

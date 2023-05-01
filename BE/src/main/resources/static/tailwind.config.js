@@ -9,8 +9,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'current': '#262626',
-        'not-current': '#E2E2E2',
+        'current': '#000000',
+        'not-current': '#B2B2B2',
         'holiday': '#DC143C',
       },
       height: {
