@@ -13,6 +13,7 @@ import { render, throttle } from "./hook.js";
       return;
     }
     render($App, document.querySelector("#aside"), name);
+    aside.style.display = 'block';
   }, 500);
 })();
 

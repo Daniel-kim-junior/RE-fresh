@@ -13,7 +13,7 @@ export default function AsideHeader() {
   })
 
   function makeHeader(departmentList) {
-    let dom = '';
+    let dom = '<option value="부서 선택">부서 선택</option>';
     departmentList.forEach((item) => {
       dom += `<option value="${item}">${item}</option>`
     });

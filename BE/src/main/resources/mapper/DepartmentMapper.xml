@@ -9,4 +9,7 @@
   <select id="getDepartmentTotalById" resultType="int" parameterType="String">
     select count(*) from member group by department_uid having department_uid in (select department_uid from member where member_id = #{value})
   </select>
+  <select id="getDepartmentNameList" resultType="String">
+    select department_name from department
+  </select>
 </mapper>

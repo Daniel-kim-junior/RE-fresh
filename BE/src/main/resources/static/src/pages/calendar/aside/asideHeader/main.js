@@ -7,12 +7,16 @@ const INIT_LENGTH = 0;
   const selectDom = document.querySelector('#search-option');
   const department = document.querySelector('#department');
   const member = document.querySelector('#member');
+  const departmentSelect = document.querySelector('#department-select');
   const select = document.querySelector('#department-select');
   const aside = document.querySelector('#aside');
   const input = document.querySelector('#member-input');
 
   selectDom.onchange = (e) => {
+    aside.style.display = 'none';
+    aside.innerHTML = '';
     if (e.target.value === 'department') {
+      departmentSelect.value = '부서 선택';
       department.style.display = 'block';
       if (select.childNodes.length === INIT_LENGTH) {
         render($App, select);
@@ -26,7 +30,6 @@ const INIT_LENGTH = 0;
       department.style.display = 'none';
       member.style.display = 'none';
     }
-    aside.innerHTML = '';
   }
 })();
 

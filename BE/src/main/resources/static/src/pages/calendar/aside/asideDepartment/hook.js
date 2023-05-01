@@ -102,7 +102,11 @@ function debounceFrame(callback) {
     return options.department;
   }
 
-  return { useState, render, getDepartment };
+  function setDepartment() {
+    options.department = null;
+  }
+
+  return { useState, render, getDepartment, setDepartment };
 }
 
 function onLoad(callback) {
@@ -114,4 +118,4 @@ function onLoad(callback) {
 
 export { onLoad };
 
-export const {useState, render, getDepartment} = Hook();
+export const {useState, render, getDepartment, setDepartment} = Hook();

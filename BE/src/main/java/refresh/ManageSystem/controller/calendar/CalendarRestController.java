@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import refresh.ManageSystem.service.AnnualService;
 import refresh.ManageSystem.dto.CalendarServiceDTO;
 import refresh.ManageSystem.service.CalendarService;
+import refresh.ManageSystem.service.DepartmentService;
 import refresh.ManageSystem.vo.AnnualDataByFilterVO;
 
 /**
@@ -29,8 +30,6 @@ import refresh.ManageSystem.vo.AnnualDataByFilterVO;
 class CalendarRestController {
     @Autowired
     private CalendarService calendarService;
-    @Autowired
-    private AnnualService annualService;
     /**
      * Daniel Kim
      *
@@ -44,28 +43,7 @@ class CalendarRestController {
     @GetMapping
     List<CalendarServiceDTO> getCalendar(@RequestParam String year, @RequestParam String month)
             throws JsonProcessingException {
-        List<CalendarServiceDTO> calRst = calendarService.updateCalendar(year, month);
-        return calRst;
+        return calendarService.updateCalendar(year, month);
     }
-    /**
-     * Daniel Kim
-     *
-     * @param name : 사원 이름을 통해 연차 정보 가져오기, 부서 이름을 통해 연차 정보 가져오기
-     *
-     * @return
-     * @throws JsonProcessingException
-     *
-     * 2023-04-29
-     */
-    @GetMapping("/member")
-    List<AnnualDataByFilterVO> getAnnualCalendarByMemberName(@RequestParam String name, @RequestParam int start, @RequestParam int end) {
-        return annualService.getAnnualDataByName(name, start, end);
-    }
-
-    @GetMapping("/department")
-    List<AnnualDataByFilterVO> getAnnualCalendarByDepartment(@RequestParam String name, @RequestParam int start,@RequestParam int end) {
-        return annualService.getAnnualDataByDepartment(name, start, end);
-    }
-
 
 }
