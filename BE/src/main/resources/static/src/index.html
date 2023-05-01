@@ -4,9 +4,56 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="/dist/output.css" />
+    <link rel="stylesheet" th:href="@{/dist/output.css}" />
   </head>
-  <body>
-    <main></main>
+  <body class="flex justify-center items-center h-screen bg-gray-100">
+    <form
+      class="bg-white p-8 rounded-lg shadow-lg"
+      method="post"
+      th:action="@{/}"
+      th:object="${MemberLogin}"
+    >
+      <h2 class="text-2xl font-bold mb-4">Log In</h2>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="userId">UserId</label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="id"
+          type="text"
+          th:field="*{id}"
+          placeholder="UserId"
+          required
+          aria-required="true"
+        />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 font-bold mb-2" for="password">Password</label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="password"
+          type="password"
+          th:field="*{password}"
+          required
+          aria-required="true"
+          placeholder="Password"
+        />
+      </div>
+      <div class="flex items-center justify-between">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit"
+          th:onclick="|location.href='@{/}`|"
+        >
+          Sign In
+        </button>
+        <a
+          class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+          href="#"
+        >
+          Forgot Password?
+        </a>
+      </div>
+    </form>
   </body>
 </html>
