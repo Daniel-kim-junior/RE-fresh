@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HolidayService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BE</a> &gt; <a href="index.source.html" class="el_package">refresh.ManageSystem.service</a> &gt; <span class="el_source">HolidayService.java</span></div><h1>HolidayService.java</h1><pre class="source lang-java linenums">package refresh.ManageSystem.service;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import refresh.ManageSystem.vo.HolidayServiceVO;
+import refresh.ManageSystem.dao.HolidayApiDAO;
+import refresh.ManageSystem.dao.HolidayDbDAO;
+import refresh.ManageSystem.repository.HolidayRepository;
+/**
+ * Daniel kim
+ *
+ * @Service : 특별한 기능이 없지만 Bean 으로 관리되는 Component 서비스 계층이라는 것을 나타내는 Annotation
+ * @Value({${key}) : key 에 해당하는 value 를 application-properties 에서 찾아서 적용
+ * @Scheduled : Spring-Scheduler method 로 등록(cron job 표현식을 통해 스케줄링)
+ * Refactoring 예정
+ *
+ * 2023-04-18
+ */
+@Service
+<span class="fc" id="L36">public class HolidayService {</span>
+    @Autowired
+    private HolidayRepository holidayRepository;
+    @Value(&quot;${service-key}&quot;)
+    private String serviceKey;
+    private static List&lt;HolidayApiDAO&gt; result;
+<span class="fc" id="L42">    private final static String array[] = {&quot;response&quot;, &quot;body&quot;, &quot;items&quot;};</span>
+    /**
+     * Daniel Kim
+     *
+     * 1. 해당 스케줄일 때 호출 되는 메소드 (매년 1월 1일)
+     * 2. result ArrayList 메모리 할당
+     * 3. 데이터베이스 테이블 비우기
+     * 4. 현재 연도와 내년에 대한 값 get (팩토리 빈으로 관리할 예정, 이유 위의 이유와 같음)
+     * 5. 26번을 돌면서 올해 1 ~ 12월, 내년 1 ~ 12월의 데이터를 Open API 에서 데이터 Fetching
+     * 6. DB repository Mybatis interface 에 구현되어 있는 Mybatis insert query 호출
+     *
+     * 2023-04-19
+     */
+    @Scheduled(cron = &quot;0 0 0 1 1 *&quot;)
+    public void getHolidayData() {
+
+        try {
+<span class="nc" id="L59">            result = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L60">            holidayRepository.removeHolidayTable();</span>
+
+<span class="nc" id="L62">            int curYear = LocalDate.now().getYear();</span>
+<span class="nc" id="L63">            int nextYear = curYear + 1;</span>
+<span class="nc" id="L64">            int curMonth = 1;</span>
+            int month;
+            JsonNode rootNode;
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            while(curMonth &lt; 26) {</span>
+<span class="nc" id="L68">                month = curMonth % 13;</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">                if(month == 0){</span>
+<span class="nc" id="L70">                    curMonth++;</span>
+<span class="nc" id="L71">                    continue;</span>
+                }
+<span class="nc bnc" id="L73" title="All 2 branches missed.">                if((curMonth - 1) / 12  == 0) {</span>
+                    // 올해 데이터
+<span class="nc" id="L75">                    rootNode = getJsonNode(curYear, month);</span>
+<span class="nc" id="L76">                    findData(0, rootNode);</span>
+
+                } else {
+                    // 내년 데이터
+<span class="nc" id="L80">                    rootNode = getJsonNode(nextYear, month);</span>
+<span class="nc" id="L81">                    findData(0, rootNode);</span>
+                }
+<span class="nc" id="L83">                curMonth++;</span>
+            }
+
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            for(HolidayApiDAO hdt : result) {</span>
+<span class="nc" id="L87">                holidayRepository.insertHoliday(hdt);</span>
+<span class="nc" id="L88">            }</span>
+
+<span class="nc" id="L90">        } catch (Exception e) {</span>
+<span class="nc" id="L91">            System.out.println(e);</span>
+<span class="nc" id="L92">        }</span>
+
+<span class="nc" id="L94">    }</span>
+    /**
+     * Daniel Kim
+     *
+     * Open API 에 요청을 보내는 메소드
+     * URL 과 serviceKey 그리고 Query 를 만들어서 RestTemplate 을 통해 서버간 통신을 구현
+     * Response 를 ResponseEntity 객체로 받아 body 만 추출해서 body Tree 를 JsonNode 로 변환하는 작업을
+     * jackson 의 objectMapper 를 통해 구현했다.
+     *
+     * 2023-04-18
+     */
+    private JsonNode getJsonNode(int year, int month) throws JsonProcessingException {
+<span class="nc" id="L106">        ObjectMapper objectMapper = new ObjectMapper();</span>
+<span class="nc" id="L107">        RestTemplate restTemplate = new RestTemplate();</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        String monthStr = month &lt; 10 ? &quot;0&quot;+month : String.valueOf(month);</span>
+<span class="nc" id="L109">        String URL = &quot;http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo?ServiceKey=&quot; + serviceKey + &quot;&amp;&quot;;</span>
+<span class="nc" id="L110">        String query = URL + &quot;solYear=&quot; + year + &quot;&amp;&quot; + &quot;solMonth=&quot; + monthStr;</span>
+<span class="nc" id="L111">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="nc" id="L112">        HttpEntity&lt;String&gt; entity = new HttpEntity&lt;&gt;(headers);</span>
+<span class="nc" id="L113">        ResponseEntity&lt;String&gt; response = restTemplate.exchange(query, HttpMethod.GET, entity, String.class);</span>
+
+<span class="nc" id="L115">        JsonNode rootNode = objectMapper.readTree(response.getBody());</span>
+<span class="nc" id="L116">        return rootNode;</span>
+    }
+    /**
+     * Daniel Kim
+     *
+     * JsonNode 의 모양은 response &gt; body &gt; items &gt; item 으로 이루어져 있다.
+     * depth 를 하나씩 내려가서 마지막 item 을 가져왔을때
+     * ArrayNode 이면 여러개의 값이 들어있는 것 -&gt; 탐색 가능
+     * ObjectNode 이면 하나의 값이 들어있는 것 -&gt; 값 추출
+     * result 에 값을 저장하는 재귀 함수
+     *
+     * 2023-04-18
+     */
+    private static void findData(int dep, JsonNode jsonNode) throws JsonProcessingException {
+<span class="nc bnc" id="L130" title="All 2 branches missed.">        if(dep == 3) {</span>
+<span class="nc" id="L131">            JsonNode jn = jsonNode.get(&quot;item&quot;);</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">            if(jn instanceof ArrayNode) {</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                for(JsonNode tmp: jn) {</span>
+<span class="nc" id="L134">                    result.add(HolidayApiDAO.builder()</span>
+<span class="nc" id="L135">                                            .dateName(tmp.get(&quot;dateName&quot;).toString())</span>
+<span class="nc" id="L136">                                            .locDate(tmp.get(&quot;locdate&quot;).toString()).build());</span>
+<span class="nc" id="L137">                }</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">            } else if(jn instanceof ObjectNode){</span>
+<span class="nc" id="L139">                result.add(HolidayApiDAO.builder()</span>
+<span class="nc" id="L140">                                        .dateName(jn.get(&quot;dateName&quot;).toString())</span>
+<span class="nc" id="L141">                                        .locDate(jn.get(&quot;locdate&quot;).toString()).build());</span>
+            }
+<span class="nc" id="L143">            return;</span>
+        }
+<span class="nc" id="L145">        findData(dep + 1, jsonNode.get(array[dep]));</span>
+<span class="nc" id="L146">    }</span>
+    /**
+     * Daniel Kim
+     *
+     * DB 에서 값을 찾아오는 메소드
+     * Mybatis 에서는 Parameter 가 여러 개일 때는 DAO 를 만드는 방법 or Map 을 통해 데이터를 전달한다.
+     * repository 에서 findHoliday(Model) 로 Mybatis query 호출
+     *
+     * 2023-04-18
+     */
+    public List&lt;HolidayServiceVO&gt; holidayDBData(String strYear, String strMonth) {
+<span class="nc" id="L157">        int month = Integer.parseInt(strMonth);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">        String monthStr = month &lt; 10 ? &quot;0&quot;+month : String.valueOf(month);</span>
+<span class="nc" id="L159">        return holidayRepository.findHoliday(HolidayDbDAO.builder()</span>
+<span class="nc" id="L160">                                                         .month(monthStr)</span>
+<span class="nc" id="L161">                                                         .year(strYear)</span>
+<span class="nc" id="L162">                                                         .build());</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

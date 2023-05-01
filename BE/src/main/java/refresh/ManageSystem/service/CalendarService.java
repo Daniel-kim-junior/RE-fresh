@@ -39,8 +39,9 @@ public class CalendarService {
     private AnnualService annualService;
     @Autowired
     private HolidayService holidayService;
-    public List<CalendarServiceDTO> updateCalendar(String strYear, String strMonth) {
+    public List<CalendarServiceDTO> updateCalendar(String strYear, String strMonth, String departmentName) {
         List<CalendarServiceDTO> result = new ArrayList<>();
+        System.out.println(strYear + " " + strMonth);
         int year = Integer.parseInt(strYear);
         int month = Integer.parseInt(strMonth);
 
@@ -71,9 +72,9 @@ public class CalendarService {
                                          .build());
         }
 
-        List<AnnualCalVO>annualCalData = annualService.getAnnualCalData(strYear, strMonth);
+        List<AnnualCalVO>annualCalData = annualService.getAnnualCalData(strYear, strMonth, departmentName);
 
-        int minimumDay = annualCalData.isEmpty() ? 0 : annualCalData.get(0).getDay();
+        int minimumDay = annualCalData.size() == 0 ? 0 : annualCalData.get(0).getDay();
 
         int dayCount = 0;
 
