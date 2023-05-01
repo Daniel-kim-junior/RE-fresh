@@ -22,6 +22,9 @@ module.exports = {
     static: './',
     proxy: {
       '/calendar': 'http://localhost:8090',
+      '/department': 'http://localhost:8090',
+      '/annual': 'http://localhost:8090',
+      '/member': 'http://localhost:8090',
     }
   },
   plugins: [
