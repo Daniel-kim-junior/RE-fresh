@@ -35,10 +35,10 @@ out/
 **/dist/
 /nbdist/
 /.nb-gradle/
-
+.gz
 ### VS Code ###
 .vscode/
-.gz
+*.gz
 ### log files
 *.log
 !**/util/aop/**
