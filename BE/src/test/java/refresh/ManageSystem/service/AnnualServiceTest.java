@@ -29,10 +29,10 @@ class AnnualServiceTest {
      */
     @Test
     void 월_연차_집계_정보_확인() {
-        List<AnnualCalVO> annualCalData1 = annualService.getAnnualCalData("2010", "5");
+        List<AnnualCalVO> annualCalData1 = annualService.getAnnualCalData("2010", "5", "개발팀");
         assertThat(annualCalData1).isEmpty();
 
-        List<AnnualCalVO> annualCalData2 = annualService.getAnnualCalData("2023", "4");
+        List<AnnualCalVO> annualCalData2 = annualService.getAnnualCalData("2023", "4", "개발팀");
         assertThat(annualCalData2.size()).isEqualTo(5);
     }
 

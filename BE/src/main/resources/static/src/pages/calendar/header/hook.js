@@ -1,3 +1,13 @@
+/*
+    Daniel Kim
+    
+    CalendarHook
+    view 계층에서 사용할 render 함수와
+    상태 관리를 위한 useState 함수를 제공하는 모듈
+    useState는 상태와 상태를 변경하는 함수를 반환한다.
+    
+    2023-04-16
+*/
 function Hook() {
   /*
     Daniel Kim
@@ -78,7 +88,21 @@ function debounceFrame(callback) {
     root.innerHTML = rootComponent();
     options.currentStateKey = 0;
     options.renderCount += 1;
+    waitForRender(root, Mock);
   });
+
+  function waitForRender(elem, callback) {
+    requestAnimationFrame(() => {
+      var isRendered = elem.offsetHeight > 0;
+      if (isRendered) {
+        callback();
+      } else {
+        waitForRender(elem, callback);
+      }
+    });
+  }
+
+
   /*
     Daniel Kim
 
@@ -95,16 +119,23 @@ function debounceFrame(callback) {
     _render();
   }
 
+
   return { useState, render };
 }
 
-function onLoad(callback) {
+
+
+/*
+  Daniel Kim
+
+  onLoad 함수는 callback 함수를 실행하여 Rest API를 호출
+  state를 변경한다.
+
+  2023-04-23
+*/
+function onLoad(callback) { 
   callback();
 }
 
-
-
-
 export { onLoad };
-
-export const {useState, render} = Hook();
+export const { useState, render } = Hook();
