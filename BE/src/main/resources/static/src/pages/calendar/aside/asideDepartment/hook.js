@@ -21,13 +21,7 @@ function Hook() {
     rootComponent: null,
   }
   function optionInit() {
-    options.currentStateKey = 0;
-    options.renderCount = 0;
     options.states = [];
-    options.aside = null;
-    options.root = null;
-    options.department = null;
-    options.rootComponent = null;
   }
 
 

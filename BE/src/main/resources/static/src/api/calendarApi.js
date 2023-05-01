@@ -17,6 +17,11 @@ async function getDepartmentNameList() {
   return await response.json();
 }
 
+async function getCalendarDataByDepartment(year, month, departmentName) {
+  const response = await fetch(`/calendar/department?year=${year}&month=${month}&departmentName=${departmentName}`);
+  return await response.json();
+}
+
 
 async function getAnnualListByMember(input, start, end) {
   const response = await fetch(`/annual/member?name=${input}&start=${start}&end=${end}`);
@@ -30,4 +35,4 @@ async function getAnnualtListByDepartment(input, start, end) {
 
 
 
-export { getCalendarData, getAnnualListByMember, getAnnualtListByDepartment, getDepartmentNameList };
+export { getCalendarData, getAnnualListByMember, getAnnualtListByDepartment, getDepartmentNameList, getCalendarDataByDepartment };

@@ -26,6 +26,7 @@ function Hook() {
     renderCount: 0,
     states: [],
     root: null,
+    departmentName: null,
     rootComponent: null,
   }
   /*
@@ -102,6 +103,14 @@ function debounceFrame(callback) {
     });
   }
 
+  function getRenderCount() {
+    return options.renderCount;
+  }
+
+  function getDepartmentName() {
+    return options.departmentName;
+  }
+
 
   /*
     Daniel Kim
@@ -113,16 +122,19 @@ function debounceFrame(callback) {
 
     2023-04-16
   */
-  function render(rootComponent, root) {
+  function render(rootComponent, root, departmentName) {
     options.root = root;
     options.rootComponent = rootComponent;
+    if (departmentName) {
+      options.departmentName = departmentName; 
+    }
     setTimeout(() => {
       _render();
-    }, 500);
+    }, 300);
   }
 
 
-  return { useState, render };
+  return { useState, render, getRenderCount, getDepartmentName};
 }
 
 function Mock() {
@@ -172,4 +184,4 @@ function onLoad(callback) {
 }
 
 export { onLoad, debounceButtonEvent };
-export const { useState, render } = Hook();
+export const { useState, render, getRenderCount, getDepartmentName } = Hook();

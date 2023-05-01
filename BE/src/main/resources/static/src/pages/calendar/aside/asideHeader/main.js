@@ -1,7 +1,6 @@
 import { $App } from "./app.js";
 import { render } from "./hook.js";
 import { optionInit } from "../asideDepartment/hook.js";
-
 const INIT_LENGTH = 0;
 
 
@@ -15,13 +14,12 @@ const INIT_LENGTH = 0;
   const input = document.querySelector('#member-input');
 
   selectDom.onchange = (e) => {
-    aside.style.display = 'none';
     aside.innerHTML = '';
     if (e.target.value === 'department') {
       departmentSelect.value = '부서 선택';
-      department.style.display = 'block';
       optionInit();
-      if(departmentSelect.length === INIT_LENGTH) {
+      department.style.display = 'block';
+      if (select.childNodes.length === INIT_LENGTH) {
         render($App, select);
       }
       member.style.display = 'none';
