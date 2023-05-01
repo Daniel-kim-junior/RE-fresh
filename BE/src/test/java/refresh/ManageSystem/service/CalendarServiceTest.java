@@ -36,7 +36,7 @@ class CalendarServiceTest {
      */
     @Test
     void 달력_list_계산() {
-        List<CalendarServiceDTO> list = calendarService.updateCalendar("2023", "04");
+        List<CalendarServiceDTO> list = calendarService.updateCalendar("2023", "04", "개발팀");
 
         assertThat(list.size()).isEqualTo(42);
     }

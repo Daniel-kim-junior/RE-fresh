@@ -15,10 +15,23 @@ function Hook() {
     currentStateKey: 0,
     renderCount: 0,
     states: [],
+    aside: null,
     root: null,
     department: null,
     rootComponent: null,
   }
+  function optionInit() {
+    options.currentStateKey = 0;
+    options.renderCount = 0;
+    options.states = [];
+    options.aside = null;
+    options.root = null;
+    options.department = null;
+    options.rootComponent = null;
+  }
+
+
+
   /*
     Daniel Kim
 
@@ -74,12 +87,26 @@ function debounceFrame(callback) {
     2023-04-16
   */
   const _render = debounceFrame(() => {
-    const { root, rootComponent } = options;
+    const { root, rootComponent, aside } = options;
     if (!root || !rootComponent) return;
-    root.innerHTML = rootComponent();
+    root.innerHTML = '';
+    waitForRender(root, () => {
+        root.innerHTML = rootComponent();
+    });
     options.currentStateKey = 0;
     options.renderCount += 1;
   });
+
+   function waitForRender(elem, callback) {
+      requestAnimationFrame(() => {
+        var isRenderedReady = elem.offsetHeight === 0;
+        if (isRenderedReady) {
+          callback();
+        } else {
+          waitForRender(elem, callback);
+        }
+      });
+    }
 
   /*
     Daniel Kim
@@ -91,10 +118,12 @@ function debounceFrame(callback) {
 
     2023-04-16
   */
-  function render(rootComponent, root, department) {
+  function render(rootComponent, root, department, aside) {
     options.root = root;
     options.department = department;
+    options.aside = aside;
     options.rootComponent = rootComponent;
+
     _render();
   }
 
@@ -102,11 +131,8 @@ function debounceFrame(callback) {
     return options.department;
   }
 
-  function setDepartment() {
-    options.department = null;
-  }
 
-  return { useState, render, getDepartment, setDepartment };
+  return { useState, render, getDepartment, optionInit };
 }
 
 function onLoad(callback) {
@@ -118,4 +144,4 @@ function onLoad(callback) {
 
 export { onLoad };
 
-export const {useState, render, getDepartment, setDepartment} = Hook();
+export const {useState, render, getDepartment, optionInit} = Hook();
