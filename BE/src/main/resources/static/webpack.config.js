@@ -39,6 +39,21 @@ module.exports = {
       file: 'dist/pages/calendar/calendar.html'
     }),
     new HtmlWebpackPlugin({
+      filename : 'createMemberForm.html',
+      template: 'src/pages/admin/member/createMemberForm.html',
+      file: 'dist/pages/admin/member/createMemberForm.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename : 'memberList.html',
+      template: 'src/pages/admin/member/memberList.html',
+      file: 'dist/pages/admin/member/memberList.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename : 'adminTab.html',
+      template: 'src/pages/admin/member/adminTab.html',
+      file: 'dist/pages/admin/member/adminTab.html'
+    }),
+    new HtmlWebpackPlugin({
       filename : 'annualmanage.html',
       template: 'src/pages/admin/annualmanage.html',
       file: 'dist/pages/admin/annualmanage.html'
@@ -47,8 +62,8 @@ module.exports = {
       filename : 'annualmodal.html',
       template: 'src/pages/admin/annualmodal.html',
       file: 'dist/pages/admin/annualmodal.html'
+
     })
-      
   ]
 };
 
