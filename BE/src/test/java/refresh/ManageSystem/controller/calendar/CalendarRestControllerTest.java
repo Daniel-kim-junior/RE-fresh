@@ -21,8 +21,8 @@ import refresh.ManageSystem.util.hash.SHA256;
 /**
  * Daniel Kim
  *
- * CalenderRestController("/calendar) 테스트
- * CalendarRestController("/calendar/annual") 테스트
+ * CalenderRestController("/calendar) RestAPI 테스트
+ * CalendarRestController("/calendar/annual") RestAPI 테스트
  *
  * 2023-04-17
  */
@@ -32,11 +32,21 @@ import refresh.ManageSystem.util.hash.SHA256;
 class CalendarRestControllerTest {
     @Autowired
     private MockMvc mvc;
-
     private static SHA256 sha256;
     private static MockHttpSession session;
     private static MemberLoginDTO loginDTO;
     private static MockHttpServletRequest request;
+    /**
+     * Daniel Kim
+     *
+     * MockMvc 객체 생성
+     * 필터 추가
+     * 모든 요청에 대해 print() 수행
+     * session 객체 생성
+     * MockHttpServletRequest 객체 생성
+     *
+     * 2023-05-01
+     */
     @BeforeAll
     public static void setUp() throws Exception{
         loginDTO = new MemberLoginDTO();
