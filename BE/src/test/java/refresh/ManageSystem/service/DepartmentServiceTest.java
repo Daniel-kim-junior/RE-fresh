@@ -1,6 +1,9 @@
 package refresh.ManageSystem.service;
 
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -55,6 +58,19 @@ class DepartmentServiceTest {
         // 존재하지 않는 id로 조회했을 때 Optional 객체가 비었는지 확인
         Optional<Integer> t2 = departmentService.getDepartmentTotalById("member1");
         Assertions.assertThat(t2).isEmpty();
+    }
+
+    /**
+     * Daniel Kim
+     *
+     * 모든 부서 가져오기
+     *
+     * 2023-05-01
+     */
+    @Test
+    void 모든_부서_가져오기() {
+        List<String> departmentAllList = departmentService.getDepartmentAllList();
+        assertThat(departmentAllList.size()).isEqualTo(5);
     }
 
 }

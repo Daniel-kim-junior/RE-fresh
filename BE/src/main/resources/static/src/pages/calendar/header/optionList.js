@@ -1,4 +1,4 @@
-import { getDepartmentNameList } from '../../../api/calendarApi.js';
+import { getDepartmentNameList, getDepartmentInit } from '../../../api/calendarApi.js';
 import { useState } from './hook.js';
 import { onLoad } from './hook.js';
 
@@ -15,13 +15,18 @@ export default function OptionList() {
 
   onLoad(async () => {
     const depList = await getDepartmentNameList();
-    const dom = makeOptionList(depList);
+    const departmentInit = await getDepartmentInit();
+    const dom = makeOptionList(depList, departmentInit['department']);
     setList(dom);
   });
-  function makeOptionList(list) {
-    return list.map((item) => `
-      <option value="${item}">${item}</option>
-    `).join('');
+  function makeOptionList(list, name) {
+    let dom = `<option>${name}</option>`;
+    list.forEach((item) => {
+      if (item !== name) {
+        dom += `<option value="${item}">${item}</option>`;
+      }   
+    });
+    return dom;
   }
 
   return list;

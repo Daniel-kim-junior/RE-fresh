@@ -1,6 +1,6 @@
-package refresh.ManageSystem.controller.calendar;
+package refresh.ManageSystem.controller.department;
 
-import org.junit.jupiter.api.AfterAll;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,23 +13,18 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+
 import refresh.ManageSystem.dto.MemberLoginDTO;
 import refresh.ManageSystem.util.hash.SHA256;
 
-/**
- * Daniel Kim
- *
- * CalenderRestController("/calendar) RestAPI 테스트
- * CalendarRestController("/calendar/annual") RestAPI 테스트
- *
- * 2023-04-17
- */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class CalendarRestControllerTest {
+class DepartmentRestControllerTest {
     @Autowired
     private MockMvc mvc;
     private static SHA256 sha256;
@@ -61,31 +56,24 @@ class CalendarRestControllerTest {
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
     }
 
-    @AfterAll
-    public static void clear(){
-        session.clearAttributes();
-        session = null;
-    }
+    @Autowired
+    private MockMvc mockMvc;
 
-
-    /**
-     * Daniel Kim
-     *
-     * 부서 이름과 세션 정보를 통해 달력 정보를 요청하는 테스트
-     * @throws Exception
-     *
-     * 2023-04-29
-     */
     @Test
-    void 부서_이름_달력_정보_요청() throws Exception {
-        mvc.perform(get("/calendar/department?year=2023&month=10&departmentName=개발팀"))
-                .andExpect(status().isOk());
+    void 모든_부서_Get_컨트롤러_테스트() throws Exception {
+        mockMvc.perform(get("/department/allList"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$").isArray())
+               .andExpect(jsonPath("$").isNotEmpty())
+               .andExpect(jsonPath("$[0]").isString());
     }
 
     @Test
-    void 세션_정보_달력_정보_요청() throws Exception {
-        mvc.perform(get("/calendar?year=2023&month=10").session(session))
-                .andExpect(status().isOk());
-
+    void 세션정보로_부서_초기화_컨트롤러_테스트() throws Exception {
+        mockMvc.perform(get("/department").session(session))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$").isNotEmpty())
+               .andExpect(jsonPath("$").value("개발팀"));
     }
+
 }

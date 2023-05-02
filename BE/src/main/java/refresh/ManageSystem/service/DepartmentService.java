@@ -31,4 +31,7 @@ public class DepartmentService {
     public List<String> getDepartmentAllList() {
         return departmentRepository.getDepartmentNameList();
     }
+
+
+
 }
