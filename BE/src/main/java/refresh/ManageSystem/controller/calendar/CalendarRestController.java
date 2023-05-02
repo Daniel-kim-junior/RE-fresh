@@ -1,16 +1,24 @@
 package refresh.ManageSystem.controller.calendar;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import refresh.ManageSystem.dto.MemberLoginDTO;
 import refresh.ManageSystem.service.AnnualService;
 import refresh.ManageSystem.dto.CalendarServiceDTO;
 import refresh.ManageSystem.service.CalendarService;
+import refresh.ManageSystem.service.DepartmentService;
 import refresh.ManageSystem.vo.AnnualDataByFilterVO;
 
 /**
@@ -30,42 +38,27 @@ class CalendarRestController {
     @Autowired
     private CalendarService calendarService;
     @Autowired
-    private AnnualService annualService;
+    private DepartmentService departmentService;
+
     /**
      * Daniel Kim
      *
-     * @param year : Request Validation 추가 예정(백엔드)
-     * @param month
      * @return
      * @throws JsonProcessingException
      *
      * 2023-04-19
      */
     @GetMapping
-    List<CalendarServiceDTO> getCalendar(@RequestParam String year, @RequestParam String month)
+    List<CalendarServiceDTO> getCalendar(@RequestParam String year, @RequestParam String month, @SessionAttribute("MemberLogin") MemberLoginDTO memberLogin)
             throws JsonProcessingException {
-        List<CalendarServiceDTO> calRst = calendarService.updateCalendar(year, month);
-        return calRst;
-    }
-    /**
-     * Daniel Kim
-     *
-     * @param name : 사원 이름을 통해 연차 정보 가져오기, 부서 이름을 통해 연차 정보 가져오기
-     *
-     * @return
-     * @throws JsonProcessingException
-     *
-     * 2023-04-29
-     */
-    @GetMapping("/member")
-    List<AnnualDataByFilterVO> getAnnualCalendarByMemberName(@RequestParam String name, @RequestParam int start, @RequestParam int end) {
-        return annualService.getAnnualDataByName(name, start, end);
+        Optional<String> departmentName = departmentService.getDepartmentNameById(memberLogin.getId());
+        return calendarService.updateCalendar(year, month, departmentName.get());
     }
 
     @GetMapping("/department")
-    List<AnnualDataByFilterVO> getAnnualCalendarByDepartment(@RequestParam String name, @RequestParam int start,@RequestParam int end) {
-        return annualService.getAnnualDataByDepartment(name, start, end);
+    List<CalendarServiceDTO> getCalendarByDepartment(@RequestParam String year, @RequestParam String month, @RequestParam String departmentName)
+            throws JsonProcessingException {
+        return calendarService.updateCalendar(year, month, departmentName);
     }
-
 
 }

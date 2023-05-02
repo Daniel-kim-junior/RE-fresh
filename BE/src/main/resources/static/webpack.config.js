@@ -22,6 +22,9 @@ module.exports = {
     static: './',
     proxy: {
       '/calendar': 'http://localhost:8090',
+      '/department': 'http://localhost:8090',
+      '/annual': 'http://localhost:8090',
+      '/member': 'http://localhost:8090',
     }
   },
   plugins: [
@@ -49,6 +52,17 @@ module.exports = {
       filename : 'adminTab.html',
       template: 'src/pages/admin/member/adminTab.html',
       file: 'dist/pages/admin/member/adminTab.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename : 'annualmanage.html',
+      template: 'src/pages/admin/annualmanage.html',
+      file: 'dist/pages/admin/annualmanage.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename : 'annualmodal.html',
+      template: 'src/pages/admin/annualmodal.html',
+      file: 'dist/pages/admin/annualmodal.html'
+
     })
   ]
 };

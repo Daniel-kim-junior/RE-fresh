@@ -33,12 +33,13 @@ public class AnnualService {
      *
      * 2023-04-27
      */
-    public List<AnnualCalVO> getAnnualCalData(String year, String month) {
+    public List<AnnualCalVO> getAnnualCalData(String year, String month, String departmentName) {
+
         return annualRepository.getAnnualCalData(AnnualCalDAO.
                                                          builder()
                                                          .year(year)
                                                          .month(month)
-                                                         .departmentName(departmentService.getDepartmentNameById("member2").get())
+                                                         .departmentName(departmentName)
                                                          .build());
     }
 
@@ -80,6 +81,5 @@ public class AnnualService {
                                                          .pageStart(start).pageEnd(end)
                                                          .build());
     }
-
 
 }

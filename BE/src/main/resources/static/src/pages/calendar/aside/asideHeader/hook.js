@@ -1,13 +1,3 @@
-/*
-    Daniel Kim
-    
-    CalendarHook
-    view 계층에서 사용할 render 함수와
-    상태 관리를 위한 useState 함수를 제공하는 모듈
-    useState는 상태와 상태를 변경하는 함수를 반환한다.
-    
-    2023-04-16
-*/
 function Hook() {
   /*
     Daniel Kim
@@ -89,7 +79,6 @@ function debounceFrame(callback) {
     options.currentStateKey = 0;
     options.renderCount += 1;
   });
-
   /*
     Daniel Kim
 
@@ -100,51 +89,22 @@ function debounceFrame(callback) {
 
     2023-04-16
   */
-  function render(rootComponent, root, mockHandler) {
+  function render(rootComponent, root) {
     options.root = root;
     options.rootComponent = rootComponent;
-    setTimeout(() => {
-      _render();
-      if (mockHandler) {
-        mockHandler();
-      }
-    }, 500);   
+    _render();
   }
-
 
   return { useState, render };
 }
-/*
-  Daniel Kim
 
-  debounceButtonEvent 함수는 버튼 이벤트를 최적화하기 위해 사용한다.
-  이전 timer를 취소하고 다음 timer를 실행한다.
-  clearTimeout 함수는 timer를 취소한다.
-  setTimeout 함수는 callback 함수를 delay 시간 후에 실행한다.
-
-  2023-04-24
-*/
-function debounceButtonEvent(callback, delay, context) {
-  let timer = null;
-  return () => {
-    const args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      callback.apply(context, args);
-    }, delay);
-  }
-}
-/*
-  Daniel Kim
-
-  onLoad 함수는 callback 함수를 실행하여 Rest API를 호출
-  state를 변경한다.
-
-  2023-04-23
-*/
-function onLoad(callback) { 
+function onLoad(callback) {
   callback();
 }
 
-export { onLoad, debounceButtonEvent };
-export const { useState, render } = Hook();
+
+
+
+export { onLoad };
+
+export const {useState, render} = Hook();

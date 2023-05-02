@@ -1,6 +1,5 @@
 import { render } from "./hook.js";
 import { $App } from "./app.js";
-import Mock from "./mockTable.js";
 /*
   Daniel Kim
 
@@ -9,7 +8,6 @@ import Mock from "./mockTable.js";
 
   2023-04-24
 */
-
-render($App, document.querySelector("#app"), Mock);
+render($App, document.querySelector("#cal-header"));
 
 

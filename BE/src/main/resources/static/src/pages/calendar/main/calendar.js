@@ -1,6 +1,6 @@
-import getCalendarData from '../../api/calendarApi.js';
-import { useState } from './hook.js';
-import { debounceButtonEvent, onLoad } from './hook.js';
+import { getCalendarData, getCalendarDataByDepartment } from '../../../api/calendarApi.js';
+import { useState, getRenderCount, getDepartmentName } from './hook.js';
+import { onLoad, debounceButtonEvent } from './hook.js';
 
 /*
   Daniel Kim
@@ -47,7 +47,12 @@ export default function Calendar() {
   */
   onLoad(async () => {
     try {
-      const response = await getCalendarData(year, month);
+      let response;
+      if (getRenderCount === 0) {
+        response = await getCalendarData(year, month);
+      } else {
+        response = await getCalendarDataByDepartment(year, month, getDepartmentName());
+      }
       const cal = makeCalendar(response);
       setCalendar(cal);
       header.innerHTML = makeHeader(year, month);
@@ -100,6 +105,13 @@ export default function Calendar() {
       callBack();
     }
   }
+
+
+
+
+
+
+
   /*
     Daniel Kim
     달력의 헤더를 만들어주는 함수
@@ -108,6 +120,8 @@ export default function Calendar() {
   function makeHeader(year, month) {
     return `<h1 class="text-2xl font-bold text-center text-gray-800 py-2">${year}년 ${month}월</h1>`
   }
+
+
   
   /*
     Daniel Kim
@@ -141,14 +155,14 @@ export default function Calendar() {
         dom += `<td class="border-2 border-slate-600 w-20 h-32 relative">
             <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
               ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
-            ${calendar[i].sumCount !== 0 ?`<div class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
+            ${calendar[i].sumCount !== 0 ?`<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
         </td>`;
         
       } else {
         dom += `</tr><tr><td class=" border-2 border-slate-600 w-20 h-32 relative">
         <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
           ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
-          ${calendar[i].sumCount !== 0 ? `<div class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
+          ${calendar[i].sumCount !== 0 ? `<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
       </td>`;
         cnt++;
       } 

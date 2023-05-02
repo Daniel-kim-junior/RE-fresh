@@ -1,4 +1,5 @@
 package refresh.ManageSystem.service;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,9 @@ public class DepartmentService {
 
     public Optional<Integer> getDepartmentTotalById(String memberId) {
         return departmentRepository.getDepartmentTotalById(memberId);
+    }
+
+    public List<String> getDepartmentAllList() {
+        return departmentRepository.getDepartmentNameList();
     }
 }

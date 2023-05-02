@@ -1,11 +1,13 @@
 HELP.md
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
+.idea
+!/BE/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 application-API-KEY.properties
-src/jacoco/
+jacoco
+
 
 ### STS ###
 .apt_generated
@@ -30,15 +32,15 @@ out/
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
-/dist/
+**/dist/
 /nbdist/
 /.nb-gradle/
-
+.gz
 ### VS Code ###
 .vscode/
-.gz
+*.gz
 ### log files
-*log*
+*.log
 !**/util/aop/**
 
 ###  file to ignore all directories called node_modules in the current folder and any subfolders
