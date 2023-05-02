@@ -34,6 +34,21 @@ module.exports = {
       filename : 'calendar.html',
       template: 'src/pages/calendar/calendar.html',
       file: 'dist/pages/calendar/calendar.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename : 'createMemberForm.html',
+      template: 'src/pages/admin/member/createMemberForm.html',
+      file: 'dist/pages/admin/member/createMemberForm.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename : 'memberList.html',
+      template: 'src/pages/admin/member/memberList.html',
+      file: 'dist/pages/admin/member/memberList.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename : 'adminTab.html',
+      template: 'src/pages/admin/member/adminTab.html',
+      file: 'dist/pages/admin/member/adminTab.html'
     })
   ]
 };
