@@ -37,7 +37,18 @@ module.exports = {
       filename : 'calendar.html',
       template: 'src/pages/calendar/calendar.html',
       file: 'dist/pages/calendar/calendar.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename : 'annualmanage.html',
+      template: 'src/pages/admin/annualmanage.html',
+      file: 'dist/pages/admin/annualmanage.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename : 'annualmodal.html',
+      template: 'src/pages/admin/annualmodal.html',
+      file: 'dist/pages/admin/annualmodal.html'
     })
+      
   ]
 };
 

@@ -37,4 +37,6 @@ public class AnnualRestController {
         return annualService.getAnnualDataByDepartment(name, start, end);
     }
 
+
+
 }
