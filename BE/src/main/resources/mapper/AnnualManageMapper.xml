@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="refresh.ManageSystem.repository.AnnualManageRepository">
+    <select id="getAnnualManageList" resultType="AnnualManageVO">
+        select annual_uid, m.member_name as member_name, m.department_name, a.annual_type, a.annual_status,
+               start_date, end_date, a.create_tm
+        from annual a left join
+             (select mem.member_name , member_uid , mem.department_uid, dept.department_name
+              from member mem
+                       left join department dept on mem.department_uid = dept.department_uid) m
+             on a.member_uid = m.member_uid ;
+    </select>
+
+</mapper>
