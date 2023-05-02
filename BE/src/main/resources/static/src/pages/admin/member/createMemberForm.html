@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="/dist/output.css" />
+  <link rel="stylesheet" th:href="@{/dist/output.css}" />
+  <script src="/src/pages/admin/member/adminTab.js" type="module"></script>
+</head>
+<body>
+<div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
+<form method="post" action="/admin/members/new" th:object="${member}">
+  <div class="flex justify-center mt-10">
+    <div class="w-3/12 rounded-lg overflow-auto shadow-lg">
+      <div class="px-6 py-4">
+        <div class="mb-4">
+          <input th:field="*{memberName}"
+                 class="shadow border rounded w-full py-2 px-3 font-bold text-xl text-gray-700 focus:outline-none focus:shadow-outline"
+                 type="text" placeholder="사원 이름 입력">
+        </div>
+        <div class="mb-4">
+          <label class="text-gray-700 font-bold mb-2" hidden>
+            신청인
+          </label>
+          <input th:field="*{createId}"
+                 class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                 type="text" th:value="관리자" hidden>
+          <input th:field="*{updateId}"
+                 class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                 type="text" th:value="관리자" hidden>
+        </div>
+        <div class="mb-4">
+          <label class="text-gray-700 font-bold mb-2">
+            사원번호
+          </label>
+          <input th:field="*{memberId}"
+                 class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                 type="text" placeholder="사원번호를 입력하세요.">
+        </div>
+        <div class="mb-4">
+          <label class="text-gray-700 font-bold mb-2">
+            부서
+          </label>
+          <select id="departmentUid" th:field="*{departmentName}"
+                  class="shadow border rounded w-full py-2 px-3 text-gray-700 hover:border-gray-500 focus:outline-none focus:shadow-outline">
+            <th:block th:unless="${department == null}" th:each="department : ${department}">
+              <option th:value="${department}">[[${department}]]</option>
+            </th:block>
+          </select>
+        </div>
+        <div class="mb-4">
+          <label class="text-gray-700 font-bold mb-2">
+            비밀번호
+          </label>
+          <input th:field="*{memberPassword}"
+                 class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                 type="password" placeholder="비밀번호를 입력하세요.">
+        </div>
+        <div class="mb-4">
+          <label class="text-gray-700 font-bold mb-2">
+            이메일
+          </label>
+          <input th:field="*{memberEmail}"
+                 class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                 type="text" placeholder="이메일을 입력하세요.">
+        </div>
+        <div class="mb-4">
+          <label class="text-gray-700 font-bold mb-2">
+            전화번호
+          </label>
+          <input th:field="*{memberCellphone}"
+                 class="shadow border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:shadow-outline"
+                 type="text" placeholder="전화번호를 입력하세요.">
+        </div>
+        <div class="mb-4 flex justify-end">
+          <input type="checkbox" th:field="*{memberAuth}" class="mr-1" value="admin" th:vlaue="admin">
+          <label>관리자 권한으로 생성</label>
+        </div>
+        <div class="flex justify-center">
+          <button
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-3 rounded focus:outline-none focus:shadow-outline"
+                  type="submit">
+            등록
+          </button>
+          <button
+                  class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 ml-3 rounded focus:outline-none focus:shadow-outline"
+                  type="reset">
+            취소
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+</body>
+</html>
