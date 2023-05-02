@@ -1,13 +1,3 @@
-/*
-    Daniel Kim
-    
-    CalendarHook
-    view 계층에서 사용할 render 함수와
-    상태 관리를 위한 useState 함수를 제공하는 모듈
-    useState는 상태와 상태를 변경하는 함수를 반환한다.
-    
-    2023-04-16
-*/
 function Hook() {
   /*
     Daniel Kim
@@ -26,16 +16,8 @@ function Hook() {
     renderCount: 0,
     states: [],
     root: null,
-    firstRender: null,
-    departmentName: null,
     rootComponent: null,
   }
-  function setDepartmentName(departmentName) {
-    options.departmentName = departmentName;
-  }
-
-
-
   /*
     Daniel Kim
 
@@ -63,7 +45,6 @@ function Hook() {
     options.currentStateKey += 1;
     return [state, setState];
   }
-
 
   /*
     Daniel Kim
@@ -95,34 +76,9 @@ function debounceFrame(callback) {
     const { root, rootComponent } = options;
     if (!root || !rootComponent) return;
     root.innerHTML = rootComponent();
-    if (options.renderCount === 0 || options.renderCount === 1) {
-      options.firstRender = root.innerHTML;
-    }
     options.currentStateKey = 0;
     options.renderCount += 1;
-    waitForRender(root, MockHide);      
   });
-
-  function waitForRender(elem, callback) {
-    requestAnimationFrame(() => {
-      var isRendered = elem.offsetHeight > 0;
-      if (isRendered) {
-        callback();
-      } else {
-        waitForRender(elem, callback);
-      }
-    });
-  }
-
-  function getRenderCount() {
-    return options.renderCount;
-  }
-
-  function getDepartmentName() {
-    return options.departmentName;
-  }
-
-
   /*
     Daniel Kim
 
@@ -133,81 +89,22 @@ function debounceFrame(callback) {
 
     2023-04-16
   */
-  function render(rootComponent, root, departmentName) {
+  function render(rootComponent, root) {
     options.root = root;
     options.rootComponent = rootComponent;
-    if (departmentName) {
-      options.departmentName = departmentName; 
-    }
-    setTimeout(() => {
-      _render();
-    }, 300);
+    _render();
   }
 
-  function getDate() {
-    const date = new Date();
-    const y = date.getFullYear();
-    const m = date.getMonth() + 1;
-    const d = date.getDate();
-
-    return {y, m, d};
-  }
-
-
-  return { useState, render, getRenderCount, getDepartmentName, setDepartmentName, getDate};
+  return { useState, render };
 }
 
-function MockHide() {
-  const mockTable = document.getElementById("mock-table");
-  const prevBtn = document.getElementById("prev-btn");
-  const nextBtn = document.getElementById("next-btn");
-  const mockHeader = document.getElementById("mock-header");
-
-  prevBtn.innerHTML = '&larr; Prev';
-  nextBtn.innerHTML = 'Next &rarr;';
-  prevBtn.disabled = false;
-  nextBtn.disabled = false;
-  mockHeader.style.display = 'none';
-  mockTable.style.display = 'none';
-}
-
-
-
-
-
-
-
-/*
-  Daniel Kim
-
-  debounceButtonEvent 함수는 버튼 이벤트를 최적화하기 위해 사용한다.
-  이전 timer를 취소하고 다음 timer를 실행한다.
-  clearTimeout 함수는 timer를 취소한다.
-  setTimeout 함수는 callback 함수를 delay 시간 후에 실행한다.
-
-  2023-04-24
-*/
-function debounceButtonEvent(callback, delay, context) {
-  let timer = null;
-  return () => {
-    const args = arguments;
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      callback.apply(context, args);
-    }, delay);
-  }
-}
-/*
-  Daniel Kim
-
-  onLoad 함수는 callback 함수를 실행하여 Rest API를 호출
-  state를 변경한다.
-
-  2023-04-23
-*/
-function onLoad(callback) { 
+function onLoad(callback) {
   callback();
 }
 
-export { onLoad, debounceButtonEvent };
-export const { useState, render, getRenderCount, getDepartmentName, setDepartmentName, getDate } = Hook();
+
+
+
+export { onLoad };
+
+export const {useState, render} = Hook();

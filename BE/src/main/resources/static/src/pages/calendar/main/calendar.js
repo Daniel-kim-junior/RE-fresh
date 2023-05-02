@@ -1,6 +1,6 @@
 import { getCalendarDataByDepartment, getDepartmentInit} from '../../../api/calendarApi.js';
 import { useState, getRenderCount, getDepartmentName, setDepartmentName } from './hook.js';
-import { onLoad, debounceButtonEvent } from './hook.js';
+import { getDate, onLoad, debounceButtonEvent } from './hook.js';
 
 /*
   Daniel Kim
@@ -18,12 +18,11 @@ export default function Calendar() {
     header는 달력의 헤더를 담고 있는 요소이다.
     2023-04-23
   */
-  const date = new Date();
-  const y = date.getFullYear();
-  const m = date.getMonth() + 1;
+  const { y, m, d } = getDate();
+
   const buttons = document.querySelector('#header-container');
   const header = document.querySelector('#calendar-header');
-  
+  const todayBtn = document.querySelector('#today-btn');
   /*
     Daniel Kim
     state 관리를 위해 선언한 변수
@@ -88,6 +87,11 @@ export default function Calendar() {
       setMdy({ year: year, month: month + 1 });
     }
   }
+
+  
+
+
+
     
   /*
     Daniel Kim
@@ -97,21 +101,18 @@ export default function Calendar() {
     (250ms 경과하면 이벤트들을 한번에 처리)
     2023-04-24
   */
+  
+  
   buttons.onclick = clickEvent;
   function clickEvent(e) {
-    let callBack;
     if (e.target.id === 'prev-btn') {
-      callBack = debounceButtonEvent(handlePrevClick, 250, this);
-      callBack();
+      debounceButtonEvent(handlePrevClick, 250, this)();
     } else if (e.target.id === 'next-btn') {
-      callBack = debounceButtonEvent(handleNextClick, 250, this);
-      callBack();
+      debounceButtonEvent(handleNextClick, 250, this)();
+    } else if(e.target.id === 'today-btn') {
+      debounceButtonEvent(() => setMdy({ year: y, month: m }), 250, this)();
     }
   }
-
-
-
-
 
 
 
@@ -136,6 +137,12 @@ export default function Calendar() {
       ? false : true;
   }
   
+
+  function isToday(obj) {
+    return obj.hoName !== '' && d === obj.day && m === month;
+  }
+
+
   /*
     Daniel Kim
     달력 dom을 만들어 주는 함수
@@ -155,14 +162,14 @@ export default function Calendar() {
       }
 
       if (parseInt(i / 7) === cnt) {
-        dom += `<td class="border-2 border-slate-600 w-20 h-32 relative">
+        dom += `<td class="border-2 ${isToday(calendar[i]) ? 'bg-orange-300' : ''} border-slate-600 w-20 h-32 relative">
             <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
               ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
             ${calendar[i].sumCount !== 0 ?`<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
         </td>`;
         
       } else {
-        dom += `</tr><tr><td class=" border-2 border-slate-600 w-20 h-32 relative">
+        dom += `</tr><tr><td class=" border-2 ${isToday(calendar[i]) ? 'bg-orange-200' : ''} border-slate-600 w-20 h-32 relative">
         <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
           ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
           ${calendar[i].sumCount !== 0 ? `<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}

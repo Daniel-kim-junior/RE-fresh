@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.service.AnnualManageService;
-
 import java.util.List;
 
 @Controller

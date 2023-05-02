@@ -1,4 +1,4 @@
-import OptionList from './optionList.js';
+import DepartmentOptionList from './departOptionList.js';
 /*
   Daniel Kim
   
@@ -8,5 +8,5 @@ import OptionList from './optionList.js';
 */
 
 export const $App = () => `
-  ${OptionList()}
+  ${DepartmentOptionList()}
 `
