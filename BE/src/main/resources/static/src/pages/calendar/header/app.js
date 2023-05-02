@@ -1,4 +1,4 @@
-import CalendarHeader from './calendarHeader.js';
+import OptionList from './optionList.js';
 /*
   Daniel Kim
   
@@ -8,5 +8,5 @@ import CalendarHeader from './calendarHeader.js';
 */
 
 export const $App = () => `
-  ${CalendarHeader()}
+  ${OptionList()}
 `

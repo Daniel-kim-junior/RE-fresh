@@ -1,5 +1,6 @@
 import { render } from "./hook.js";
 import { $App } from "./app.js";
+
 /*
   Daniel Kim
 
@@ -8,6 +9,10 @@ import { $App } from "./app.js";
 
   2023-04-24
 */
+const calHeader = document.querySelector("#cal-header");
+calHeader.onchange = (e) => {
+  render($App, document.querySelector("#main"), e.target.value);
+}
 
 render($App, document.querySelector("#main"));
 

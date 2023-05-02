@@ -7,6 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import refresh.ManageSystem.util.hash.SHA256;
 
+/**
+ * Daniel Kim
+ *
+ * LoginServiceTest : 로그인 서비스 테스트 클래스
+ *
+ * 2023-05-01
+ */
 @SpringBootTest
 public class LoginServiceTest {
 
@@ -15,6 +22,7 @@ public class LoginServiceTest {
 
     @Autowired
     private MemberService memberService;
+
     @Test
     void 성공_로그인_테스트() throws Exception {
         Optional<String> member = memberService.login("member2", sha256.getHash("5678", "SHA-256"));
