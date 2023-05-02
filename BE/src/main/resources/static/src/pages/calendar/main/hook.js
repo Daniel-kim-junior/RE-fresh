@@ -29,6 +29,11 @@ function Hook() {
     departmentName: null,
     rootComponent: null,
   }
+  function setDepartmentName(departmentName) {
+    options.departmentName = departmentName;
+  }
+
+
   /*
     Daniel Kim
 
@@ -134,7 +139,7 @@ function debounceFrame(callback) {
   }
 
 
-  return { useState, render, getRenderCount, getDepartmentName};
+  return { useState, render, getRenderCount, getDepartmentName, setDepartmentName};
 }
 
 function Mock() {
@@ -184,4 +189,4 @@ function onLoad(callback) {
 }
 
 export { onLoad, debounceButtonEvent };
-export const { useState, render, getRenderCount, getDepartmentName } = Hook();
+export const { useState, render, getRenderCount, getDepartmentName, setDepartmentName } = Hook();

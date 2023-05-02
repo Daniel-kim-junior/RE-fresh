@@ -1,5 +1,5 @@
-import { getCalendarData, getCalendarDataByDepartment } from '../../../api/calendarApi.js';
-import { useState, getRenderCount, getDepartmentName } from './hook.js';
+import { getCalendarDataByDepartment, getDepartmentInit} from '../../../api/calendarApi.js';
+import { useState, getRenderCount, getDepartmentName, setDepartmentName } from './hook.js';
 import { onLoad, debounceButtonEvent } from './hook.js';
 
 /*
@@ -48,11 +48,14 @@ export default function Calendar() {
   onLoad(async () => {
     try {
       let response;
-      if (getRenderCount === 0) {
-        response = await getCalendarData(year, month);
+      const count = getRenderCount();
+      if (count === 1 || count === 0) {
+        const departmentInit = await getDepartmentInit();
+        response = await getCalendarDataByDepartment(year, month, departmentInit['department']);
+        setDepartmentName(departmentInit['department']);
       } else {
-        response = await getCalendarDataByDepartment(year, month, getDepartmentName());
-      }
+        response = await getCalendarDataByDepartment(year, month, getDepartmentName()); 
+      } 
       const cal = makeCalendar(response);
       setCalendar(cal);
       header.innerHTML = makeHeader(year, month);
