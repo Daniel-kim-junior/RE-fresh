@@ -1,6 +1,9 @@
 package refresh.ManageSystem.controller.member;
 
 import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,9 +43,8 @@ public class LoginController {
     @GetMapping("/")
     public String get(Model model) {
         if(model.getAttribute("MemberLogin") != null) {
-            return "redirect:/pages/calendar/calendar";
+            return "/pages/calendar/calendar";
         }
-
 
         model.addAttribute("MemberLogin", new MemberLoginDTO());
         return "/index";
