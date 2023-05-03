@@ -40,9 +40,8 @@ public class LoginController {
     @GetMapping("/")
     public String get(Model model) {
         if(model.getAttribute("MemberLogin") != null) {
-            return "redirect:/pages/calendar/calendar";
+            return "/pages/calendar/calendar";
         }
-
 
         model.addAttribute("MemberLogin", new MemberLoginDTO());
         return "/index";
