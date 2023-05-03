@@ -13,7 +13,7 @@
     <link rel="stylesheet" th:href="@{/dist/output.css}" />
   </head>
   <body>
-    <main id="calendar" class="container mx-auto flex justify-evenly flex-col">
+    <main id="calendar" class="container mx-auto flex justify-evenly flex-col relative">
       <header id="header-container" class="flex w-full items-center justify-center">
         <button id="today-btn">오늘</button>
         <select
@@ -41,79 +41,104 @@
             />
           </svg>
         </a>
+        <article
+          id="cal-arrow-modal"
+          class="absolute flex-col top-10 left-cal-modal border-2 border-zinc-950 bg-cal-modal w-52 h-36 z-10"
+          style="display: none"
+        >
+          <div class="flex justify-between">
+            <div class="text-center">직접 선택</div>
+            <button class="flex items-center justify-center w-8 h-8 rounded-ful focus:outline-none">
+              <svg
+                class="w-4 h-4 text-gray-600"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  d="M6.354 6.354a.5.5 0 0 1 .708 0L10 9.293l3.938-3.939a.5.5 0 0 1 .707.707L10.707 10l3.938 3.938a.5.5 0 0 1-.707.707L10 10.707l-3.939 3.938a.5.5 0 0 1-.708-.707L9.293 10 5.354 6.062a.5.5 0 0 1 0-.708z"
+                />
+              </svg>
+            </button>
+          </div>
 
+          <div id="inner-container" class="relative h-36">
+            <div class="flex absolute h-full justify-evenly w-full" id="modal-container"></div>
+          </div>
+        </article>
         <button id="next-btn" disabled class="mx-10 hover:-translate-y-1 hover:scale-110"></button>
       </header>
       <section class="m-auto flex gap-36">
-        <table class="border-2 border-slate-600 px-2 bg-white w-128 h-auto">
-          <thead class="border-2 border-slate-600 px-4 py-2 bg-black-600">
+        <table class="border-1 border-table-rgba px-2 bg-white w-128 h-auto">
+          <thead class="border-1 border-table-rgba px-4 py-2 bg-black-600">
             <tr>
-              <th class="border-2 text-holiday bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">
+              <th class="border-1 text-holiday bg-table-rgba border-table-rgba px-4 py-2 w-1/7">
                 Sun
               </th>
-              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Mon</th>
-              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Tue</th>
-              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Wed</th>
-              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Thu</th>
-              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Fri</th>
-              <th class="border-2 bg-zinc-300 border-slate-600 px-4 py-2 w-1/7">Sat</th>
+              <th class="border-1 bg-table-rgba border-table-rgba px-4 py-2 w-1/7">Mon</th>
+              <th class="border-1 bg-table-rgba border-table-rgba px-4 py-2 w-1/7">Tue</th>
+              <th class="border-1 bg-table-rgba border-table-rgba px-4 py-2 w-1/7">Wed</th>
+              <th class="border-1 bg-table-rgba border-table-rgba px-4 py-2 w-1/7">Thu</th>
+              <th class="border-1 bg-table-rgba border-table-rgba px-4 py-2 w-1/7">Fri</th>
+              <th class="border-1 bg-table-rgba border-table-rgba px-4 py-2 w-1/7">Sat</th>
             </tr>
           </thead>
           <tbody id="main" class="px-10 py-20"></tbody>
           <tbody id="mock-table" class="px-10 py-20 dark:bg-gray-200">
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
             </tr>
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
             </tr>
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+            </tr>
+
+            <tr>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
             </tr>
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
             </tr>
             <tr>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-            </tr>
-            <tr>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
-              <td class="border-2 border-slate-600 w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
+              <td class="border-1 border-table-rgba w-20 h-32"></td>
             </tr>
           </tbody>
         </table>

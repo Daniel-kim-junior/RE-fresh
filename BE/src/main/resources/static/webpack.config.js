@@ -55,12 +55,12 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       filename: 'annualmanage.html',
-      template: 'src/pages/admin/annualmanage.html',
+      template: 'src/pages/admin/annual/annualmanage.html',
       file: 'dist/pages/admin/annualmanage.html'
     }),
     new HtmlWebpackPlugin({
       filename: 'annualmodal.html',
-      template: 'src/pages/admin/annualmodal.html',
+      template: 'src/pages/admin/annual/annualmodal.html',
       file: 'dist/pages/admin/annualmodal.html'
     }),
     new HtmlWebpackPlugin({

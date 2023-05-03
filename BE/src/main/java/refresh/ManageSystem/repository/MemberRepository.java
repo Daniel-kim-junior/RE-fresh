@@ -15,9 +15,12 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface MemberRepository {
     Optional<String> login(MemberDAO dao);
+    String getAuthority(MemberDAO dao);
+    String getMemberName(MemberDAO dao);
 
     void createMember(MemberServiceDTO dto);
 
     boolean checkId(String memberId);
+
 
 }

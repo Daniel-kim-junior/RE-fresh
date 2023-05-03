@@ -1,6 +1,5 @@
 import { render } from "./hook.js";
 import { $App } from "./app.js";
-import { initDepartment } from "../header/departmentOption/main.js";
 /*
   Daniel Kim
 
@@ -25,9 +24,6 @@ const calHeader = document.querySelector("#cal-header");
 
 calHeader.onchange = (e) => {
   render($App, main , e.target.value);
-}
-todayBtn.onclick = () => {  
-  initDepartment();
 }
 render($App, main);
 

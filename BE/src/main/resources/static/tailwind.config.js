@@ -12,6 +12,8 @@ module.exports = {
         'current': '#000000',
         'not-current': '#B2B2B2',
         'holiday': '#DC143C',
+        'cal-modal': '#fffaf0',
+        'table-rgba': 'rgba(180, 180, 180)',
       },
       height: {
         '128': '50rem',
@@ -19,6 +21,9 @@ module.exports = {
       },
       width: {
         '128': '80rem'
+      },
+      spacing: {
+        'cal-modal': '50%'
       }
     },
   },

@@ -40,4 +40,10 @@ public class LoginServiceTest {
         String authority = memberService.getAuthority("admin", sha256.getHash("1234", "SHA-256"));
         assertThat(authority).isEqualTo("admin");
     }
+
+    @Test
+    void 멤버_이름_정보_테스트() throws Exception {
+        String memberName = memberService.getMemberName("admin", sha256.getHash("1234", "SHA-256"));
+        assertThat(memberName).isEqualTo("박영희");
+    }
 }
