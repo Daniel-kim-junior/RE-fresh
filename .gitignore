@@ -7,7 +7,7 @@ build/
 !**/src/test/**/build/
 application-API-KEY.properties
 jacoco
-
+dist/
 
 ### STS ###
 .apt_generated
@@ -32,7 +32,7 @@ out/
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
-**/dist/
+
 /nbdist/
 /.nb-gradle/
 .gz

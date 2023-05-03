@@ -34,4 +34,10 @@ public class LoginServiceTest {
         Optional<String> member = memberService.login("member3", sha256.getHash("abca", "SHA-256"));
         assertThat(member.isPresent()).isFalse();
     }
+
+    @Test
+    void 권한_정보_테스트() throws Exception {
+        String authority = memberService.getAuthority("admin", sha256.getHash("1234", "SHA-256"));
+        assertThat(authority).isEqualTo("admin");
+    }
 }

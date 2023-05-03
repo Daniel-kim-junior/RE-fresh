@@ -1,5 +1,5 @@
 import { getCalendarDataByDepartment, getDepartmentInit} from '../../../api/calendarApi.js';
-import { useState, getRenderCount, getDepartmentName, setDepartmentName } from './hook.js';
+import { useState, getRenderCount, getDepartmentName, setDepartmentName, debounceFrame } from './hook.js';
 import { getDate, onLoad, debounceButtonEvent } from './hook.js';
 
 /*
@@ -22,7 +22,7 @@ export default function Calendar() {
 
   const buttons = document.querySelector('#header-container');
   const header = document.querySelector('#calendar-header');
-  const todayBtn = document.querySelector('#today-btn');
+  const calArrowSvg = document.querySelector('#cal-arrow-svg');
   /*
     Daniel Kim
     state 관리를 위해 선언한 변수
@@ -104,6 +104,7 @@ export default function Calendar() {
   
   
   buttons.onclick = clickEvent;
+  
   function clickEvent(e) {
     if (e.target.id === 'prev-btn') {
       debounceButtonEvent(handlePrevClick, 250, this)();
@@ -111,7 +112,13 @@ export default function Calendar() {
       debounceButtonEvent(handleNextClick, 250, this)();
     } else if(e.target.id === 'today-btn') {
       debounceButtonEvent(() => setMdy({ year: y, month: m }), 250, this)();
+    } else if (isArrowBtn(e)) {
+      calArrowSvg.classList.toggle('rotate-180');
     }
+  }
+
+  function isArrowBtn(e) {
+    return e.target.id === 'cal-arrow-btn' || e.target.id === 'cal-arrow-svg' || e.target.tagName === 'path';
   }
 
 

@@ -19,4 +19,5 @@ public class MemberLoginDTO {
     @NonNull private String id;
     @NonNull private String password;
 
+    private String authority;
 }

@@ -154,7 +154,7 @@ function debounceFrame(callback) {
   }
 
 
-  return { useState, render, getRenderCount, getDepartmentName, setDepartmentName, getDate};
+  return { useState, render, getRenderCount, getDepartmentName, setDepartmentName, getDate, debounceFrame};
 }
 
 function MockHide() {
@@ -210,4 +210,4 @@ function onLoad(callback) {
 }
 
 export { onLoad, debounceButtonEvent };
-export const { useState, render, getRenderCount, getDepartmentName, setDepartmentName, getDate } = Hook();
+export const { useState, render, getRenderCount, getDepartmentName, setDepartmentName, getDate, debounceFrame } = Hook();
