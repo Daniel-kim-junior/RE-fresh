@@ -13,7 +13,8 @@
     <link rel="stylesheet" th:href="@{/dist/output.css}" />
   </head>
   <body>
-    <main id="calendar" class="container mx-auto flex justify-evenly flex-col relative">
+  <div th:replace="~{/fragments/header/header.html :: header}"></div>
+  <main id="calendar" class="container mx-auto flex justify-evenly flex-col relative">
       <header id="header-container" class="flex w-full items-center justify-center">
         <button id="today-btn">오늘</button>
         <select
