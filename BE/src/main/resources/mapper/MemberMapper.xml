@@ -4,4 +4,7 @@
   <select id="login" resultType="string" parameterType="MemberDAO">
     select member_id from member where member_id = #{memberId} and member_password = #{memberPassword}
   </select>
+  <select id="getAuthority" resultType="string" parameterType="MemberDAO">
+    select member_auth from member where member_id = #{memberId} and member_password = #{memberPassword}
+  </select>
 </mapper>

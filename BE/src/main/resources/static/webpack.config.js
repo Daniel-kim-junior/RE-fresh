@@ -4,8 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
 
   output: {
-    path : path.resolve(__dirname, 'dist'), // 경로
-    filename : '[name].bundle.js', // 파일명
+    path: path.resolve(__dirname, 'dist'), // 경로
+    filename: '[name].bundle.js', // 파일명
   },
 
   module: {
@@ -29,30 +29,44 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename : 'index.html',
+      filename: 'index.html',
       template: 'src/index.html',
       file: 'dist/index.html'
     }),
     new HtmlWebpackPlugin({
-      filename : 'calendar.html',
+      filename: 'calendar.html',
       template: 'src/pages/calendar/calendar.html',
       file: 'dist/pages/calendar/calendar.html'
     }),
     new HtmlWebpackPlugin({
-      filename : 'annualmanage.html',
+      filename: 'createMemberForm.html',
+      template: 'src/pages/admin/member/createMemberForm.html',
+      file: 'dist/pages/admin/member/createMemberForm.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'memberList.html',
+      template: 'src/pages/admin/member/memberList.html',
+      file: 'dist/pages/admin/member/memberList.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'adminTab.html',
+      template: 'src/pages/admin/member/adminTab.html',
+      file: 'dist/pages/admin/member/adminTab.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'annualmanage.html',
       template: 'src/pages/admin/annualmanage.html',
       file: 'dist/pages/admin/annualmanage.html'
     }),
     new HtmlWebpackPlugin({
-      filename : 'annualmodal.html',
+      filename: 'annualmodal.html',
       template: 'src/pages/admin/annualmodal.html',
       file: 'dist/pages/admin/annualmodal.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'header.html',
+      template: 'src/fragments/header/header.html',
+      file: 'dist/fragments/header/header.html'
     })
-      
   ]
 };
-
-
-
-
-

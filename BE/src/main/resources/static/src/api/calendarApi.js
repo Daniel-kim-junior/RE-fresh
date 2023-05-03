@@ -33,6 +33,9 @@ async function getAnnualtListByDepartment(input, start, end) {
   return await response.json();
 }
 
+async function getDepartmentInit() {
+  const response = await fetch('/department');
+  return await response.json();
+}
 
-
-export { getCalendarData, getAnnualListByMember, getAnnualtListByDepartment, getDepartmentNameList, getCalendarDataByDepartment };
+export { getCalendarData, getAnnualListByMember, getAnnualtListByDepartment, getDepartmentNameList, getCalendarDataByDepartment, getDepartmentInit };

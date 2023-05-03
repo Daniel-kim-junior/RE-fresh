@@ -38,6 +38,12 @@ public class MemberService {
                                                .build());
     }
 
+    public String getAuthority(String memberId, String memberPassword) {
+        return memberRepository.getAuthority(MemberDAO.builder()
+                                              .memberId(memberId)
+                                              .memberPassword(memberPassword)
+                                               .build());
+    }
 
 
 }
