@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Annual Manage</title>
+  <link rel="stylesheet" th:href="@{/dist/output.css}" />
+  <link rel="stylesheet" href="/dist/output.css" />
+  <script src="/src/pages/admin/annual/annualmanage.js" type="module"></script>
+
+  <script th:inline="javascript" th:src="@{/src/pages/admin/annual/annualmanage.js}" ></script>
+</head>
+<body>
+<div class=" flex justify-center pt-10">
+  <form id="searchForm" th:action="@{/admin/annualManage}" th:object="${searchData}" method="post" onload="resetForm()" >
+    <div class="bg-neutral-100 p-3 rounded-lg ">
+      <lable for="dept" class="mx-4">부서</lable>
+      <select th:field="*{departmentName}" id="dept" class="bg-white border text-gray-900 text-sm border-gray-300 rounded-lg py-1 pr-8 focus:border-blue-500 hover:border-blue-500">
+        <option value="" selected>부서명 선택</option>
+        <th:block th:if="${deptNames}">
+          <option th:each="data : ${deptNames}" th:value="${data}" th:text="${data}"></option>
+        </th:block>
+      </select>
+      <label class="mx-4">사원 명</label>
+      <input th:field="*{memberName}" type="text" class="mx-1 border rounded-lg px-1 py-1  text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 " />
+      <label class="mx-4">기간</label>
+      <input th:field="*{startDate}" type="date" class="mx-2 border rounded-lg px-1 py-1  text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 "/> ~
+      <input th:field="*{endDate}" type="date" class="mx-2 border rounded-lg px-1 py-1 text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 "/>
+      <button id="submit-btn" type="submit" class="ml-10 bg-blue-500 px-3 py-1 rounded-lg text-white hover:bg-blue-700">조회</button>
+    </div>
+  </form>
+</div>
+
+
+<div class=" flex justify-center pt-9">
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="text-sm text-left text-gray-800 ">
+      <thead class="text-sm text-gray-700 uppercase bg-gray-50 ">
+      <tr>
+        <th scope="col" class="px-6 py-3">요청 날짜</th>
+        <th scope="col" class="px-6 py-3">사원명</th>
+        <th scope="col" class="px-6 py-3">부서명</th>
+        <th scope="col" class="px-6 py-3">연차 종류</th>
+        <th scope="col" class="px-6 py-3">연차 기간</th>
+        <th scope="col" class="px-6 py-3">연차 상태</th>
+      </tr>
+      </thead>
+
+      <tbody th:if="${annualList}">
+      <tr th:each="data : ${ annualList}" class="bg-white border-b  hover:bg-sky-50">
+        <td class="px-6 py-3">[[${data.createTm}]]</td>
+        <td class="px-6 py-3">[[${data.memberName}]]</td>
+        <td class="px-6 py-3">[[${data.departmentName}]]</td>
+        <td class="px-6 py-3">[[${data.annualType}]]</td>
+        <td class="px-6 py-3">
+          <span>[[${data.startDate}]]</span> ~
+          <spna>[[${data.endDate}]]</spna>
+        </td>
+        <td class="px-6 py-3">
+          <button id="statusBnt" th:onclick="showEditAnnual( [[${data.annualUid}]] )" class="bg-inherit text-blue-700">[[${data.annualStatus}]]</button>
+          <div th:replace="/pages/admin/annual/annualmodal.html :: editAnnual-modal" ></div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+</body>
+</html>
