@@ -12,4 +12,7 @@
   <select id="getDepartmentNameList" resultType="String">
     select department_name from department
   </select>
+  <select id="getDepartmentName" resultType="String">
+    select distinct department_name from department order by department_name
+  </select>
 </mapper>

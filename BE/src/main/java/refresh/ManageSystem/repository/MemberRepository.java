@@ -1,7 +1,9 @@
 package refresh.ManageSystem.repository;
+
 import java.util.Optional;
 import refresh.ManageSystem.dao.MemberDAO;
-
+import refresh.ManageSystem.dto.MemberServiceDTO;
+import org.apache.ibatis.annotations.Mapper;
 /**
  * Daniel Kim
  *
@@ -10,8 +12,15 @@ import refresh.ManageSystem.dao.MemberDAO;
  *
  * 2021-04-30
  */
+@Mapper
 public interface MemberRepository {
     Optional<String> login(MemberDAO dao);
     String getAuthority(MemberDAO dao);
     String getMemberName(MemberDAO dao);
+
+    void createMember(MemberServiceDTO dto);
+
+    boolean checkId(String memberId);
+
+
 }

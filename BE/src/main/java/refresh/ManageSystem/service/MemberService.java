@@ -1,9 +1,8 @@
 package refresh.ManageSystem.service;
-import java.util.Optional;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import refresh.ManageSystem.dao.MemberDAO;
 import refresh.ManageSystem.repository.MemberRepository;
 
@@ -14,6 +13,9 @@ import refresh.ManageSystem.repository.MemberRepository;
  *
  * 2021-05-01
  */
+import refresh.ManageSystem.dto.MemberServiceDTO;
+
+
 @Service
 public class MemberService {
 
@@ -45,10 +47,21 @@ public class MemberService {
                                                .build());
     }
 
+
     public String getMemberName(String id, String cryptoPassword) {
         return memberRepository.getMemberName(MemberDAO.builder()
                                               .memberId(id)
                                               .memberPassword(cryptoPassword)
                                                .build());
     }
+
+    public void create(MemberServiceDTO member) {
+        memberRepository.createMember(member);
+    }
+
+    public boolean checkId(MemberServiceDTO member) {
+        return memberRepository.checkId(member.getMemberId());
+    }
+
+
 }

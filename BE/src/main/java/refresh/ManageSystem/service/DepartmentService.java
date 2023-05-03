@@ -1,4 +1,5 @@
 package refresh.ManageSystem.service;
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,8 @@ public class DepartmentService {
         return departmentRepository.getDepartmentNameList();
     }
 
-
+    public List<String> getDepartmentName() {
+        return departmentRepository.getDepartmentName();
+    }
 
 }

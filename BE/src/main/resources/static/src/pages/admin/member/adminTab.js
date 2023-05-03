@@ -31,5 +31,5 @@ function button2() {
 }
 
 function button3() {
-    window.location.href = "/admin/annual/annualManage";
+    window.location.href = "/admin/annualManage";
 }

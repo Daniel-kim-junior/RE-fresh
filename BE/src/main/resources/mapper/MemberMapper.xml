@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="refresh.ManageSystem.repository.MemberRepository">
-  <select id="login" resultType="string" parameterType="MemberDAO">
-    select member_id from member where member_id = #{memberId} and member_password = #{memberPassword}
-  </select>
+
+    <select id="login" resultType="string" parameterType="MemberDAO">
+      select member_id from member where member_id = #{memberId} and member_password = #{memberPassword}
+    </select>
+    <insert id="createMember" parameterType="MemberServiceDTO">
+        insert into member(member_uid, department_uid, member_id, member_password,
+                           member_name, member_cellphone, member_email,
+                           annual_count, member_auth, member_status, retire_date,
+                           create_id, create_tm, update_id, update_tm)
+        values (UUID(), (select department_uid from department where department_name = #{departmentName}),
+                #{memberId}, SHA2(#{memberPassword}, 256), #{memberName}, #{memberCellphone}, #{memberEmail},
+                12.0, #{memberAuth}, 'in use', NOW(), #{createId}, NOW(), #{updateId}, NOW())
+    </insert>
+    <select id="checkId" resultType="boolean" parameterType="String">
+        select count(member_id) from member where member_id = #{memberId}
+    </select>
   <select id="getAuthority" resultType="string" parameterType="MemberDAO">
     select member_auth from member where member_id = #{memberId} and member_password = #{memberPassword}
   </select>
   <select id="getMemberName" resultType="string" parameterType="MemberDAO">
     select member_name from member where member_id = #{memberId} and member_password = #{memberPassword}
   </select>
+
 </mapper>
