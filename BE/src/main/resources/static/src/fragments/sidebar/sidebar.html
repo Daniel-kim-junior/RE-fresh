@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>사이드바</title>
+    <!-- tailwind 적용 -->
+    <link rel="stylesheet" href="/dist/output.css" />
+  </head>
+  <body>
+    <aside
+      class="text-center flex justify-between h-[calc(100vh-137px)]"
+      aria-label="Sidebar"
+      th:fragment="sidebar"
+    >
+      <nav class="flex flex-col border-2 border-slate-100 shadow-lg">
+        <ul>
+          <li
+            class="px-2 py-2 border border-slate-100 text-white font-semibold bg-sky-300 hover:bg-sky-400"
+          >
+            <a href="/">연차 조회</a>
+          </li>
+          <li
+            class="px-2 py-2 border border-slate-100 text-white font-semibold bg-sky-300 hover:bg-sky-400"
+          >
+            <a href="/">연차 신청</a>
+          </li>
+        </ul>
+        <a
+          href="/"
+          class="px-4 py-2 mt-auto border border-slate-100 text-white font-semibold bg-sky-300 hover:bg-sky-400"
+        >
+          관리자 페이지
+        </a>
+      </nav>
+    </aside>
+  </body>
+</html>
