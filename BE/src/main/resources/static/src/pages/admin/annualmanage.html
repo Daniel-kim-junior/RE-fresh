@@ -8,8 +8,10 @@
   <script  src="/src/pages/admin/annualmanage.js" type="module"></script>
 
   <script th:inline="javascript" th:src="@{/src/pages/admin/annualmanage.js}" ></script>
+  <script src="/src/pages/admin/member/adminTab.js" type="module"></script>
 </head>
 <body>
+<div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
 <div class=" flex justify-center pt-10">
   <form >
     <div class="bg-neutral-100 p-3 rounded-lg ">
