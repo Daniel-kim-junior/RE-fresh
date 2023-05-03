@@ -5,31 +5,30 @@
   <title>Annual Manage</title>
   <link rel="stylesheet" th:href="@{/dist/output.css}" />
   <link rel="stylesheet" href="/dist/output.css" />
-  <script  src="/src/pages/admin/annualmanage.js" type="module"></script>
+  <script src="/src/pages/admin/annual/annualmanage.js" type="module"></script>
 
-  <script th:inline="javascript" th:src="@{/src/pages/admin/annualmanage.js}" ></script>
   <script src="/src/pages/admin/member/adminTab.js" type="module"></script>
+  <script th:inline="javascript" th:src="@{/src/pages/admin/annual/annualmanage.js}" ></script>
+
 </head>
 <body>
 <div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
 <div class=" flex justify-center pt-10">
-  <form >
+  <form id="searchForm" th:action="@{/admin/annualManage}" th:object="${searchData}" method="post" onload="resetForm()" >
     <div class="bg-neutral-100 p-3 rounded-lg ">
       <lable for="dept" class="mx-4">부서</lable>
-      <select id="dept" class="bg-white border text-gray-900 text-sm border-gray-300 rounded-lg py-1 pr-8 focus:border-blue-500 hover:border-blue-500">
+      <select th:field="*{departmentName}" id="dept" class="bg-white border text-gray-900 text-sm border-gray-300 rounded-lg py-1 pr-8 focus:border-blue-500 hover:border-blue-500">
         <option value="" selected>부서명 선택</option>
-        <option value="">운영팀</option>
+        <th:block th:if="${deptNames}">
+          <option th:each="data : ${deptNames}" th:value="${data}" th:text="${data}"></option>
+        </th:block>
       </select>
+      <label class="mx-4">사원 명</label>
+      <input th:field="*{memberName}" type="text" class="mx-1 border rounded-lg px-1 py-1  text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 " />
       <label class="mx-4">기간</label>
-      <input type="date" class="mx-2 border rounded-lg px-1 py-1  text-gray-900 text-sm focus:border-blue-400 hover:border-blue-400 "/> ~
-      <input type="date" class="mx-2 border rounded-lg px-1 py-1 text-gray-900 text-sm focus:border-blue-400 hover:border-blue-400 "/>
-      <label for="status" class="mx-4">연차 상태</label>
-      <select id="status" class="bg-white border text-gray-900 text-sm border-gray-300 rounded-lg py-1 pr-8 focus:border-blue-500 hover:border-blue-500">
-        <option value="" selected>상태선택</option>
-        <option value="accept">승인</option>
-        <option value="reject">반려</option>
-      </select>
-      <button type="submit" class="ml-10 bg-blue-500 px-3 py-1 rounded-lg text-white hover:bg-blue-700">조회</button>
+      <input th:field="*{startDate}" type="date" class="mx-2 border rounded-lg px-1 py-1  text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 "/> ~
+      <input th:field="*{endDate}" type="date" class="mx-2 border rounded-lg px-1 py-1 text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 "/>
+      <button id="submit-btn" type="submit" class="ml-10 bg-blue-500 px-3 py-1 rounded-lg text-white hover:bg-blue-700">조회</button>
     </div>
   </form>
 </div>
@@ -49,21 +48,20 @@
       </tr>
       </thead>
 
-      <tbody th:if="${list}">
-      <tr th:each="data : ${ list}" class="bg-white border-b  hover:bg-sky-50">
+      <tbody th:if="${annualList}">
+      <tr th:each="data : ${ annualList}" class="bg-white border-b  hover:bg-sky-50">
         <td class="px-6 py-3">[[${data.createTm}]]</td>
         <td class="px-6 py-3">[[${data.memberName}]]</td>
         <td class="px-6 py-3">[[${data.departmentName}]]</td>
         <td class="px-6 py-3">[[${data.annualType}]]</td>
         <td class="px-6 py-3">
           <span>[[${data.startDate}]]</span> ~
-          <spna>[[${data.endDate}]]</spna>
+          <span>[[${data.endDate}]]</span>
         </td>
         <td class="px-6 py-3">
-          <button id="statusBnt" th:onclick="showEditAnnual()" onclick="showEditAnnual()"  class="bg-inherit text-blue-700">[[${data.annualStatus}]]</button>
-          <div th:replace="/pages/admin/annualmodal.html :: editAnnual-modal" ></div>
+          <button id="statusBnt" th:onclick="showEditAnnual( [[${data.annualUid}]] )" class="bg-inherit text-blue-700">[[${data.annualStatus}]]</button>
+          <div th:replace="/pages/admin/annual/annualmodal.html :: editAnnual-modal" ></div>
         </td>
-
       </tr>
       </tbody>
     </table>

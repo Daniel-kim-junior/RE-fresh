@@ -43,6 +43,9 @@ class CalendarRestController {
     /**
      * Daniel Kim
      *
+     * @param year : 연도
+     * @param month : 월
+     * @param memberLogin : 로그인 정보
      * @return
      * @throws JsonProcessingException
      *
@@ -54,6 +57,18 @@ class CalendarRestController {
         Optional<String> departmentName = departmentService.getDepartmentNameById(memberLogin.getId());
         return calendarService.updateCalendar(year, month, departmentName.get());
     }
+
+    /**
+     * Daniel Kim
+     *
+     * @param year : 연도
+     * @param month : 월
+     * @param departmentName : 부서명
+     * @return
+     * @throws JsonProcessingException
+     *
+     * 2023-04-19
+     */
 
     @GetMapping("/department")
     List<CalendarServiceDTO> getCalendarByDepartment(@RequestParam String year, @RequestParam String month, @RequestParam String departmentName)

@@ -15,6 +15,10 @@ import refresh.ManageSystem.repository.DepartmentRepository;
  * getDepartmentTotalById: memberId를 통해 해당 유저의 부서 연차 총합을 가져옴
  *
  * 2023-04-28
+ *
+ * Park JuHee
+ * getDepartmentNameAndIdList : 부서명과 id를 가져옴
+ * 2023-05-02
  */
 @Service
 public class DepartmentService {
@@ -36,4 +40,5 @@ public class DepartmentService {
     public List<String> getDepartmentName() {
         return departmentRepository.getDepartmentName();
     }
+
 }

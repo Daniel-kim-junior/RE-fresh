@@ -19,4 +19,5 @@ public interface DepartmentRepository {
     Optional<Integer> getDepartmentTotalById(String memberId);
     List<String> getDepartmentNameList();
     List<String> getDepartmentName();
+
 }
