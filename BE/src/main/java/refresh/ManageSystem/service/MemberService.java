@@ -45,5 +45,10 @@ public class MemberService {
                                                .build());
     }
 
-
+    public String getMemberName(String id, String cryptoPassword) {
+        return memberRepository.getMemberName(MemberDAO.builder()
+                                              .memberId(id)
+                                              .memberPassword(cryptoPassword)
+                                               .build());
+    }
 }

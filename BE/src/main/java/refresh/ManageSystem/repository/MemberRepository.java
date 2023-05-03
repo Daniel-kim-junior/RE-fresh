@@ -13,4 +13,5 @@ import refresh.ManageSystem.dao.MemberDAO;
 public interface MemberRepository {
     Optional<String> login(MemberDAO dao);
     String getAuthority(MemberDAO dao);
+    String getMemberName(MemberDAO dao);
 }

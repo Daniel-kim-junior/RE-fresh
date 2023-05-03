@@ -70,6 +70,7 @@ public class LoginController {
         memberLogin.setId(memberLoginDTO.getId());
         memberLogin.setPassword(cryptoPassword);
         memberLogin.setAuthority(memberService.getAuthority(memberLoginDTO.getId(), cryptoPassword));
+        memberLogin.setMemberName(memberService.getMemberName(memberLoginDTO.getId(), cryptoPassword));
         model.addAttribute("MemberLogin", memberLogin);
 
 
