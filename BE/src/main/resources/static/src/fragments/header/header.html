@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="/dist/output.css" />
   </head>
   <body>
-    <header>
+<!--    th:fragment="템플릿 조각 이름" -> th:fragment="header" -> header라는 템플릿 조각을 만든 것-->
+    <header th:fragment="header">
       <div
         class="flex justify-between border-b border-b-slate-300 px-4 lg:px-12 py-6"
       >
@@ -31,22 +32,18 @@
         <!-- 로그인 영역 -->
         <div class="flex items-center text-center">
           <!-- 로그인한 경우 -->
-          <a
-            th:if="${session.user}"
-            href="#"
-            class="flex-row items-center text-center"
-            ><img
+          <a href="#" class="flex-row items-center text-center" th:if="${#session != null}">
+            <img
               src="/src/assets/images/user.svg"
               alt="로그인 계정 이미지"
               class="h-12 sm:h-16"
             />
-            <div class="font-semibold" th:text="${session.user.name}">
-              김관리
-            </div></a
-          >
+<!--            로그인 사용자명-->
+            <div class="font-semibold" th:text="${MemberLogin.memberName}"></div>
+          </a>
 
           <!-- 로그인 하지 않은 경우 -->
-          <a th:unless="${session.user}" href="#" class="flex items-center">
+          <a href="#" class="flex items-center" th:if="${#session == null}">
             <button
               type="button"
               class="text-white bg-sky-400 hover:bg-sky-600 px-2 sm:px-5 py-1 sm:py-2.5 rounded-xl font-semibold"
