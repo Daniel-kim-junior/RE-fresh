@@ -1,6 +1,7 @@
 import { getCalendarDataByDepartment, getDepartmentInit} from '../../../api/calendarApi.js';
-import { useState, getRenderCount, getDepartmentName, setDepartmentName, debounceFrame } from './hook.js';
+import { useState, getRenderCount, getDepartmentName, setDepartmentName} from './hook.js';
 import { getDate, onLoad, debounceButtonEvent } from './hook.js';
+import { initDepartment } from "../header/departmentOption/main.js";
 
 /*
   Daniel Kim
@@ -23,6 +24,8 @@ export default function Calendar() {
   const buttons = document.querySelector('#header-container');
   const header = document.querySelector('#calendar-header');
   const calArrowSvg = document.querySelector('#cal-arrow-svg');
+  const calArrowModal = document.querySelector('#cal-arrow-modal');
+  const modalContainer = document.querySelector('#modal-container');
   /*
     Daniel Kim
     state 관리를 위해 선언한 변수
@@ -110,16 +113,44 @@ export default function Calendar() {
       debounceButtonEvent(handlePrevClick, 250, this)();
     } else if (e.target.id === 'next-btn') {
       debounceButtonEvent(handleNextClick, 250, this)();
-    } else if(e.target.id === 'today-btn') {
+    } else if (e.target.id === 'today-btn') {
+      if (y == year && m == month) return;
+      initDepartment();
       debounceButtonEvent(() => setMdy({ year: y, month: m }), 250, this)();
     } else if (isArrowBtn(e)) {
       calArrowSvg.classList.toggle('rotate-180');
+      modalContainer.innerHTML = makeModal();
+      calArrowModal.style.display = isDisplayModal();
     }
+  }
+
+  function isDisplayModal() {
+    return calArrowModal.style.display === 'none' ? 'flex ' : 'none';
   }
 
   function isArrowBtn(e) {
     return e.target.id === 'cal-arrow-btn' || e.target.id === 'cal-arrow-svg' || e.target.tagName === 'path';
   }
+
+  function makeModal() {
+    return `
+      <div class="overflow-y-scroll w-full ">
+        ${makeModalContents(1900, 2037, '년')}
+      </div>
+      <div class="overflow-y-scroll w-full">
+      ${makeModalContents(1, 12, '월')}
+      </div>
+    `
+  }
+
+  function makeModalContents(start, end, str) {
+    let dom = '';
+    for (let i = start; i <= end; i++) {
+      dom += `<li class="block p-1 hover:bg-sky-200"><a href="javascript:;">${i + str}</a></li>`;
+    }
+    return dom;
+  }
+
 
 
 
@@ -169,14 +200,14 @@ export default function Calendar() {
       }
 
       if (parseInt(i / 7) === cnt) {
-        dom += `<td class="border-2 ${isToday(calendar[i]) ? 'bg-orange-300' : ''} border-slate-600 w-20 h-32 relative">
+        dom += `<td class="${isToday(calendar[i]) ? 'bg-orange-200' : ''}  w-20 h-32 relative">
             <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
               ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
             ${calendar[i].sumCount !== 0 ?`<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
         </td>`;
         
       } else {
-        dom += `</tr><tr><td class=" border-2 ${isToday(calendar[i]) ? 'bg-orange-200' : ''} border-slate-600 w-20 h-32 relative">
+        dom += `</tr><tr><td class="${isToday(calendar[i]) ? 'bg-orange-200' : ''}w-20 h-32 relative">
         <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
           ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
           ${calendar[i].sumCount !== 0 ? `<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
