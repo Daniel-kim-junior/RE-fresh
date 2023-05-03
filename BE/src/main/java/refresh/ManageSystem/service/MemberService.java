@@ -1,4 +1,5 @@
 package refresh.ManageSystem.service;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,11 @@ import refresh.ManageSystem.repository.MemberRepository;
  *
  * 2021-05-01
  */
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import refresh.ManageSystem.dto.MemberServiceDTO;
+
+
 @Service
 public class MemberService {
 
@@ -45,5 +51,12 @@ public class MemberService {
                                                .build());
     }
 
+    public void create(MemberServiceDTO member) {
+        memberRepository.createMember(member);
+    }
+
+    public boolean checkId(MemberServiceDTO member) {
+        return memberRepository.checkId(member.getMemberId());
+    }
 
 }
