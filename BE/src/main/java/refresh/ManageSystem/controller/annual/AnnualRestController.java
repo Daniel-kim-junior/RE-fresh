@@ -9,6 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import refresh.ManageSystem.service.AnnualService;
 import refresh.ManageSystem.vo.AnnualDataByFilterVO;
 
+/**
+ * Daniel Kim
+ *
+ * 연차 정보를 가져오는 컨트롤러
+ *
+ * 2023-04-29
+ */
 @RestController
 @RequestMapping("/annual")
 @CrossOrigin
@@ -18,7 +25,7 @@ public class AnnualRestController {
     /**
      * Daniel Kim
      *
-     * @param name : 사원 이름을 통해 연차 정보 가져오기
+     * @param name : 사원 이름, 부서 이름을 통해 연차 정보 가져오기
      * @param start : 페이지 시작
      * @param end : 페이지 끝
      * @return

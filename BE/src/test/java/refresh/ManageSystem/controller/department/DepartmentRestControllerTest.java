@@ -1,6 +1,7 @@
 package refresh.ManageSystem.controller.department;
 
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -56,6 +57,13 @@ class DepartmentRestControllerTest {
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
     }
 
+    @AfterAll
+    public static void clear(){
+        session.clearAttributes();
+        session = null;
+    }
+
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -72,8 +80,7 @@ class DepartmentRestControllerTest {
     void 세션정보로_부서_초기화_컨트롤러_테스트() throws Exception {
         mockMvc.perform(get("/department").session(session))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$").isNotEmpty())
-               .andExpect(jsonPath("$").value("개발팀"));
+               .andExpect(jsonPath("department").value("개발팀"));
     }
 
 }

@@ -39,6 +39,11 @@ public class LoginController {
      */
     @GetMapping("/")
     public String get(Model model) {
+        if(model.getAttribute("MemberLogin") != null) {
+            return "redirect:/pages/calendar/calendar";
+        }
+
+
         model.addAttribute("MemberLogin", new MemberLoginDTO());
         return "/index";
     }
@@ -65,6 +70,7 @@ public class LoginController {
         MemberLoginDTO memberLogin = (MemberLoginDTO) model.getAttribute("MemberLogin");
         memberLogin.setId(memberLoginDTO.getId());
         memberLogin.setPassword(cryptoPassword);
+        memberLogin.setAuthority(memberService.getAuthority(memberLoginDTO.getId(), cryptoPassword));
         model.addAttribute("MemberLogin", memberLogin);
 
 

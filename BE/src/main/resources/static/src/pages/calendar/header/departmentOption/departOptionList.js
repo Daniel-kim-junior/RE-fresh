@@ -1,4 +1,4 @@
-import { getDepartmentNameList, getDepartmentInit } from '../../../api/calendarApi.js';
+import { getDepartmentNameList, getDepartmentInit } from '../../../../api/calendarApi.js';
 import { useState } from './hook.js';
 import { onLoad } from './hook.js';
 
@@ -10,7 +10,7 @@ import { onLoad } from './hook.js';
   2023-05-01
 */
 
-export default function OptionList() {
+export default function DepartmentOptionList() {
   const [list, setList] = useState([]);
 
   onLoad(async () => {
@@ -19,6 +19,7 @@ export default function OptionList() {
     const dom = makeOptionList(depList, departmentInit['department']);
     setList(dom);
   });
+  
   function makeOptionList(list, name) {
     let dom = `<option>${name}</option>`;
     list.forEach((item) => {
