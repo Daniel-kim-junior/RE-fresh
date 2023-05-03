@@ -12,7 +12,7 @@ module.exports = {
         'current': '#000000',
         'not-current': '#B2B2B2',
         'holiday': '#DC143C',
-        'cal-modal': '#fffaf0',
+        'cal-modal': '#FFFAFA',
         'table-rgba': 'rgba(180, 180, 180)',
       },
       height: {

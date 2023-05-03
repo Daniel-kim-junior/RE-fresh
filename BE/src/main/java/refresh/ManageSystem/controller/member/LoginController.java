@@ -39,10 +39,10 @@ public class LoginController {
      */
     @GetMapping("/")
     public String get(Model model) {
-        if(model.getAttribute("MemberLogin") != null) {
+        MemberLoginDTO memberLogin = (MemberLoginDTO) model.getAttribute("MemberLogin");
+        if(memberLogin != null && memberLogin.getId() != null && memberLogin.getPassword() != null) {
             return "/pages/calendar/calendar";
         }
-
         model.addAttribute("MemberLogin", new MemberLoginDTO());
         return "/index";
     }
@@ -63,8 +63,9 @@ public class LoginController {
 
         String cryptoPassword = sha256.getHash(memberLoginDTO.getPassword(), "SHA-256");
         Optional<String> loginRequest = memberService.login(memberLoginDTO.getId(), cryptoPassword);
+
         if(loginRequest.isEmpty()) {
-            return "redirect:/";
+            return "/error";
         }
         MemberLoginDTO memberLogin = (MemberLoginDTO) model.getAttribute("MemberLogin");
         memberLogin.setId(memberLoginDTO.getId());

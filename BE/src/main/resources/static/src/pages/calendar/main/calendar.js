@@ -120,8 +120,15 @@ export default function Calendar() {
     } else if (isArrowBtn(e)) {
       calArrowSvg.classList.toggle('rotate-180');
       modalContainer.innerHTML = makeModal();
+      calArrowModal.style.display = isDisplayModal(); 
+    } else if (isModalExitBtn(e)) {
       calArrowModal.style.display = isDisplayModal();
+      calArrowSvg.classList.toggle('rotate-180');
+    } else if (isModalBtn(e)) {
     }
+  }
+  function isModalExitBtn(e) {
+    if(e.target.classList.contains('modal-exit-btn')) return true;
   }
 
   function isDisplayModal() {
@@ -146,7 +153,7 @@ export default function Calendar() {
   function makeModalContents(start, end, str) {
     let dom = '';
     for (let i = start; i <= end; i++) {
-      dom += `<li class="block p-1 hover:bg-sky-200"><a href="javascript:;">${i + str}</a></li>`;
+      dom += `<li class="block p-1.5 hover:bg-sky-200" value=${i}><a href="javascript:;" class="block w-full">${i + str}</a></li>`;
     }
     return dom;
   }
