@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import refresh.ManageSystem.dao.AnnualCalDAO;
 import refresh.ManageSystem.dao.AnnualDataByFilterDAO;
+import refresh.ManageSystem.repository.AnnualCalRepository;
 import refresh.ManageSystem.repository.AnnualRepository;
 import refresh.ManageSystem.vo.AnnualCalVO;
 import refresh.ManageSystem.vo.AnnualDataByFilterVO;
@@ -19,7 +20,7 @@ import refresh.ManageSystem.vo.AnnualDataByFilterVO;
 @Service
 public class AnnualService {
     @Autowired
-    private AnnualRepository annualRepository;
+    private AnnualCalRepository annualCalRepository;
     @Autowired
     private DepartmentService departmentService;
 
@@ -35,7 +36,7 @@ public class AnnualService {
      */
     public List<AnnualCalVO> getAnnualCalData(String year, String month, String departmentName) {
 
-        return annualRepository.getAnnualCalData(AnnualCalDAO.
+        return annualCalRepository.getAnnualCalData(AnnualCalDAO.
                                                          builder()
                                                          .year(year)
                                                          .month(month)
@@ -55,7 +56,7 @@ public class AnnualService {
      * 2023-04-29
      */
     public List<AnnualDataByFilterVO> getAnnualDataByName(String memberName, int start, int end) {
-        return annualRepository.getAnnualDataByName(AnnualDataByFilterDAO.
+        return annualCalRepository.getAnnualDataByName(AnnualDataByFilterDAO.
                                                          builder()
                                                          .name(memberName)
                                                          .pageStart(start)
@@ -75,7 +76,7 @@ public class AnnualService {
      * 2023-04-29
      */
     public List<AnnualDataByFilterVO> getAnnualDataByDepartment(String departmentName, int start, int end) {
-        return annualRepository.getAnnualDataByDepartment(AnnualDataByFilterDAO.
+        return annualCalRepository.getAnnualDataByDepartment(AnnualDataByFilterDAO.
                                                          builder()
                                                          .name(departmentName)
                                                          .pageStart(start).pageEnd(end)

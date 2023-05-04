@@ -40,4 +40,8 @@
         where annual_uid = #{uid}
     </update>
 
+    <select id="getAnnualByMemberId">
+
+    </select>
+
 </mapper>
