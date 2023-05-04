@@ -56,17 +56,28 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'annualmanage.html',
       template: 'src/pages/admin/annual/annualmanage.html',
-      file: 'dist/pages/admin/annualmanage.html'
+      file: 'dist/pages/admin/annual/annualmanage.html'
     }),
     new HtmlWebpackPlugin({
       filename: 'annualmodal.html',
       template: 'src/pages/admin/annual/annualmodal.html',
-      file: 'dist/pages/admin/annualmodal.html'
+      file: 'dist/pages/admin/annual/annualmodal.html'
     }),
     new HtmlWebpackPlugin({
       filename: 'header.html',
       template: 'src/fragments/header/header.html',
       file: 'dist/fragments/header/header.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'header.html',
+      template: 'src/fragments/header/header.html',
+      file: 'dist/fragments/header/header.html'
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'annualHistory.html',
+      template: 'src/pages/mypage/history/annualHistory.html',
+      file: 'dist/pages/mypage/history/annualHistory.html'
     })
+
   ]
 };

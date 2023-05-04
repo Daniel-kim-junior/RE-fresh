@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Annual Manage</title>
+    <link rel="stylesheet" th:href="@{/dist/output.css}" />
+    <link rel="stylesheet" href="/dist/output.css" />
+    <script src="/src/pages/mypage/history/annualHistory.js" type="module"></script>
+
+    <script src="/src/pages/admin/member/adminTab.js" type="module"></script>
+    <script th:inline="javascript" th:src="@{/src/pages/mypage/history/annualHistory.js}" ></script>
+
+</head>
+<body>
+
+<div th:replace="~{/fragments/header/header.html :: header}"></div>
+
+<div th:replace="~{/fragments/sidebar/sidebar.html :: sidebar}"></div>
+
+<main class="flex pt-20 mt-2 pl-64  flex-col">
+    <div class="relative text-center pt-12">
+        <div class="text-slate-600 text-3xl font-bold">
+            <p><span class="text-pink-500">XX님</span>의 연차 신청 내역</p>
+        </div>
+    </div>
+    <div class="relative flex px-10 py-8">
+        <div>
+            <span class="absolute inset-x-1/4 top-10 text-xl text-slate-600 font-semibold">휴가 신청/사용 내역</span>
+            <span class="absolute end-1/4 px-3 top-12 text-sm font-semibold text-slate-600">사용/잔여 : 5 / 10</span>
+        </div>
+        <div class="absolute  left-1/4 top-20 overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="text-sm text-left text-gray-800 ">
+                <thead class="text-sm w-2/3 text-gray-700 uppercase bg-gray-50 ">
+                <tr>
+                    <th scope="col" class="px-6 py-3">요청 날짜</th>
+                    <th scope="col" class="px-6 py-3">연차 기간</th>
+                    <th scope="col" class="px-6 py-3">연차 종류</th>
+                    <th scope="col" class="px-6 py-3">연차 상태</th>
+                    <th scope="col" class="px-6 py-3">연차 상태</th>
+                    <th scope="col" class="px-6 py-3">연차 취소</th>
+                </tr>
+                </thead>
+
+                <tbody >
+                <tr  class="bg-white border-b  hover:bg-sky-50">
+                    <td class="px-6 py-3">2023-04-05</td>
+                    <td class="px-6 py-3">
+                        <span>2023-04-05</span> ~
+                        <span>2023-05-05</span>
+                    </td>
+                    <td class="px-6 py-3">반차</td>
+                    <td class="px-6 py-3">admin</td>
+                    <td class="px-6 py-3">대기</td>
+                    <td class="px-6 py-3">
+                        <button id="statusBnt"  class="bg-inherit text-blue-700">취소</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</main>
+
+
+</body>
+</html>
