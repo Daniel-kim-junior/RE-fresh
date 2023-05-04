@@ -56,12 +56,13 @@ public class AnnualManageService {
      * 연차 수락,반려값을 bool 타입에서 string으르 변환하여 update 하는 서비스 메소드
      * 2023-05-03
      * */
-    public boolean updateAnnualStatus(AnnualStatusVO statusVO){
-        String approved = statusVO.isStatus() ? "수락" : "반려" ;
+    public boolean updateAnnualStatus(AnnualStatusVO statusVO,String memberName){
+        String approved = statusVO.isStatus() ? "승인" : "반려" ;
 
          return annualManageRepository.updateAnnualStatus(AnnualStatusDAO
                  .builder()
                  .uid(statusVO.getUid())
+                 .acceptor(memberName)
                  .status(approved)
                  .build());
     }

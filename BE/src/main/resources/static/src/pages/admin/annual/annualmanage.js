@@ -1,4 +1,4 @@
-   /*
+   /**
     Park JuHee
     관리자가 연차 신청 승인여부를 변경할 modal을 보여주는 함수  
     2023-05-01
@@ -20,6 +20,12 @@ const closeEditAnnual = () => {
     modal.classList.add('hidden');
     modal.classList.remove('flex');
 }
+
+/**
+ * Park JuHee
+ * 연차 승인,반려를 update 기능을 처리하는 함수
+ * 2023-05-04
+ * */
 
 function updateStatus() {
     const radioBnt = document.getElementsByName('approved');
