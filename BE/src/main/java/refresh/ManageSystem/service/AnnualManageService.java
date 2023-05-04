@@ -7,7 +7,7 @@ import refresh.ManageSystem.dao.AnnualSearchDAO;
 import refresh.ManageSystem.dao.AnnualStatusDAO;
 import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
-import refresh.ManageSystem.repository.AnnualManageRepository;
+import refresh.ManageSystem.repository.AnnualRepository;
 import refresh.ManageSystem.vo.AnnualManageVO;
 import refresh.ManageSystem.vo.AnnualStatusVO;
 
@@ -27,7 +27,7 @@ import java.util.List;
 public class AnnualManageService {
 
     @Autowired
-    private AnnualManageRepository  annualManageRepository;
+    private AnnualRepository annualRepository;
 
     /**
      * Park JuHee
@@ -36,11 +36,11 @@ public class AnnualManageService {
      */
     public List<AnnualManageDTO> getAnnualManageList(){
 
-        return voToDTO(annualManageRepository.getAnnualManageList());
+        return voToDTO(annualRepository.getAnnualManageList());
     }
 
     public List<AnnualManageDTO> getAnnualSearchList(AnnualSearchDTO searchDTO){
-        List<AnnualManageVO> list =  annualManageRepository.getAnnualSearchList(AnnualSearchDAO
+        List<AnnualManageVO> list =  annualRepository.getAnnualSearchList(AnnualSearchDAO
                 .builder()
                 .departmentName(searchDTO.getDepartmentName())
                 .memberName(searchDTO.getMemberName())
@@ -59,7 +59,7 @@ public class AnnualManageService {
     public boolean updateAnnualStatus(AnnualStatusVO statusVO,String memberName){
         String approved = statusVO.isStatus() ? "승인" : "반려" ;
 
-         return annualManageRepository.updateAnnualStatus(AnnualStatusDAO
+         return annualRepository.updateAnnualStatus(AnnualStatusDAO
                  .builder()
                  .uid(statusVO.getUid())
                  .acceptor(memberName)
