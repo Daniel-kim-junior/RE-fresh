@@ -8,22 +8,68 @@
     <insert id="createMember" parameterType="MemberServiceDTO">
         insert into member(member_uid, department_uid, member_id, member_password,
                            member_name, member_cellphone, member_email,
-                           annual_count, member_auth, member_status, retire_date,
+                           annual_count, member_auth, member_status,
                            create_id, create_tm, update_id, update_tm)
         values (UUID(), (select department_uid from department where department_name = #{departmentName}),
                 #{memberId}, SHA2(#{memberPassword}, 256), #{memberName}, #{memberCellphone}, #{memberEmail},
-                12.0, #{memberAuth}, 'in use', NOW(), #{createId}, NOW(), #{updateId}, NOW())
+                12.0, #{memberAuth}, 'in use', #{createId}, NOW(), #{updateId}, NOW())
     </insert>
     <select id="checkId" resultType="boolean" parameterType="String">
         select count(member_id) from member where member_id = #{memberId}
     </select>
-  <select id="getAuthority" resultType="string" parameterType="MemberDAO">
+    <select id="getAuthority" resultType="string" parameterType="MemberDAO">
     select member_auth from member where member_id = #{memberId} and member_password = #{memberPassword}
-  </select>
-  <select id="getMemberName" resultType="string" parameterType="MemberDAO">
+    </select>
+    <select id="getMemberName" resultType="string" parameterType="MemberDAO">
     select member_name from member where member_id = #{memberId} and member_password = #{memberPassword}
+
   </select>
     <select id="getAnnualCountById" parameterType="String" resultType="_double">
-        select annual_count from member where member_id = #{memberId};
+        select annual_count from member where member_id = #{memberId}
+
+    </select>
+    <select id="getMemberList" resultType="MemberVO">
+      select member.member_id, member.member_name, department.department_id, department.department_name,
+             member.member_cellphone, member.member_email, member.create_tm, member.retire_date, member.member_status
+      from member left join department on member.department_uid = department.department_uid
+    </select>
+    <select id="getMemberListByPage" resultType="MemberVO" parameterType="PageDTO">
+        select member.member_id, member.member_name, department.department_id, department.department_name,
+               member.member_cellphone, member.member_email, member.create_tm, member.retire_date, member.member_status
+        from member left join department on member.department_uid = department.department_uid
+        limit #{start}, #{perPageNum}
+    </select>
+    <select id="getMemberSearchList" resultType="MemberVO" parameterType="MemberSearchDTO">
+        select member.member_id, member.member_name, department.department_id, department.department_name,
+        member.member_cellphone, member.member_email, member.create_tm, member.retire_date, member.member_status
+        from member left join department on member.department_uid = department.department_uid
+        <where>
+            <if test="departmentName != null and departmentName  !=''">
+                and department_name = #{departmentName}
+            </if>
+            <if test="memberName != null and memberName  !=''">
+                and member_name like '%${memberName}%'
+            </if>
+            <if test="memberStatus != null and memberStatus !=''">
+                and member_status = #{memberStatus}
+            </if>
+        </where>
+        limit #{pageDTO.start}, #{pageDTO.perPageNum}
+    </select>
+    <select id="countMemberSearchList" resultType="int" parameterType="MemberSearchDTO">
+      select count(*)
+      from member left join department on member.department_uid = department.department_uid
+    <where>
+        <if test="departmentName != null and departmentName  !=''">
+            and department_name = #{departmentName}
+        </if>
+        <if test="memberName != null and memberName  !=''">
+            and member_name like '%${memberName}%'
+        </if>
+        <if test="memberStatus != null and memberStatus !=''">
+            and member_status = #{memberStatus}
+        </if>
+    </where>
+
     </select>
 </mapper>
