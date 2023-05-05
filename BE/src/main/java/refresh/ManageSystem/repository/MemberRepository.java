@@ -26,6 +26,9 @@ public interface MemberRepository {
 
     boolean checkId(String memberId);
 
+
+    double getAnnualCountById(String memberId);
+
     List<MemberVO> getMemberList();
 
     List<MemberVO> getMemberSearchList(MemberSearchDTO dto);
@@ -33,5 +36,6 @@ public interface MemberRepository {
     List<MemberVO> getMemberListByPage(PageDTO dto);
 
     int countMemberSearchList(MemberSearchDTO dto);
+
 
 }

@@ -22,6 +22,11 @@
     </select>
     <select id="getMemberName" resultType="string" parameterType="MemberDAO">
     select member_name from member where member_id = #{memberId} and member_password = #{memberPassword}
+
+  </select>
+    <select id="getAnnualCountById" parameterType="String" resultType="_double">
+        select annual_count from member where member_id = #{memberId}
+
     </select>
     <select id="getMemberList" resultType="MemberVO">
       select member.member_id, member.member_name, department.department_id, department.department_name,
@@ -65,5 +70,6 @@
             and member_status = #{memberStatus}
         </if>
     </where>
+
     </select>
 </mapper>

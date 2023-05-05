@@ -5,9 +5,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import refresh.ManageSystem.dao.MemberDAO;
+
+import refresh.ManageSystem.dto.AnnualCntDTO;
+
 import refresh.ManageSystem.dto.PageDTO;
 import refresh.ManageSystem.vo.MemberVO;
 import refresh.ManageSystem.dto.MemberSearchDTO;
+
 import refresh.ManageSystem.repository.MemberRepository;
 
 /**
@@ -65,6 +69,11 @@ public class MemberService {
 
     public boolean checkId(MemberServiceDTO member) {
         return memberRepository.checkId(member.getMemberId());
+    }
+
+    public AnnualCntDTO getAnnualCount(String id) {
+
+        return new AnnualCntDTO(memberRepository.getAnnualCountById(id));
     }
 
     public List<MemberVO> getMemberAllList() {
