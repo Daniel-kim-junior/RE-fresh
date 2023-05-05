@@ -13,17 +13,23 @@ module.exports = {
         'not-current': '#B2B2B2',
         'holiday': '#DC143C',
         'cal-modal': '#FFFAFA',
-        'table-rgba': 'rgba(180, 180, 180)',
+        'today-color': '#B3E0FF',
+        'table-rgba': 'rgba(160, 160, 160)',
       },
       height: {
-        '128': '50rem',
+        'table-height': '500px',
         'ss': '0.2rem',
+        'td-height': '90px',
       },
       width: {
-        '128': '80rem'
+        '128': '80rem',
+        'table-width': '840px',
+        'td-width': '120px'
       },
       spacing: {
-        'cal-modal': '50%'
+        'cal-modal': '60%',
+        'cal-header': '500px',
+        'table-header-top': '76px',
       }
     },
   },

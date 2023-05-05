@@ -103,13 +103,17 @@ function debounceFrame(callback) {
     waitForRender(root, MockHide);      
   });
 
-  function waitForRender(elem, callback) {
+  function waitForRender(elem, callback, ...args) {
     requestAnimationFrame(() => {
       var isRendered = elem.offsetHeight > 0;
       if (isRendered) {
-        callback();
+        if (args.length > 0) {  
+          callback(...args);
+        } else {
+          callback();
+        }
       } else {
-        waitForRender(elem, callback);
+        waitForRender(elem, callback, ...args);
       }
     });
   }
@@ -154,7 +158,7 @@ function debounceFrame(callback) {
   }
 
 
-  return { useState, render, getRenderCount, getDepartmentName, setDepartmentName, getDate, debounceFrame};
+  return { useState, render, getRenderCount, getDepartmentName, setDepartmentName, getDate, debounceFrame, waitForRender};
 }
 
 function MockHide() {
@@ -163,8 +167,10 @@ function MockHide() {
   const nextBtn = document.getElementById("next-btn");
   const mockHeader = document.getElementById("mock-header");
 
-  prevBtn.innerHTML = '&larr; Prev';
-  nextBtn.innerHTML = 'Next &rarr;';
+  prevBtn.innerHTML = '<';
+  nextBtn.innerHTML = '>';
+  prevBtn.style.fontSize = '30px';
+  nextBtn.style.fontSize = '30px';
   prevBtn.disabled = false;
   nextBtn.disabled = false;
   mockHeader.style.display = 'none';
@@ -210,4 +216,4 @@ function onLoad(callback) {
 }
 
 export { onLoad, debounceButtonEvent };
-export const { useState, render, getRenderCount, getDepartmentName, setDepartmentName, getDate, debounceFrame } = Hook();
+export const { useState, render, getRenderCount, getDepartmentName, setDepartmentName, getDate, debounceFrame, waitForRender } = Hook();

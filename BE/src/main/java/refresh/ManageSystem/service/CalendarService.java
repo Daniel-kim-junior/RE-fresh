@@ -41,7 +41,6 @@ public class CalendarService {
     private HolidayService holidayService;
     public List<CalendarServiceDTO> updateCalendar(String strYear, String strMonth, String departmentName) {
         List<CalendarServiceDTO> result = new ArrayList<>();
-        System.out.println(strYear + " " + strMonth);
         int year = Integer.parseInt(strYear);
         int month = Integer.parseInt(strMonth);
 
