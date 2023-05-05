@@ -37,8 +37,4 @@ public class DepartmentService {
         return departmentRepository.getDepartmentNameList();
     }
 
-    public List<String> getDepartmentName() {
-        return departmentRepository.getDepartmentName();
-    }
-
 }

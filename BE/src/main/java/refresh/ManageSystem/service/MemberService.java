@@ -1,9 +1,13 @@
 package refresh.ManageSystem.service;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import refresh.ManageSystem.dao.MemberDAO;
+import refresh.ManageSystem.dto.PageDTO;
+import refresh.ManageSystem.vo.MemberVO;
+import refresh.ManageSystem.dto.MemberSearchDTO;
 import refresh.ManageSystem.repository.MemberRepository;
 
 /**
@@ -63,5 +67,19 @@ public class MemberService {
         return memberRepository.checkId(member.getMemberId());
     }
 
+    public List<MemberVO> getMemberAllList() {
+        return memberRepository.getMemberList();
+    }
 
+    public List<MemberVO> getMemberSearchList(MemberSearchDTO dto) {
+        return memberRepository.getMemberSearchList(dto);
+    }
+
+    public List<MemberVO> getMemberAllListByPage(PageDTO dto) {
+        return memberRepository.getMemberListByPage(dto);
+    }
+
+    public int countMemberSearchList(MemberSearchDTO dto) {
+        return memberRepository.countMemberSearchList(dto);
+    }
 }

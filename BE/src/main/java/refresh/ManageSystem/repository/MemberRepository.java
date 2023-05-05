@@ -1,7 +1,11 @@
 package refresh.ManageSystem.repository;
 
+import java.util.List;
 import java.util.Optional;
 import refresh.ManageSystem.dao.MemberDAO;
+import refresh.ManageSystem.dto.PageDTO;
+import refresh.ManageSystem.vo.MemberVO;
+import refresh.ManageSystem.dto.MemberSearchDTO;
 import refresh.ManageSystem.dto.MemberServiceDTO;
 import org.apache.ibatis.annotations.Mapper;
 /**
@@ -22,5 +26,12 @@ public interface MemberRepository {
 
     boolean checkId(String memberId);
 
+    List<MemberVO> getMemberList();
+
+    List<MemberVO> getMemberSearchList(MemberSearchDTO dto);
+
+    List<MemberVO> getMemberListByPage(PageDTO dto);
+
+    int countMemberSearchList(MemberSearchDTO dto);
 
 }

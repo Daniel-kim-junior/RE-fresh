@@ -11,8 +11,8 @@
 </head>
 <body>
 <div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
-<div class=" flex justify-center pt-10">
-  <form method="post" th:action="@{/admin/members}" th:object="${memberSearchDTO}" >
+<div class="flex justify-center pt-10">
+  <form method="get" th:action="@{/admin/members/search}" th:object="${memberSearchDTO}" >
     <div class="bg-neutral-100 p-3 rounded-lg ">
       <lable for="dept" class="mx-4">부서</lable>
       <select th:field="*{departmentName}" id="dept" class="bg-white border text-gray-900 text-sm border-gray-300 rounded-lg py-1 pr-8 focus:border-blue-500 hover:border-blue-500">
@@ -27,9 +27,10 @@
       <label>사용중인 계정만 표시</label>
       <button id="submit-btn" type="submit" class="ml-10 bg-blue-500 px-3 py-1 rounded-lg text-white hover:bg-blue-700">조회</button>
     </div>
+    <input name="page" value=1 hidden>
   </form>
 </div>
-<div class=" flex justify-center pt-9">
+<div class="flex justify-center pt-9">
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="text-sm text-left text-gray-800 ">
       <thead class="text-sm text-gray-700 uppercase bg-gray-50 ">
@@ -45,7 +46,6 @@
         <th scope="col" class="px-6 py-3">사용자 상태</th>
       </tr>
       </thead>
-
       <tbody th:if="${memberVO}">
       <tr th:each="member : ${memberVO}" class="bg-white border-b  hover:bg-sky-50">
         <td class="px-6 py-3">[[${member.memberId}]]</td>
@@ -61,6 +61,14 @@
       </tbody>
     </table>
   </div>
+</div>
+<div id="page" class="flex justify-center">
+  <a th:if="${pageDAO.getStartPage() != 1}" class="mx-2" th:href="@{/admin/members/search(dto=${memberSearchDTO}, page=${pageDAO.getStartPage() - 1})}">이전</a>
+  <span th:each="i : ${#numbers.sequence(pageDAO.getStartPage(), pageDAO.getEndPage())}">
+    <a th:if="${i} == ${currentPage}" class="text-blue-500 mx-2" th:text="${i}"></a>
+    <a th:if="${i} != ${currentPage}" class="mx-2" th:href="@{/admin/members/search(departmentName=${param.departmentName}, memberName=${param.memberName}, memberStatus=${param.memberStatus}, page=${i})}" th:text="${i}"></a>
+  </span>
+  <a th:if="${pageDAO.getEndPage() != pageDAO.getTotalPage()}" class="mx-2" th:href="@{/admin/members(page=${pageDAO.getEndPage() + 1})}">다음</a>
 </div>
 </body>
 </html>
