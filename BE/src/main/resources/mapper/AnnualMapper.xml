@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="refresh.ManageSystem.repository.AnnualManageRepository">
+<mapper namespace="refresh.ManageSystem.repository.AnnualRepository">
     <select id="getAnnualManageList" resultType="AnnualManageVO">
         select annual_uid, m.member_name as member_name, m.department_name, a.annual_type, a.annual_status,
                start_date, end_date, a.create_tm
@@ -39,9 +39,11 @@
         update annual set annual_status = #{status} , acceptor= #{acceptor}, update_tm = now()
         where annual_uid = #{uid}
     </update>
-
-    <select id="getAnnualByMemberId">
-
+    <select id="getAnnualByMemberId" parameterType="String" resultType="AnnualHistoryVO">
+        select annual_uid, annual_type, annual_status, start_date, end_date, create_tm, acceptor
+        from annual ann
+                 inner join (select member_uid , member_id from member where member_id = #{id}) mem
+                            on ann.member_uid = mem.member_uid;
     </select>
 
 </mapper>

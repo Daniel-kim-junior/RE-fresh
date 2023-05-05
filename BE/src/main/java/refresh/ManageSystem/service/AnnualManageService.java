@@ -5,20 +5,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import refresh.ManageSystem.dao.AnnualSearchDAO;
 import refresh.ManageSystem.dao.AnnualStatusDAO;
+import refresh.ManageSystem.dto.AnnualHistoryDTO;
 import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
 import refresh.ManageSystem.repository.AnnualRepository;
+import refresh.ManageSystem.vo.AnnualHistoryVO;
 import refresh.ManageSystem.vo.AnnualManageVO;
 import refresh.ManageSystem.vo.AnnualStatusVO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Park JuHee
  *
- * 관리자 페이지의 연차 관리 서비스 클래스
+ * 연차 관련 서비스 클래스
  *
  * 2023-05-01
  */
@@ -28,6 +32,7 @@ public class AnnualManageService {
 
     @Autowired
     private AnnualRepository annualRepository;
+
 
     /**
      * Park JuHee
@@ -94,5 +99,28 @@ public class AnnualManageService {
         return result;
     }
 
+    /**
+     * Park JuHee
+     * myPage의 연차 신청 내역을 조회하는 서비스 메소드
+     * 2023-05-05
+     * */
+    public List<AnnualHistoryDTO> getAnnualHistoryList(String id){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+        List<AnnualHistoryDTO> result = new ArrayList<>();
+
+        for(AnnualHistoryVO data : annualRepository.getAnnualByMemberId(id)){
+            result.add(AnnualHistoryDTO
+                    .builder()
+                            .annualUid(data.getAnnualUid())
+                            .annualType(data.getAnnualType())
+                            .annualStatus(data.getAnnualStatus())
+                            .acceptor(data.getAcceptor())
+                            .startDate(dateFormat.format(data.getStartDate()))
+                            .endDate(dateFormat.format(data.getEndDate()))
+                            .createTm(dateFormat.format(data.getCreateTm()))
+                            .build());
+        }
+        return result;
+    }
 
 }

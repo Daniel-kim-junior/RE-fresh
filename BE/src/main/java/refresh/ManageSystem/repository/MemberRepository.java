@@ -22,5 +22,7 @@ public interface MemberRepository {
 
     boolean checkId(String memberId);
 
+    double getAnnualCountById(String memberId);
+
 
 }
