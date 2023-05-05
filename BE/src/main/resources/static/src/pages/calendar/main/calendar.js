@@ -118,9 +118,7 @@ export default function Calendar() {
   */
   
   
-  buttons.onclick = clickEvent;
-  
-  function clickEvent(e) {
+  buttons.onclick = (e) => {
     if (e.target.id === 'prev-btn') {
       debounceButtonEvent(handlePrevClick, 250, this)();
     } else if (e.target.id === 'next-btn') {
@@ -132,10 +130,11 @@ export default function Calendar() {
     } else if (isArrowModal(e)) {
       calArrowSvg.classList.toggle('rotate-180');
       calArrowModal.style.display = isDisplayModal(); 
-    } else if (isModalExitBtn(e)) {
-      calArrowModal.style.display = isDisplayModal();
-      calArrowSvg.classList.toggle('rotate-180');
-    } else if (isModalBtn(e)) {
+    }
+  }
+  
+  calArrowModal.onclick = (e) => {
+    if (isModalBtn(e)) {
       const select = Number(e.target.innerText.substring(0, e.target.innerText.length - 1));
       if (select === year) return;
       if (select === month) return;
@@ -144,9 +143,12 @@ export default function Calendar() {
       } else {
         setMdy({ ...mdy, year: select});
       }
+    } else if (isModalExitBtn(e)) {
+      calArrowModal.style.display = isDisplayModal();
+      calArrowSvg.classList.toggle('rotate-180');
     }
   }
-  
+
   function isModalBtn(e) {
     return e.target.classList.contains('modal-year-month');
   }

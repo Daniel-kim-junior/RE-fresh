@@ -185,9 +185,11 @@
               </tr>
             </tbody>
           </table>
-          <aside class="flex flex-col items-center w-96 max-h-96 relative">
+          <aside
+            class="flex flex-col w-96 max-h-96 relative border-4 border-gray-400 border-double"
+          >
             <label for="annual" class="hidden">annual</label>
-            <div class="absolute top-0 left-0">
+            <div class="absolute top-0 left-5">
               <select
                 id="search-option"
                 class="block w-48 p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -198,20 +200,20 @@
               </select>
             </div>
 
-            <div id="department" class="absolute top-16 left-0 hidden">
+            <div id="department" class="absolute top-16 left-5 hidden">
               <select
                 id="department-select"
-                class="block w-44 p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="block w-48 p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               ></select>
             </div>
 
-            <div id="member" class="absolute top-16 left-0 hidden">
+            <div id="member" class="absolute top-16 left-5 hidden">
               <div class="relative rounded-md shadow-sm">
                 <input
                   type="text"
                   name="name"
                   id="member-input"
-                  class="form-input w-44 h-9 p-2 block sm:text-sm sm:leading-5 border-2"
+                  class="form-input w-48 h-9 p-2 block sm:text-sm sm:leading-5 border-2"
                   placeholder="이름을 입력하세요."
                   required
                 />
@@ -225,7 +227,7 @@
                 </div>
               </div>
             </div>
-            <article id="aside" class="ml-6"></article>
+            <article id="aside" class="absolute top-28 left-5"></article>
           </aside>
         </section>
       </main>
