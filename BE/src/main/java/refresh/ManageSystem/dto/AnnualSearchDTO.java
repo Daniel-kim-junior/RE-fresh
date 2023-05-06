@@ -16,5 +16,5 @@ public class AnnualSearchDTO {
     private String memberName;
     private String startDate;
     private String endDate;
-
+    private PageDTO pageDTO;
 }

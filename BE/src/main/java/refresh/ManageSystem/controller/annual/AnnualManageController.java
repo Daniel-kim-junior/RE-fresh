@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import refresh.ManageSystem.dao.PageDAO;
 import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
 import refresh.ManageSystem.dto.MemberLoginDTO;
+import refresh.ManageSystem.dto.PageDTO;
 import refresh.ManageSystem.service.AnnualManageService;
 import refresh.ManageSystem.service.DepartmentService;
 import refresh.ManageSystem.vo.AnnualStatusVO;
@@ -29,13 +31,22 @@ public class AnnualManageController {
     @Autowired
     HttpSession session;
 
-    //연차관리 조회
     @GetMapping("/admin/annualManage")
-    public String getAnnualManage(Model model){
+    public String getAnnualManage(Model model, int page){
         if(!verifyAdmin()) return "redirect:/";
 
-        List<AnnualManageDTO> annualList = annualManageService.getAnnualManageList();
-        model.addAttribute("annualList", annualList);
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setPage(page);
+        pageDTO.setStart((page-1) * pageDTO.getPerPageNum());
+
+        PageDAO pageDAO = new PageDAO();
+        pageDAO.setPageDTO(pageDTO);
+        pageDAO.setTotalCount(annualManageService.getAnnualManageList().size());
+        pageDAO.pageMaker();
+
+        model.addAttribute("annualList", annualManageService.getAnnualManageListByPage(pageDTO));
+        model.addAttribute("pageDAO", pageDAO);
+        model.addAttribute("currentPage", page);
 
         List<String> deptNames = departmentService.getDepartmentAllList();
         model.addAttribute("deptNames",deptNames);
@@ -45,18 +56,29 @@ public class AnnualManageController {
         return "/pages/admin/annual/annualmanage";
     }
 
-    //연차관리 검색 컨트롤러
-    @PostMapping("/admin/annualManage")
-    public String postAnnualManage(@ModelAttribute("searchData")AnnualSearchDTO searchDto , Model model ){
+    @GetMapping("/admin/annualManage/search")
+    public String seach(AnnualSearchDTO dto, int page, Model model) {
         if(!verifyAdmin()) return "redirect:/";
 
-        List<AnnualManageDTO> annualList = annualManageService.getAnnualSearchList(searchDto);
-        model.addAttribute("annualList",annualList);
+        PageDTO pageDTO = new PageDTO();
+        pageDTO.setPage(page);
+        pageDTO.setStart((page-1) * pageDTO.getPerPageNum());
+        dto.setPageDTO(pageDTO);
+
+        PageDAO pageDAO = new PageDAO();
+        pageDAO.setPageDTO(pageDTO);
+        pageDAO.setTotalCount(annualManageService.countAnnualSearchList(dto));
+        pageDAO.pageMaker();
+
+        model.addAttribute("annualList", annualManageService.getAnnualManageSearchList(dto));
+        model.addAttribute("pageDAO", pageDAO);
+        model.addAttribute("currentPage", page);
 
         List<String> deptNames = departmentService.getDepartmentAllList();
         model.addAttribute("deptNames",deptNames);
 
         model.addAttribute("searchData", new AnnualSearchDTO());
+
         return "/pages/admin/annual/annualmanage";
     }
 
