@@ -8,6 +8,7 @@ import refresh.ManageSystem.dao.AnnualStatusDAO;
 import refresh.ManageSystem.dto.AnnualHistoryDTO;
 import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
+import refresh.ManageSystem.dto.PageDTO;
 import refresh.ManageSystem.repository.AnnualRepository;
 import refresh.ManageSystem.vo.AnnualHistoryVO;
 import refresh.ManageSystem.vo.AnnualManageVO;
@@ -44,17 +45,17 @@ public class AnnualManageService {
         return voToDTO(annualRepository.getAnnualManageList());
     }
 
-    public List<AnnualManageDTO> getAnnualSearchList(AnnualSearchDTO searchDTO){
-        List<AnnualManageVO> list =  annualRepository.getAnnualSearchList(AnnualSearchDAO
-                .builder()
-                .departmentName(searchDTO.getDepartmentName())
-                .memberName(searchDTO.getMemberName())
-                .startDate(searchDTO.getStartDate())
-                .endDate(searchDTO.getEndDate())
-                .build());
-
-         return voToDTO(list);
-    }
+//    public List<AnnualManageDTO> getAnnualSearchList(AnnualSearchDTO searchDTO){
+//        List<AnnualManageVO> list =  annualRepository.getAnnualSearchList(AnnualSearchDAO
+//                .builder()
+//                .departmentName(searchDTO.getDepartmentName())
+//                .memberName(searchDTO.getMemberName())
+//                .startDate(searchDTO.getStartDate())
+//                .endDate(searchDTO.getEndDate())
+//                .build());
+//
+//         return voToDTO(list);
+//    }
 
     /**
      * Park JuHee
@@ -121,6 +122,18 @@ public class AnnualManageService {
                             .build());
         }
         return result;
+    }
+
+    public List<AnnualManageVO> getAnnualManageListByPage(PageDTO dto) {
+        return annualRepository.getAnnualManageListByPage(dto);
+    }
+
+    public int countAnnualSearchList(AnnualSearchDTO dto) {
+        return annualRepository.countAnnualSearchList(dto);
+    }
+
+    public List<AnnualManageVO> getAnnualManageSearchList(AnnualSearchDTO dto) {
+        return annualRepository.getAnnualSearchList(dto);
     }
 
 }

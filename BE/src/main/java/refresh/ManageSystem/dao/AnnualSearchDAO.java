@@ -3,6 +3,7 @@ package refresh.ManageSystem.dao;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import refresh.ManageSystem.dto.PageDTO;
 
 @ToString
 @Getter
