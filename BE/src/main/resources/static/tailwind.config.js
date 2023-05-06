@@ -14,17 +14,18 @@ module.exports = {
         'holiday': '#DC143C',
         'cal-modal': '#FFFAFA',
         'today-color': '#B3E0FF',
-        'table-rgba': 'rgba(160, 160, 160)',
+        'table-rgba': 'rgba(226, 226, 226)',
       },
       height: {
-        'table-height': '500px',
+        'table-height': '560px',
         'ss': '0.2rem',
-        'td-height': '90px',
+        'td-height': '80px',
       },
       width: {
         '128': '80rem',
-        'table-width': '840px',
-        'td-width': '120px'
+        'table-width': '700px',
+        'td-width': '100px',
+        'aside': '400px'
       },
       spacing: {
         'cal-modal': '60%',

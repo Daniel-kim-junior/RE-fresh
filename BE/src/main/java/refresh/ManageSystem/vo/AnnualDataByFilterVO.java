@@ -16,6 +16,8 @@ import lombok.ToString;
 @Getter @ToString
 public class AnnualDataByFilterVO {
     private String name;
+
+    private String email;
     private LocalDate startDate;
     private LocalDate endDate;
 }
