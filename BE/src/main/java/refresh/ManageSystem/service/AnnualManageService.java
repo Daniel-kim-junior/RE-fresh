@@ -3,6 +3,7 @@ package refresh.ManageSystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import refresh.ManageSystem.dao.AnnualCountDAO;
 import refresh.ManageSystem.dao.AnnualSearchDAO;
 import refresh.ManageSystem.dao.AnnualStatusDAO;
 import refresh.ManageSystem.dto.AnnualHistoryDTO;
@@ -10,6 +11,7 @@ import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
 import refresh.ManageSystem.dto.PageDTO;
 import refresh.ManageSystem.repository.AnnualRepository;
+import refresh.ManageSystem.repository.MemberRepository;
 import refresh.ManageSystem.vo.AnnualHistoryVO;
 import refresh.ManageSystem.vo.AnnualManageVO;
 import refresh.ManageSystem.vo.AnnualStatusVO;
@@ -33,6 +35,8 @@ public class AnnualManageService {
 
     @Autowired
     private AnnualRepository annualRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
 
     /**
@@ -59,18 +63,30 @@ public class AnnualManageService {
 
     /**
      * Park JuHee
-     * 연차 수락,반려값을 bool 타입에서 string으르 변환하여 update 하는 서비스 메소드
-     * 2023-05-03
+     * 연차 수락 : 연차 횟수 차감, 연차 상태 변경
+     * 연차 반려 : 연차 상태 변경
+     * 2023-05-06
      * */
     public boolean updateAnnualStatus(AnnualStatusVO statusVO,String memberName){
-        String approved = statusVO.isStatus() ? "승인" : "반려" ;
+        boolean memResult= true;
 
-         return annualRepository.updateAnnualStatus(AnnualStatusDAO
-                 .builder()
-                 .uid(statusVO.getUid())
-                 .acceptor(memberName)
-                 .status(approved)
-                 .build());
+        if(statusVO.getStatus().equals("승인")){
+            Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+
+            memResult =  memberRepository.updateAnnulCount(AnnualCountDAO
+                        .builder()
+                        .annualUid(statusVO.getUid())
+                        .count(count)
+                        .build());
+        }
+        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+                                .builder()
+                                .uid(statusVO.getUid())
+                                .acceptor(memberName)
+                                .status(statusVO.getStatus())
+                                .build());
+
+         return (memResult && annResult);
     }
 
 

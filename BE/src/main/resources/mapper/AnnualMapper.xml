@@ -8,7 +8,7 @@
              (select mem.member_name , member_uid , mem.department_uid, dept.department_name
               from member mem
                        left join department dept on mem.department_uid = dept.department_uid) m
-             on a.member_uid = m.member_uid ;
+             on a.member_uid = m.member_uid order by create_tm asc
     </select>
 
     <select id="getAnnualManageListByPage" resultType="AnnualManageVO" parameterType="PageDTO">
@@ -43,6 +43,7 @@
                 and <![CDATA[ date_format(create_tm,'%Y-%m-%d') <= date_format(#{endDate} ,'%Y-%m-%d')]]>
             </if>
         </where>
+        ORDER BY create_tm asc
     </select>
 
     <select id="getAnnualSearchList" resultType="AnnualManageVO" parameterType="AnnualSearchDTO">
