@@ -10,65 +10,71 @@
   <script src="/src/pages/admin/member/adminTab.js" type="module"></script>
 </head>
 <body>
-<div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
-<div class="flex justify-center pt-10">
-  <form method="get" th:action="@{/admin/members/search}" th:object="${memberSearchDTO}" >
-    <div class="bg-neutral-100 p-3 rounded-lg ">
-      <lable for="dept" class="mx-4">부서</lable>
-      <select th:field="*{departmentName}" id="dept" class="bg-white border text-gray-900 text-sm border-gray-300 rounded-lg py-1 pr-8 focus:border-blue-500 hover:border-blue-500">
-        <option value="" selected>부서명 선택</option>
-        <th:block th:if="${department}">
-          <option th:each="department : ${department}" th:value="${department}" th:text="${department}"></option>
-        </th:block>
-      </select>
-      <label class="mx-4">사원명</label>
-      <input th:field="*{memberName}" type="text" class="mx-1 border rounded-lg px-1 py-1  text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 " />
-      <input type="checkbox" th:field="*{memberStatus}" class="ml-4" th:value="'in use'">
-      <label>사용중인 계정만 표시</label>
-      <button id="submit-btn" type="submit" class="ml-10 bg-blue-500 px-3 py-1 rounded-lg text-white hover:bg-blue-700">조회</button>
-    </div>
-    <input name="page" value=1 hidden>
-  </form>
-</div>
-<div class="flex justify-center pt-9">
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="text-sm text-left text-gray-800 ">
-      <thead class="text-sm text-gray-700 uppercase bg-gray-50 ">
-      <tr>
-        <th scope="col" class="px-6 py-3">사원아이디</th>
-        <th scope="col" class="px-6 py-3">사원명</th>
-        <th scope="col" class="px-6 py-3">부서코드</th>
-        <th scope="col" class="px-6 py-3">부서이름</th>
-        <th scope="col" class="px-6 py-3">전화번호</th>
-        <th scope="col" class="px-6 py-3">이메일</th>
-        <th scope="col" class="px-6 py-3">입사일자</th>
-        <th scope="col" class="px-6 py-3">퇴사일자</th>
-        <th scope="col" class="px-6 py-3">사용자 상태</th>
-      </tr>
-      </thead>
-      <tbody th:if="${memberVO}">
-      <tr th:each="member : ${memberVO}" class="bg-white border-b  hover:bg-sky-50">
-        <td class="px-6 py-3">[[${member.memberId}]]</td>
-        <td class="px-6 py-3">[[${member.memberName}]]</td>
-        <td class="px-6 py-3">[[${member.departmentId}]]</td>
-        <td class="px-6 py-3">[[${member.departmentName}]]</td>
-        <td class="px-6 py-3">[[${member.memberCellphone}]]</td>
-        <td class="px-6 py-3">[[${member.memberEmail}]]</td>
-        <td class="px-6 py-3">[[${member.createTm}]]</td>
-        <td class="px-6 py-3">[[${member.retireDate}]]</td>
-        <td class="px-6 py-3">[[${member.memberStatus}]]</td>
-      </tr>
-      </tbody>
-    </table>
+<div th:replace="~{/fragments/header/header.html :: header}"></div>
+
+<div th:replace="~{/fragments/sidebar/sidebar.html :: sidebar}"></div>
+
+<main class="flex pt-20 mt-2 pl-64  flex-col">
+  <div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
+  <div class="flex justify-center pt-10">
+    <form method="get" th:action="@{/admin/members/search}" th:object="${memberSearchDTO}" >
+      <div class="bg-white p-3 rounded-lg shadow-md">
+        <lable for="dept" class="mx-4">부서</lable>
+        <select th:field="*{departmentName}" id="dept" class="bg-white border text-gray-900 text-sm border-gray-300 rounded-lg py-1 pr-8 focus:border-blue-500 hover:border-blue-500">
+          <option value="" selected>부서명 선택</option>
+          <th:block th:if="${department}">
+            <option th:each="department : ${department}" th:value="${department}" th:text="${department}"></option>
+          </th:block>
+        </select>
+        <label class="mx-4">사원명</label>
+        <input th:field="*{memberName}" type="text" class="mx-1 border rounded-lg px-1 py-1  text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 " />
+        <input type="checkbox" th:field="*{memberStatus}" class="ml-4" th:value="'in use'">
+        <label>사용중인 계정만 표시</label>
+        <button id="submit-btn" type="submit" class="ml-10 bg-blue-400 px-3 py-1 rounded-lg text-white hover:bg-blue-500">조회</button>
+      </div>
+      <input name="page" value=1 hidden>
+    </form>
   </div>
-</div>
-<div id="page" class="flex justify-center">
-  <a th:if="${pageDAO.getStartPage() != 1}" class="mx-2" th:href="@{/admin/members/search(dto=${memberSearchDTO}, page=${pageDAO.getStartPage() - 1})}">이전</a>
-  <span th:each="i : ${#numbers.sequence(pageDAO.getStartPage(), pageDAO.getEndPage())}">
-    <a th:if="${i} == ${currentPage}" class="text-blue-500 mx-2" th:text="${i}"></a>
-    <a th:if="${i} != ${currentPage}" class="mx-2" th:href="@{/admin/members/search(departmentName=${param.departmentName}, memberName=${param.memberName}, memberStatus=${param.memberStatus}, page=${i})}" th:text="${i}"></a>
-  </span>
-  <a th:if="${pageDAO.getEndPage() != pageDAO.getTotalPage()}" class="mx-2" th:href="@{/admin/members(page=${pageDAO.getEndPage() + 1})}">다음</a>
-</div>
+  <div class="flex justify-center mt-16">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="text-sm text-left text-gray-800 overflow-scroll">
+        <thead class="text-sm text-gray-700 uppercase bg-blue-100 text-center">
+        <tr>
+          <th scope="col" class="px-6 py-3">사원아이디</th>
+          <th scope="col" class="px-6 py-3">사원명</th>
+          <th scope="col" class="px-6 py-3">부서코드</th>
+          <th scope="col" class="px-6 py-3">부서이름</th>
+          <th scope="col" class="px-6 py-3">전화번호</th>
+          <th scope="col" class="px-6 py-3">이메일</th>
+          <th scope="col" class="px-6 py-3">입사일자</th>
+          <th scope="col" class="px-6 py-3">퇴사일자</th>
+          <th scope="col" class="px-6 py-3">사용자 상태</th>
+        </tr>
+        </thead>
+        <tbody th:if="${memberVO}">
+        <tr th:each="member : ${memberVO}" class="bg-white border-b  hover:bg-sky-50 text-center">
+          <td class="px-6 py-3">[[${member.memberId}]]</td>
+          <td class="px-6 py-3">[[${member.memberName}]]</td>
+          <td class="px-6 py-3">[[${member.departmentId}]]</td>
+          <td class="px-6 py-3">[[${member.departmentName}]]</td>
+          <td class="px-6 py-3">[[${member.memberCellphone}]]</td>
+          <td class="px-6 py-3">[[${member.memberEmail}]]</td>
+          <td class="px-6 py-3">[[${member.createTm}]]</td>
+          <td class="px-6 py-3">[[${member.retireDate}]]</td>
+          <td class="px-6 py-3">[[${member.memberStatus}]]</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div id="page" class="flex justify-center mt-10">
+    <a th:if="${pageDAO.getStartPage() != 1}" class="mx-2" th:href="@{/admin/members/search(dto=${memberSearchDTO}, page=${pageDAO.getStartPage() - 1})}">이전</a>
+    <span th:each="i : ${#numbers.sequence(pageDAO.getStartPage(), pageDAO.getEndPage())}">
+      <a th:if="${i} == ${currentPage}" class="text-blue-500 mx-2" th:text="${i}"></a>
+      <a th:if="${i} != ${currentPage}" class="mx-2" th:href="@{/admin/members/search(departmentName=${param.departmentName}, memberName=${param.memberName}, memberStatus=${param.memberStatus}, page=${i})}" th:text="${i}"></a>
+    </span>
+    <a th:if="${pageDAO.getEndPage() != pageDAO.getTotalPage()}" class="mx-2" th:href="@{/admin/members(page=${pageDAO.getEndPage() + 1})}">다음</a>
+  </div>
+</main>
 </body>
 </html>

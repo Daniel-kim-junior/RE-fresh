@@ -2,6 +2,8 @@ package refresh.ManageSystem.repository;
 
 import java.util.List;
 import java.util.Optional;
+
+import refresh.ManageSystem.dao.AnnualCountDAO;
 import refresh.ManageSystem.dao.MemberDAO;
 import refresh.ManageSystem.dto.PageDTO;
 import refresh.ManageSystem.vo.MemberVO;
@@ -36,6 +38,8 @@ public interface MemberRepository {
     List<MemberVO> getMemberListByPage(PageDTO dto);
 
     int countMemberSearchList(MemberSearchDTO dto);
+
+    Boolean updateAnnulCount(AnnualCountDAO annualCountDAO);
 
 
 }
