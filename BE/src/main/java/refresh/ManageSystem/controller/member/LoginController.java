@@ -68,7 +68,7 @@ public class LoginController {
             return "/error";
         }
         MemberLoginDTO memberLogin = (MemberLoginDTO) model.getAttribute("MemberLogin");
-          memberLogin.setId(memberLoginDTO.getId());
+        memberLogin.setId(memberLoginDTO.getId());
         memberLogin.setPassword(cryptoPassword);
         memberLogin.setAuthority(memberService.getAuthority(memberLoginDTO.getId(), cryptoPassword));
         memberLogin.setMemberName(memberService.getMemberName(memberLoginDTO.getId(), cryptoPassword));

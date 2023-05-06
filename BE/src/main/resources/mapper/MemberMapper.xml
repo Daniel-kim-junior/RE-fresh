@@ -26,7 +26,6 @@
   </select>
     <select id="getAnnualCountById" parameterType="String" resultType="_double">
         select annual_count from member where member_id = #{memberId}
-
     </select>
     <select id="getMemberList" resultType="MemberVO">
       select member.member_id, member.member_name, department.department_id, department.department_name,
@@ -72,4 +71,8 @@
     </where>
 
     </select>
+    <update id="updateAnnulCount" parameterType="AnnualCountDAO" >
+        update member set annual_count =  annual_count - #{count}
+        where member_uid = (select member_uid from annual where annual_uid = #{annualUid});
+    </update>
 </mapper>
