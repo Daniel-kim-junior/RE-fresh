@@ -35,7 +35,6 @@ public class AnnualManageController {
 
     @GetMapping("/admin/annualManage")
     public String getAnnualManage(Model model, int page){
-//        if(!verifyAdmin()) return "redirect:/";
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setPage(page);
@@ -64,7 +63,6 @@ public class AnnualManageController {
 
     @GetMapping("/admin/annualManage/search")
     public String seach(AnnualSearchDTO dto, int page, Model model) {
-//        if(!verifyAdmin()) return "redirect:/";
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setPage(page);
@@ -96,15 +94,8 @@ public class AnnualManageController {
     @PutMapping("/admin/status")
     public boolean updateAnnualStatus(@RequestBody AnnualStatusVO status, @SessionAttribute("MemberLogin")MemberLoginDTO memberDTO){
 
-//        if(!verifyAdmin()) return false;
-
         return annualManageService.updateAnnualStatus(status, memberDTO.getId() );
 
     }
-
-   //session 검증 및 admin검증 메소드
-//    private boolean verifyAdmin() {
-//       MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
-//        return (memberLoginDTO != null && memberLoginDTO.getAuthority().equals("admin"))? true :false;
-//    }
+    
 }

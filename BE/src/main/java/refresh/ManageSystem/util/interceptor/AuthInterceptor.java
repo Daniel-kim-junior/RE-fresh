@@ -15,9 +15,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
 
-        System.out.println("admin 인터셉터");
-        System.out.println(memberLoginDTO);
-
         if(memberLoginDTO == null || memberLoginDTO.getId() == null) {
             response.sendRedirect("/auth");
             return false;
