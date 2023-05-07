@@ -71,6 +71,14 @@
     </where>
 
     </select>
+
+    <select id="getMemberInfo" resultType="MemberInfoVO" parameterType="String">
+        select department.department_name, member.annual_count, count(annual.annual_type) annualRequest from member
+        left join department on member.department_uid = department.department_uid
+        left join annual on member.member_uid = annual.member_uid
+        where member.member_id = #{memberId}
+    </select>
+
     <update id="updateAnnulCount" parameterType="AnnualCountDAO" >
         update member set annual_count =  annual_count - #{count}
         where member_uid = (select member_uid from annual where annual_uid = #{annualUid});
@@ -80,4 +88,5 @@
         update member set annual_count =  annual_count + #{count}
         where member_uid = (select member_uid from annual where annual_uid = #{annualUid});
     </update>
+
 </mapper>

@@ -20,10 +20,9 @@
 
 <div th:replace="~{/fragments/sidebar/sidebar.html :: sidebar}"></div>
 
-<main class="flex pt-20 mt-2 pl-64  flex-col">
+<main class="flex pt-16 pl-64 flex-col bg-gray-50 h-full">
   <div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
   <div class=" flex justify-center pt-10">
-
     <form id="searchForm" th:action="@{/admin/annualManage/search}" th:object="${searchData}" method="get"  >
       <div class="bg-white p-3 rounded-lg shadow-md">
         <lable for="dept" class="mx-4">부서</lable>
