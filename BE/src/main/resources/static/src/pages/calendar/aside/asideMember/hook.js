@@ -19,6 +19,12 @@ function Hook() {
     name: null,
     rootComponent: null,
   }
+  function optionInit() {
+
+    options.states = [];
+  }
+
+
   /*
     Daniel Kim
 
@@ -101,8 +107,19 @@ function debounceFrame(callback) {
   function getName() {
     return options.name;
   }
+
+  function waitForRender(elem, callback) {
+    requestAnimationFrame(() => {
+      var isRenderedReady = elem.offsetHeight > 0;
+      if (isRenderedReady) {
+        callback();
+      } else {
+        waitForRender(elem, callback);
+      }
+    });
+  }
   
-  return { useState, render, getName};
+  return { useState, render, getName, waitForRender};
 }
 
 function onLoad(callback) {
@@ -123,4 +140,4 @@ function throttle(callback, delay) {
 
 export { onLoad, throttle };
 
-export const {useState, render, getName } = Hook();
+export const {useState, render, getName, waitForRender } = Hook();

@@ -1,6 +1,6 @@
 import { getCalendarDataByDepartment, getDepartmentInit} from '../../../api/calendarApi.js';
-import { useState, getRenderCount, getDepartmentName, setDepartmentName} from './hook.js';
-import { getDate, onLoad, debounceButtonEvent } from './hook.js';
+import { useState, getRenderCount, getDepartmentName, setDepartmentName, waitForRender} from './hook.js';
+import { getDate, onLoad, debounceButtonEvent} from './hook.js';
 import { initDepartment } from "../header/departmentOption/main.js";
 
 /*
@@ -23,9 +23,10 @@ export default function Calendar() {
 
   const buttons = document.querySelector('#header-container');
   const header = document.querySelector('#calendar-header');
-  const calArrowSvg = document.querySelector('#cal-arrow-svg');
+  const calArrowSvg = document.querySelector('.modal-open-close');
   const calArrowModal = document.querySelector('#cal-arrow-modal');
-  const modalContainer = document.querySelector('#modal-container');
+  const innerYear = document.querySelector("#inner-year");
+  const innerMonth = document.querySelector("#inner-month");
   /*
     Daniel Kim
     state 관리를 위해 선언한 변수
@@ -37,7 +38,6 @@ export default function Calendar() {
   const [calendar, setCalendar] = useState([]);
   const [mdy, setMdy] = useState({ year: y, month: m });
   const { year, month } = mdy;
-
   /*
     Daniel Kim
     Calendar 함수가 호출될 때 실행되는 함수
@@ -58,13 +58,25 @@ export default function Calendar() {
       } else {
         response = await getCalendarDataByDepartment(year, month, getDepartmentName()); 
       } 
-      const cal = makeCalendar(response);
+      innerYear.innerHTML = makeModal('year', year, month);
+      innerMonth.innerHTML = makeModal(false, year, month);
+      const cal = makeCalendar(response, year, month);
       setCalendar(cal);
+      waitForRender(innerYear, calScrollAndEvent, 'year', year, innerYear);
+      waitForRender(innerMonth, calScrollAndEvent, 'month', month, innerMonth);
       header.innerHTML = makeHeader(year, month);
     } catch (error) {
       console.error(error);
     }
   });
+  
+  function calScrollAndEvent(...args) {
+    const [trigger, value, dom] = args;
+    const valueOffset = document.querySelector(`#${trigger}-${value}`).offsetTop;
+    dom.scrollTo({ top: valueOffset, behavior: 'smooth' });
+  }
+
+
   /*
     Daniel Kim
     버튼을 클릭했을 때 이전 달, 다음 달을 보여주기 위한 함수들
@@ -106,9 +118,7 @@ export default function Calendar() {
   */
   
   
-  buttons.onclick = clickEvent;
-  
-  function clickEvent(e) {
+  buttons.onclick = (e) => {
     if (e.target.id === 'prev-btn') {
       debounceButtonEvent(handlePrevClick, 250, this)();
     } else if (e.target.id === 'next-btn') {
@@ -117,16 +127,33 @@ export default function Calendar() {
       if (y == year && m == month) return;
       initDepartment();
       debounceButtonEvent(() => setMdy({ year: y, month: m }), 250, this)();
-    } else if (isArrowBtn(e)) {
+    } else if (isArrowModal(e)) {
       calArrowSvg.classList.toggle('rotate-180');
-      modalContainer.innerHTML = makeModal();
       calArrowModal.style.display = isDisplayModal(); 
+    }
+  }
+  
+  calArrowModal.onclick = (e) => {
+    if (isModalBtn(e)) {
+      const select = Number(e.target.innerText.substring(0, e.target.innerText.length - 1));
+      if (select === year) return;
+      if (select === month) return;
+      if (select < 13) {
+        setMdy({...mdy, month: select});
+      } else {
+        setMdy({ ...mdy, year: select});
+      }
     } else if (isModalExitBtn(e)) {
       calArrowModal.style.display = isDisplayModal();
       calArrowSvg.classList.toggle('rotate-180');
-    } else if (isModalBtn(e)) {
     }
   }
+
+  function isModalBtn(e) {
+    return e.target.classList.contains('modal-year-month');
+  }
+
+
   function isModalExitBtn(e) {
     if(e.target.classList.contains('modal-exit-btn')) return true;
   }
@@ -135,25 +162,24 @@ export default function Calendar() {
     return calArrowModal.style.display === 'none' ? 'flex ' : 'none';
   }
 
-  function isArrowBtn(e) {
-    return e.target.id === 'cal-arrow-btn' || e.target.id === 'cal-arrow-svg' || e.target.tagName === 'path';
+  function isArrowModal(e) {
+    return e.target.classList.contains('modal-open-close');
   }
 
-  function makeModal() {
-    return `
-      <div class="overflow-y-scroll w-full ">
-        ${makeModalContents(1900, 2037, '년')}
-      </div>
-      <div class="overflow-y-scroll w-full">
-      ${makeModalContents(1, 12, '월')}
-      </div>
-    `
+  function makeModal(flag, ...args) {
+    const [year, month] = args;
+    return flag ? `${makeModalContents(1900, 2037, '년', year)}` : `${makeModalContents(1, 12, '월', month)}`;
   }
 
-  function makeModalContents(start, end, str) {
+  function makeModalContents(start, end, str, value) {
     let dom = '';
     for (let i = start; i <= end; i++) {
-      dom += `<li class="block p-1.5 hover:bg-sky-200" value=${i}><a href="javascript:;" class="block w-full">${i + str}</a></li>`;
+      dom += `<li id=${str === '월' ? `month-${i}` : `year-${i}`} class="block p-1.5 hover:bg-sky-200 modal-year-month ${str === '년' && i === value ? 'bg-sky-200' : ''}
+      ${str === '월' && i === value ? 'bg-sky-200' : ''}" value=${i}
+      >
+      <a href="javascript:;" class="block w-full modal-year-month">
+      ${i + str}</a>
+      </li>`;
     }
     return dom;
   }
@@ -167,7 +193,7 @@ export default function Calendar() {
     2023-04-23
   */
   function makeHeader(year, month) {
-    return `<h1 class="text-2xl font-bold text-center text-gray-800 py-2">${year}년 ${month}월</h1>`
+    return `<p class="text-2xl whitespace-nowrap font-bold w-full text-center text-gray-800 py-2">${year}년 ${month}월</p>`
   }
 
 
@@ -184,7 +210,7 @@ export default function Calendar() {
   
 
   function isToday(obj) {
-    return obj.hoName !== '' && d === obj.day && m === month;
+    return obj.hoName !== '' && year === y && month === m  && obj.day === d;
   }
 
 
@@ -207,16 +233,16 @@ export default function Calendar() {
       }
 
       if (parseInt(i / 7) === cnt) {
-        dom += `<td class="${isToday(calendar[i]) ? 'bg-orange-200' : ''}  w-20 h-32 relative">
-            <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
-              ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
+        dom += `<td class="${isToday(calendar[i]) ? 'bg-today-color' : ''}  w-td-width h-td-height relative">
+            <div class='absolute ${fontStyle} top-2 left-3'>${calendar[i].day}</div>
+              ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute top-3 left-12">${calendar[i].hoName}</div>` : ''}
             ${calendar[i].sumCount !== 0 ?`<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
         </td>`;
         
       } else {
-        dom += `</tr><tr><td class="${isToday(calendar[i]) ? 'bg-orange-200' : ''}w-20 h-32 relative">
-        <div class='absolute ${fontStyle} top-2 left-2'>${calendar[i].day}</div>
-          ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute bottom-6 left-2">${calendar[i].hoName}</div>` : ''}
+        dom += `</tr><tr><td class="${isToday(calendar[i]) ? 'bg-today-color' : ''} w-td-width h-td-height relative">
+        <div class='absolute ${fontStyle} top-2 left-3'>${calendar[i].day}</div>
+          ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute top-3 left-12">${calendar[i].hoName}</div>` : ''}
           ${calendar[i].sumCount !== 0 ? `<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
       </td>`;
         cnt++;

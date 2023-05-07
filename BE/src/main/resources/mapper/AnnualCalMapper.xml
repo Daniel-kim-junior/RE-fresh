@@ -6,11 +6,11 @@
     department_uid in (select department_uid from department where department_name = #{departmentName}) order by day asc;
   </select>
   <select id="getAnnualDataByName" resultType="AnnualDataByFilterVO" parameterType="AnnualDataByFilterDAO">
-    select mem.member_name as name, start_date, end_date from annual as ann join member as mem on ann.member_uid = mem.member_uid where mem.member_name like concat('%', #{name}, '%')
+    select mem.member_name as name, mem.member_email as email ,start_date, end_date from annual as ann join member as mem on ann.member_uid = mem.member_uid where mem.member_name like concat('%', #{name}, '%')
     limit #{pageStart}, #{pageEnd}
   </select>
   <select id="getAnnualDataByDepartment" resultType="AnnualDataByFilterVO" parameterType="AnnualDataByFilterDAO">
-    select mem.member_name as name, start_date, end_date from annual as ann join member as mem on ann.member_uid = mem.member_uid
+    select mem.member_name as name, mem.member_email as email ,start_date, end_date from annual as ann join member as mem on ann.member_uid = mem.member_uid
     where mem.department_uid in (select department_uid from department where department_name = #{name}) limit #{pageStart}, #{pageEnd}
   </select>
 </mapper>

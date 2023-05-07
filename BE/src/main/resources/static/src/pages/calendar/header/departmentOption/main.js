@@ -8,5 +8,5 @@ import { $App } from "./app.js";
 
   2023-04-24
 */
-export const initDepartment = () => render($App, document.querySelector("#cal-header"));
+export const initDepartment = () => render($App, document.querySelector("#depart-cal-header"));
 initDepartment();
