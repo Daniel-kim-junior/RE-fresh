@@ -5,6 +5,9 @@
   <title>Annual Manage</title>
   <link rel="stylesheet" th:href="@{/dist/output.css}" />
   <link rel="stylesheet" href="/dist/output.css" />
+  <!--fontAwesome-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
   <script src="/src/pages/admin/annual/annualmanage.js" type="module"></script>
 
   <script src="/src/pages/admin/member/adminTab.js" type="module"></script>
@@ -20,8 +23,7 @@
 <main class="flex pt-16 pl-64 flex-col bg-gray-50 h-full">
   <div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
   <div class=" flex justify-center pt-10">
-
-    <form id="searchForm" th:action="@{/admin/annualManage}" th:object="${searchData}" method="post"  >
+    <form id="searchForm" th:action="@{/admin/annualManage/search}" th:object="${searchData}" method="get"  >
       <div class="bg-white p-3 rounded-lg shadow-md">
         <lable for="dept" class="mx-4">부서</lable>
         <select th:field="*{departmentName}" id="dept" class="bg-white border text-gray-900 text-sm border-gray-300 rounded-lg py-1 pr-8 focus:border-blue-500 hover:border-blue-500">
@@ -37,6 +39,7 @@
         <input th:field="*{endDate}" type="date" class="mx-2 border rounded-lg px-1 py-1 text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 "/>
         <button id="submit-btn" type="submit" class="ml-10 bg-blue-400 px-3 py-1 rounded-lg text-white hover:bg-blue-500">조회</button>
       </div>
+      <input name="page" value=1 hidden>
     </form>
   </div>
 
@@ -65,14 +68,24 @@
             <span>[[${data.endDate}]]</span>
           </td>
           <td class="px-6 py-3">
-            <button id="statusBnt" th:onclick="showEditAnnual( [[${data.annualUid}]] )" class="bg-inherit text-blue-700">[[${data.annualStatus}]]</button>
+            <button id="statusBnt" th:onclick="showEditAnnual( [[${data.annualUid}]] , [[${data.annualStatus}]], [[${data.startDate}]], [[${data.endDate}]],[[${data.annualType}]] )">
+              <span class="mr-2" th:class="|fa fa-circle  ${data.annualStatus eq '승인' ? 'text-green-700' : data.annualStatus eq '반려' ? 'text-gray-300' : data.annualStatus eq '취소' ? 'text-red-500' : 'text-blue-700'}|"></span>
+              <span class="bg-inherit ">[[${data.annualStatus}]]</span>
+            </button>
             <div th:replace="/pages/admin/annual/annualmodal.html :: editAnnual-modal" ></div>
           </td>
         </tr>
         </tbody>
       </table>
     </div>
-
+  </div>
+  <div id="page" class="flex justify-center mt-10">
+    <a th:if="${pageDAO.getStartPage() != 1}" class="mx-2" th:href="@{/admin/annualManage/search(dto=${searchData}, page=${pageDAO.getStartPage() - 1})}">이전</a>
+    <span th:each="i : ${#numbers.sequence(pageDAO.getStartPage(), pageDAO.getEndPage())}">
+      <a th:if="${i} == ${currentPage}" class="text-blue-500 mx-2" th:text="${i}"></a>
+      <a th:if="${i} != ${currentPage}" class="mx-2" th:href="@{/admin/annualManage/search(departmentName=${param.departmentName}, memberName=${param.memberName}, startDate=${param.startDate}, endDate=${param.endDate},page=${i})}" th:text="${i}"></a>
+    </span>
+    <a th:if="${pageDAO.getEndPage() != pageDAO.getTotalPage()}" class="mx-2" th:href="@{/admin/annualManage(page=${pageDAO.getEndPage() + 1})}">다음</a>
   </div>
 </main>
 </body>

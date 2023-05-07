@@ -22,6 +22,10 @@
     </select>
     <select id="getMemberName" resultType="string" parameterType="MemberDAO">
     select member_name from member where member_id = #{memberId} and member_password = #{memberPassword}
+
+  </select>
+    <select id="getAnnualCountById" parameterType="String" resultType="_double">
+        select annual_count from member where member_id = #{memberId}
     </select>
     <select id="getMemberList" resultType="MemberVO">
       select member.member_id, member.member_name, department.department_id, department.department_name,
@@ -65,11 +69,24 @@
             and member_status = #{memberStatus}
         </if>
     </where>
+
     </select>
+
     <select id="getMemberInfo" resultType="MemberInfoVO" parameterType="String">
         select department.department_name, member.annual_count, count(annual.annual_type) annualRequest from member
         left join department on member.department_uid = department.department_uid
         left join annual on member.member_uid = annual.member_uid
         where member.member_id = #{memberId}
     </select>
+
+    <update id="updateAnnulCount" parameterType="AnnualCountDAO" >
+        update member set annual_count =  annual_count - #{count}
+        where member_uid = (select member_uid from annual where annual_uid = #{annualUid});
+    </update>
+
+    <update id="addAnnulCount" parameterType="AnnualCountDAO" >
+        update member set annual_count =  annual_count + #{count}
+        where member_uid = (select member_uid from annual where annual_uid = #{annualUid});
+    </update>
+
 </mapper>

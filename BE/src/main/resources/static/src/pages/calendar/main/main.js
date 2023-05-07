@@ -18,11 +18,10 @@ render($App, document.querySelector("#cal-header"));
   2023-04-24
 */
 
-const todayBtn = document.querySelector("#today-btn");
 const main = document.querySelector("#main");
-const calHeader = document.querySelector("#cal-header");
+const departCalHeader = document.querySelector("#depart-cal-header");
 
-calHeader.onchange = (e) => {
+departCalHeader.onchange = (e) => {
   render($App, main , e.target.value);
 }
 render($App, main);

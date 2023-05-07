@@ -3,11 +3,15 @@ package refresh.ManageSystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import refresh.ManageSystem.dao.AnnualSearchDAO;
+import refresh.ManageSystem.dao.AnnualCountDAO;
 import refresh.ManageSystem.dao.AnnualStatusDAO;
+import refresh.ManageSystem.dto.AnnualHistoryDTO;
 import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
+import refresh.ManageSystem.dto.PageDTO;
 import refresh.ManageSystem.repository.AnnualRepository;
+import refresh.ManageSystem.repository.MemberRepository;
+import refresh.ManageSystem.vo.AnnualHistoryVO;
 import refresh.ManageSystem.vo.AnnualManageVO;
 import refresh.ManageSystem.vo.AnnualStatusVO;
 
@@ -15,10 +19,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Park JuHee
  *
- * 관리자 페이지의 연차 관리 서비스 클래스
+ * 연차 관련 서비스 클래스
  *
  * 2023-05-01
  */
@@ -28,6 +33,9 @@ public class AnnualManageService {
 
     @Autowired
     private AnnualRepository annualRepository;
+    @Autowired
+    private MemberRepository memberRepository;
+
 
     /**
      * Park JuHee
@@ -39,32 +47,44 @@ public class AnnualManageService {
         return voToDTO(annualRepository.getAnnualManageList());
     }
 
-    public List<AnnualManageDTO> getAnnualSearchList(AnnualSearchDTO searchDTO){
-        List<AnnualManageVO> list =  annualRepository.getAnnualSearchList(AnnualSearchDAO
-                .builder()
-                .departmentName(searchDTO.getDepartmentName())
-                .memberName(searchDTO.getMemberName())
-                .startDate(searchDTO.getStartDate())
-                .endDate(searchDTO.getEndDate())
-                .build());
-
-         return voToDTO(list);
-    }
+//    public List<AnnualManageDTO> getAnnualSearchList(AnnualSearchDTO searchDTO){
+//        List<AnnualManageVO> list =  annualRepository.getAnnualSearchList(AnnualSearchDAO
+//                .builder()
+//                .departmentName(searchDTO.getDepartmentName())
+//                .memberName(searchDTO.getMemberName())
+//                .startDate(searchDTO.getStartDate())
+//                .endDate(searchDTO.getEndDate())
+//                .build());
+//
+//         return voToDTO(list);
+//    }
 
     /**
      * Park JuHee
-     * 연차 수락,반려값을 bool 타입에서 string으르 변환하여 update 하는 서비스 메소드
-     * 2023-05-03
+     * 연차 수락 : 연차 횟수 차감, 연차 상태 변경
+     * 연차 반려 : 연차 상태 변경
+     * 2023-05-06
      * */
     public boolean updateAnnualStatus(AnnualStatusVO statusVO,String memberName){
-        String approved = statusVO.isStatus() ? "승인" : "반려" ;
+        boolean memResult= true;
 
-         return annualRepository.updateAnnualStatus(AnnualStatusDAO
-                 .builder()
-                 .uid(statusVO.getUid())
-                 .acceptor(memberName)
-                 .status(approved)
-                 .build());
+        if(statusVO.getStatus().equals("승인")){
+            Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+
+            memResult =  memberRepository.updateAnnulCount(AnnualCountDAO
+                        .builder()
+                        .annualUid(statusVO.getUid())
+                        .count(count)
+                        .build());
+        }
+        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+                                .builder()
+                                .uid(statusVO.getUid())
+                                .acceptor(memberName)
+                                .status(statusVO.getStatus())
+                                .build());
+
+         return (memResult && annResult);
     }
 
 
@@ -94,5 +114,66 @@ public class AnnualManageService {
         return result;
     }
 
+    /**
+     * Park JuHee
+     * myPage의 연차 신청 내역을 조회하는 서비스 메소드
+     * 2023-05-05
+     * */
+    public List<AnnualHistoryDTO> getAnnualHistoryList(String id){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
+        List<AnnualHistoryDTO> result = new ArrayList<>();
+
+        for(AnnualHistoryVO data : annualRepository.getAnnualByMemberId(id)){
+            result.add(AnnualHistoryDTO
+                    .builder()
+                            .annualUid(data.getAnnualUid())
+                            .annualType(data.getAnnualType())
+                            .annualStatus(data.getAnnualStatus())
+                            .acceptor(data.getAcceptor())
+                            .startDate(dateFormat.format(data.getStartDate()))
+                            .endDate(dateFormat.format(data.getEndDate()))
+                            .createTm(dateFormat.format(data.getCreateTm()))
+                            .build());
+        }
+        return result;
+    }
+
+    /**
+     * Park JuHee
+     * 연차 취소 서비스
+     * */
+
+    public boolean cancelAnnualRequest(AnnualStatusVO statusVO){
+        boolean memResult= true;
+
+        if(statusVO.getStatus().equals("승인")){
+            Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+
+            memResult =  memberRepository.addAnnulCount(AnnualCountDAO
+                    .builder()
+                    .annualUid(statusVO.getUid())
+                    .count(count)
+                    .build());
+        }
+        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+                .builder()
+                .uid(statusVO.getUid())
+                .status("취소")
+                .build());
+
+        return (memResult && annResult);
+    }
+
+    public List<AnnualManageDTO> getAnnualManageListByPage(PageDTO dto) {
+        return  voToDTO(annualRepository.getAnnualManageListByPage(dto));
+    }
+
+    public int countAnnualSearchList(AnnualSearchDTO dto) {
+        return annualRepository.countAnnualSearchList(dto);
+    }
+
+    public List<AnnualManageDTO> getAnnualManageSearchList(AnnualSearchDTO dto) {
+        return voToDTO(annualRepository.getAnnualSearchList(dto));
+    }
 
 }

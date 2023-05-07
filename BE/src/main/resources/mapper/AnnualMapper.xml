@@ -8,12 +8,22 @@
              (select mem.member_name , member_uid , mem.department_uid, dept.department_name
               from member mem
                        left join department dept on mem.department_uid = dept.department_uid) m
-             on a.member_uid = m.member_uid ;
+             on a.member_uid = m.member_uid order by create_tm asc
     </select>
 
-    <select id="getAnnualSearchList" resultType="AnnualManageVo" parameterType="AnnualSearchDAO">
+    <select id="getAnnualManageListByPage" resultType="AnnualManageVO" parameterType="PageDTO">
         select annual_uid, m.member_name as member_name, m.department_name, a.annual_type, a.annual_status,
                start_date, end_date, a.create_tm
+        from annual a left join
+             (select mem.member_name , member_uid , mem.department_uid, dept.department_name
+              from member mem
+                       left join department dept on mem.department_uid = dept.department_uid) m
+             on a.member_uid = m.member_uid
+        limit #{start}, #{perPageNum}
+    </select>
+
+    <select id="countAnnualSearchList" resultType="int" parameterType="AnnualSearchDAO">
+        select count(*)
         from annual a left join
              (select mem.member_name , member_uid , mem.department_uid, dept.department_name
               from member mem
@@ -33,15 +43,51 @@
                 and <![CDATA[ date_format(create_tm,'%Y-%m-%d') <= date_format(#{endDate} ,'%Y-%m-%d')]]>
             </if>
         </where>
+        ORDER BY create_tm asc
+    </select>
+
+    <select id="getAnnualSearchList" resultType="AnnualManageVO" parameterType="AnnualSearchDTO">
+        select annual_uid, m.member_name as member_name, m.department_name, annual.annual_type, annual.annual_status,
+        start_date, end_date, annual.create_tm
+        from annual left join
+        (select member.member_name , member_uid , member.department_uid, department.department_name
+        from member
+        left join department on member.department_uid = department.department_uid) as m
+        on annual.member_uid = m.member_uid
+        <where>
+            <if test="departmentName != null and departmentName  !=''">
+                and department_name = #{departmentName}
+            </if>
+            <if test="memberName != null and memberName !=''">
+                and member_name like '%${memberName}%'
+            </if>
+            <if test="startDate !=null and startDate !=''">
+                and <![CDATA[ date_format(create_tm,'%Y-%m-%d') >= date_format(#{startDate} ,'%Y-%m-%d')]]>
+            </if>
+            <if test="endDate !=null and endDate !=''">
+                and <![CDATA[ date_format(create_tm,'%Y-%m-%d') <= date_format(#{endDate} ,'%Y-%m-%d')]]>
+            </if>
+        </where>
+        limit #{pageDTO.start}, #{pageDTO.perPageNum}
     </select>
 
     <update id="updateAnnualStatus" parameterType="AnnualStatusDAO">
-        update annual set annual_status = #{status} , acceptor= #{acceptor}, update_tm = now()
-        where annual_uid = #{uid}
+        <choose>
+            <when test="acceptor != null and acceptor !=''">
+                update annual set annual_status = #{status} , acceptor= #{acceptor}, update_tm = now()
+                where annual_uid = #{uid}
+            </when>
+            <otherwise>
+                update annual set annual_status = #{status} , create_tm = now()
+                where annual_uid = #{uid}
+            </otherwise>
+        </choose>
     </update>
 
-    <select id="getAnnualByMemberId">
-
+    <select id="getAnnualByMemberId" parameterType="String" resultType="AnnualHistoryVO">
+        select annual_uid, annual_type, annual_status, start_date, end_date, create_tm, acceptor
+        from annual ann
+                 inner join (select member_uid , member_id from member where member_id = #{id}) mem
+                            on ann.member_uid = mem.member_uid;
     </select>
-
 </mapper>

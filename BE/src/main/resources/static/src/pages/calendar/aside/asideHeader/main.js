@@ -10,14 +10,16 @@ const INIT_LENGTH = 0;
   const member = document.querySelector('#member');
   const departmentSelect = document.querySelector('#department-select');
   const select = document.querySelector('#department-select');
-  const aside = document.querySelector('#aside');
+  const aside = document.querySelector('#aside-contents');
   const input = document.querySelector('#member-input');
-
+  const loadingSpinner = document.querySelector('#aside-contents-status');
   selectDom.onchange = (e) => {
+    aside.onscroll = null;
     aside.innerHTML = '';
+    loadingSpinner.style.display = 'none';
     if (e.target.value === 'department') {
-      departmentSelect.value = '부서 선택';
       optionInit();
+      departmentSelect.value = '부서 선택';
       department.style.display = 'block';
       if (select.childNodes.length === INIT_LENGTH) {
         render($App, select);
