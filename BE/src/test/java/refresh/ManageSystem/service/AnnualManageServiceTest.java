@@ -48,4 +48,17 @@ class AnnualManageServiceTest {
     }
 
 
+
+    /**
+     * Daniel Kim
+     *
+     * 연차 신청 집계 서비스 테스트
+     *
+     * 2023-05-02
+     */
+    @Test
+    void 연차_신청_집계_서비스_테스트() throws Exception {
+
+    }
+
 }

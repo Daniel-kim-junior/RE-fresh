@@ -4,13 +4,14 @@ package refresh.ManageSystem.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import refresh.ManageSystem.dao.AnnualCountDAO;
-import refresh.ManageSystem.dao.AnnualSearchDAO;
 import refresh.ManageSystem.dao.AnnualStatusDAO;
+import refresh.ManageSystem.dao.AnnualSumCountDAO;
 import refresh.ManageSystem.dto.AnnualHistoryDTO;
 import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
 import refresh.ManageSystem.dto.PageDTO;
 import refresh.ManageSystem.repository.AnnualRepository;
+import refresh.ManageSystem.repository.AnnualSumCountRepository;
 import refresh.ManageSystem.repository.MemberRepository;
 import refresh.ManageSystem.vo.AnnualHistoryVO;
 import refresh.ManageSystem.vo.AnnualManageVO;
@@ -18,9 +19,8 @@ import refresh.ManageSystem.vo.AnnualStatusVO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 /**
  * Park JuHee
@@ -37,6 +37,11 @@ public class AnnualManageService {
     private AnnualRepository annualRepository;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private AnnualSumCountRepository annualSumCountRepository;
+
+    @Autowired
+    private DepartmentService departmentService;
 
 
     /**
@@ -69,9 +74,17 @@ public class AnnualManageService {
      * */
     public boolean updateAnnualStatus(AnnualStatusVO statusVO,String memberName){
         boolean memResult= true;
-
+        boolean sumCountResult = true;
         if(statusVO.getStatus().equals("승인")){
             Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+            // 집계 로직
+            Optional<String> departmentNameById = departmentService.getDepartmentNameById(statusVO.getUid());
+            sumCountResult = annualSumCountRepository.setAnnualSumCount(AnnualSumCountDAO
+                    .builder()
+                    .startDate(statusVO.getStartDate())
+                    .endDate(statusVO.getEndDate())
+                    .departmentName(departmentNameById.get())
+                    .build());
 
             memResult =  memberRepository.updateAnnulCount(AnnualCountDAO
                         .builder()
@@ -86,7 +99,7 @@ public class AnnualManageService {
                                 .status(statusVO.getStatus())
                                 .build());
 
-         return (memResult && annResult);
+         return (memResult && annResult && sumCountResult);
     }
 
 

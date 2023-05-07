@@ -86,6 +86,7 @@ public class AnnualManageController {
     @PutMapping("/admin/status")
     public boolean updateAnnualStatus(@RequestBody AnnualStatusVO status, @SessionAttribute("MemberLogin")MemberLoginDTO memberDTO){
         if(!verifyAdmin()) return false;
+
         return annualManageService.updateAnnualStatus(status, memberDTO.getId());
     }
 
