@@ -39,7 +39,7 @@ public interface MemberRepository {
 
     int countMemberSearchList(MemberSearchDTO dto);
 
-    Boolean updateAnnulCount(AnnualCountDAO annualCountDAO);
+    boolean updateAnnulCount(AnnualCountDAO annualCountDAO);
 
-
+    boolean addAnnulCount(AnnualCountDAO annualCountDAO);
 }

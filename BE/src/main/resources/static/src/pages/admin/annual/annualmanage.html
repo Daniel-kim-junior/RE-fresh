@@ -70,7 +70,7 @@
           </td>
           <td class="px-6 py-3">
             <button id="statusBnt" th:onclick="showEditAnnual( [[${data.annualUid}]] , [[${data.annualStatus}]], [[${data.startDate}]], [[${data.endDate}]],[[${data.annualType}]] )">
-              <span class="mr-2" th:class="|fa fa-circle  ${data.annualStatus eq '승인' ? 'text-green-700' : data.annualStatus eq '반려' ? 'text-gray-300' : 'text-blue-700'}|"></span>
+              <span class="mr-2" th:class="|fa fa-circle  ${data.annualStatus eq '승인' ? 'text-green-700' : data.annualStatus eq '반려' ? 'text-gray-300' : data.annualStatus eq '취소' ? 'text-red-500' : 'text-blue-700'}|"></span>
               <span class="bg-inherit ">[[${data.annualStatus}]]</span>
             </button>
             <div th:replace="/pages/admin/annual/annualmodal.html :: editAnnual-modal" ></div>
