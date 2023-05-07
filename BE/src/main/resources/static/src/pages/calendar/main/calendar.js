@@ -233,17 +233,17 @@ export default function Calendar() {
       }
 
       if (parseInt(i / 7) === cnt) {
-        dom += `<td class="${isToday(calendar[i]) ? 'bg-today-color' : ''}  w-td-width h-td-height relative">
+        dom += `<td class="${isToday(calendar[i]) ? 'bg-today-color' : ''} border border-table-rgba w-td-width h-td-height relative">
             <div class='absolute ${fontStyle} top-2 left-3'>${calendar[i].day}</div>
               ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute top-3 left-12">${calendar[i].hoName}</div>` : ''}
-            ${calendar[i].sumCount !== 0 ?`<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
+            ${calendar[i].sumCount !== 0 ?`<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">🧑🏻‍❤‍💋‍🧑🏽${calendar[i].sumCount}명</div>` : ''}
         </td>`;
         
       } else {
-        dom += `</tr><tr><td class="${isToday(calendar[i]) ? 'bg-today-color' : ''} w-td-width h-td-height relative">
+        dom += `</tr><tr><td class="${isToday(calendar[i]) ? 'bg-today-color' : ''} border border-table-rgba w-td-width h-td-height relative">
         <div class='absolute ${fontStyle} top-2 left-3'>${calendar[i].day}</div>
           ${isSpecialDay(calendar[i].hoName) ? `<div class="text-xs absolute top-3 left-12">${calendar[i].hoName}</div>` : ''}
-          ${calendar[i].sumCount !== 0 ? `<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">&#128652; 휴가 ${calendar[i].sumCount}명</div>` : ''}
+          ${calendar[i].sumCount !== 0 ? `<div id="annual-day" class="text-sm/3 absolute bottom-3 right-3">🧑🏻‍❤‍💋‍🧑🏽${calendar[i].sumCount}명</div>` : ''}
       </td>`;
         cnt++;
       } 
