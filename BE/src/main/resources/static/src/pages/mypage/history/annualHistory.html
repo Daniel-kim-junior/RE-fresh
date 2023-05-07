@@ -9,7 +9,6 @@
 
     <script src="/src/pages/admin/member/adminTab.js" type="module"></script>
     <script th:inline="javascript" th:src="@{/src/pages/mypage/history/annualHistory.js}" ></script>
-
 </head>
 <body>
 
@@ -51,8 +50,15 @@
                     <td class="px-6 py-3">[[${data.annualType}]]</td>
                     <td class="px-6 py-3">[[${data.annualStatus}]]</td>
                     <td class="px-6 py-3">[[${data.acceptor}]]</td>
-                    <td class="px-6 py-3">
-                        <button id="statusBnt"  class="bg-inherit text-blue-700">취소</button>
+                    <td class="px-6 py-3" >
+                        <th:block th:if="${data.annualStatus eq '반려' or data.annualStatus eq '취소'}">
+                            <button disabled class="text-white  py-1 px-2 border rounded-md bg-gray-500">취소</button>
+                        </th:block>
+                        <th:block th:unless="${data.annualStatus eq '반려' or data.annualStatus eq '취소'}">
+                            <button id="cancelBnt" class="text-white  py-1 px-2 border rounded-md bg-blue-500"
+                                    th:onclick="cancelAnnual([[${data.annualUid}]], [[${data.annualStatus}]], [[${data.startDate}]], [[${data.endDate}]],[[${data.annualType}]])">취소</button>
+                        </th:block>
+
                     </td>
                 </tr>
                 </tbody>

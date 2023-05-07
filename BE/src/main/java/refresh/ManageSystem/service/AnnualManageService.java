@@ -3,22 +3,24 @@ package refresh.ManageSystem.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import refresh.ManageSystem.dao.AnnualSearchDAO;
+import refresh.ManageSystem.dao.AnnualCountDAO;
 import refresh.ManageSystem.dao.AnnualStatusDAO;
+import refresh.ManageSystem.dao.AnnualSumCountDAO;
 import refresh.ManageSystem.dto.AnnualHistoryDTO;
 import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
 import refresh.ManageSystem.dto.PageDTO;
 import refresh.ManageSystem.repository.AnnualRepository;
+import refresh.ManageSystem.repository.AnnualSumCountRepository;
+import refresh.ManageSystem.repository.MemberRepository;
 import refresh.ManageSystem.vo.AnnualHistoryVO;
 import refresh.ManageSystem.vo.AnnualManageVO;
 import refresh.ManageSystem.vo.AnnualStatusVO;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Optional;
+
 
 /**
  * Park JuHee
@@ -33,6 +35,13 @@ public class AnnualManageService {
 
     @Autowired
     private AnnualRepository annualRepository;
+    @Autowired
+    private MemberRepository memberRepository;
+    @Autowired
+    private AnnualSumCountRepository annualSumCountRepository;
+
+    @Autowired
+    private DepartmentService departmentService;
 
 
     /**
@@ -59,18 +68,38 @@ public class AnnualManageService {
 
     /**
      * Park JuHee
-     * 연차 수락,반려값을 bool 타입에서 string으르 변환하여 update 하는 서비스 메소드
-     * 2023-05-03
+     * 연차 수락 : 연차 횟수 차감, 연차 상태 변경
+     * 연차 반려 : 연차 상태 변경
+     * 2023-05-06
      * */
     public boolean updateAnnualStatus(AnnualStatusVO statusVO,String memberName){
-        String approved = statusVO.isStatus() ? "승인" : "반려" ;
+        boolean memResult= true;
+        boolean sumCountResult = true;
+        if(statusVO.getStatus().equals("승인")){
+            Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+            // 집계 로직
+            Optional<String> departmentNameById = departmentService.getDepartmentNameById(statusVO.getUid());
+            sumCountResult = annualSumCountRepository.setAnnualSumCount(AnnualSumCountDAO
+                    .builder()
+                    .startDate(statusVO.getStartDate())
+                    .endDate(statusVO.getEndDate())
+                    .departmentName(departmentNameById.get())
+                    .build());
 
-         return annualRepository.updateAnnualStatus(AnnualStatusDAO
-                 .builder()
-                 .uid(statusVO.getUid())
-                 .acceptor(memberName)
-                 .status(approved)
-                 .build());
+            memResult =  memberRepository.updateAnnulCount(AnnualCountDAO
+                        .builder()
+                        .annualUid(statusVO.getUid())
+                        .count(count)
+                        .build());
+        }
+        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+                                .builder()
+                                .uid(statusVO.getUid())
+                                .acceptor(memberName)
+                                .status(statusVO.getStatus())
+                                .build());
+
+         return (memResult && annResult && sumCountResult);
     }
 
 
@@ -124,16 +153,49 @@ public class AnnualManageService {
         return result;
     }
 
-    public List<AnnualManageVO> getAnnualManageListByPage(PageDTO dto) {
-        return annualRepository.getAnnualManageListByPage(dto);
+    /**
+     * Park JuHee
+     * 연차 취소 서비스
+     * */
+
+    public boolean cancelAnnualRequest(AnnualStatusVO statusVO){
+        boolean memResult= true;
+        boolean sumCountResult = true;
+        if(statusVO.getStatus().equals("승인")){
+            Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+            Optional<String> departmentNameById = departmentService.getDepartmentNameById(statusVO.getUid());
+            sumCountResult = annualSumCountRepository.decreaseAnnualSumCount(AnnualSumCountDAO
+                    .builder()
+                    .startDate(statusVO.getStartDate())
+                    .endDate(statusVO.getEndDate())
+                    .departmentName(departmentNameById.get())
+                    .build());
+
+            memResult =  memberRepository.addAnnulCount(AnnualCountDAO
+                    .builder()
+                    .annualUid(statusVO.getUid())
+                    .count(count)
+                    .build());
+        }
+        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+                .builder()
+                .uid(statusVO.getUid())
+                .status("취소")
+                .build());
+
+        return (memResult && annResult && sumCountResult);
+    }
+
+    public List<AnnualManageDTO> getAnnualManageListByPage(PageDTO dto) {
+        return  voToDTO(annualRepository.getAnnualManageListByPage(dto));
     }
 
     public int countAnnualSearchList(AnnualSearchDTO dto) {
         return annualRepository.countAnnualSearchList(dto);
     }
 
-    public List<AnnualManageVO> getAnnualManageSearchList(AnnualSearchDTO dto) {
-        return annualRepository.getAnnualSearchList(dto);
+    public List<AnnualManageDTO> getAnnualManageSearchList(AnnualSearchDTO dto) {
+        return voToDTO(annualRepository.getAnnualSearchList(dto));
     }
 
 }

@@ -9,10 +9,10 @@ import refresh.ManageSystem.dao.MemberDAO;
 import refresh.ManageSystem.dto.AnnualCntDTO;
 
 import refresh.ManageSystem.dto.PageDTO;
+import refresh.ManageSystem.repository.MemberRepository;
+import refresh.ManageSystem.vo.MemberInfoVO;
 import refresh.ManageSystem.vo.MemberVO;
 import refresh.ManageSystem.dto.MemberSearchDTO;
-
-import refresh.ManageSystem.repository.MemberRepository;
 
 /**
  * Daniel Kim
@@ -90,5 +90,9 @@ public class MemberService {
 
     public int countMemberSearchList(MemberSearchDTO dto) {
         return memberRepository.countMemberSearchList(dto);
+    }
+
+    public List<MemberInfoVO> getMemberInfo(String memberId) {
+        return memberRepository.getMemberInfo(memberId);
     }
 }

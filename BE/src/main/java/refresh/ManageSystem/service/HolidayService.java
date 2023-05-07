@@ -52,46 +52,46 @@ public class HolidayService {
      *
      * 2023-04-19
      */
-    @Scheduled(cron = "0 0 0 1 1 *")
-    public void getHolidayData() {
-
-        try {
-            result = new ArrayList<>();
-            holidayRepository.removeHolidayTable();
-
-            int curYear = LocalDate.now().getYear();
-            int nextYear = curYear + 1;
-            int curMonth = 1;
-            int month;
-            JsonNode rootNode;
-            while(curMonth < 26) {
-                month = curMonth % 13;
-                if(month == 0){
-                    curMonth++;
-                    continue;
-                }
-                if((curMonth - 1) / 12  == 0) {
-                    // 올해 데이터
-                    rootNode = getJsonNode(curYear, month);
-                    findData(0, rootNode);
-
-                } else {
-                    // 내년 데이터
-                    rootNode = getJsonNode(nextYear, month);
-                    findData(0, rootNode);
-                }
-                curMonth++;
-            }
-
-            for(HolidayApiDAO hdt : result) {
-                holidayRepository.insertHoliday(hdt);
-            }
-
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-    }
+//    @Scheduled(cron = "0 0 0 1 1 *")
+//    public void getHolidayData() {
+//
+//        try {
+//            result = new ArrayList<>();
+//            holidayRepository.removeHolidayTable();
+//
+//            int curYear = LocalDate.now().getYear();
+//            int nextYear = curYear + 1;
+//            int curMonth = 1;
+//            int month;
+//            JsonNode rootNode;
+//            while(curMonth < 26) {
+//                month = curMonth % 13;
+//                if(month == 0){
+//                    curMonth++;
+//                    continue;
+//                }
+//                if((curMonth - 1) / 12  == 0) {
+//                    // 올해 데이터
+//                    rootNode = getJsonNode(curYear, month);
+//                    findData(0, rootNode);
+//
+//                } else {
+//                    // 내년 데이터
+//                    rootNode = getJsonNode(nextYear, month);
+//                    findData(0, rootNode);
+//                }
+//                curMonth++;
+//            }
+//
+//            for(HolidayApiDAO hdt : result) {
+//                holidayRepository.insertHoliday(hdt);
+//            }
+//
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//
+//    }
     /**
      * Daniel Kim
      *

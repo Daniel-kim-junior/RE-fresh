@@ -14,7 +14,7 @@
 
 <div th:replace="~{/fragments/sidebar/sidebar.html :: sidebar}"></div>
 
-<main class="flex pt-20 mt-2 pl-64  flex-col">
+<main class="flex pt-16 pl-64 flex-col bg-gray-50 h-full">
   <div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
   <div class="flex justify-center pt-10">
     <form method="get" th:action="@{/admin/members/search}" th:object="${memberSearchDTO}" >

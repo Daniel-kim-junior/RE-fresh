@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--mapper의 namespace와 mapper interface의 이름을 맞추면 xml의 설정과 인터페이스에 선언한 설정을 함께 사용할 수 있음-->
+<mapper namespace="refresh.ManageSystem.repository.LeaveRequestRepository">
+<!--     연차 가져오기-->
+
+
+    <insert id="insertAnnual" parameterType="LeaveRequestDAO">
+        INSERT INTO annual (annual_uid, member_uid, annual_type, start_date, end_date, annual_status, acceptor, create_tm, update_tm)
+        VALUES (
+                   UUID(),
+                   (SELECT member_uid FROM member WHERE member_name = #{name}),
+                   #{leaveType},
+                   #{startDate},
+                   #{endDate},
+                   '대기',
+                   #{acceptor},
+                   now(),
+                   now()
+               )
+    </insert>
+</mapper>

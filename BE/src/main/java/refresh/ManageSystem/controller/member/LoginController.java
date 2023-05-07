@@ -68,12 +68,13 @@ public class LoginController {
             return "/error";
         }
         MemberLoginDTO memberLogin = (MemberLoginDTO) model.getAttribute("MemberLogin");
-          memberLogin.setId(memberLoginDTO.getId());
+        String memberId = memberLoginDTO.getId();
+        memberLogin.setId(memberId);
         memberLogin.setPassword(cryptoPassword);
         memberLogin.setAuthority(memberService.getAuthority(memberLoginDTO.getId(), cryptoPassword));
         memberLogin.setMemberName(memberService.getMemberName(memberLoginDTO.getId(), cryptoPassword));
         model.addAttribute("MemberLogin", memberLogin);
-
+        model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
 
         return "/pages/calendar/calendar";
     }
