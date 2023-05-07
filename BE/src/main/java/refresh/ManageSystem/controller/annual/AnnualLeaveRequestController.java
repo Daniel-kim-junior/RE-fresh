@@ -40,6 +40,10 @@ public class AnnualLeaveRequestController {
         }
         // model attribute -> html에 타임리프로 데이터 뿌려줌
 
+        MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        String memberId = memberLoginDTO.getId();
+        model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
+
         return "/pages/leaveRequest/leaveRequest";
     }
 
@@ -54,6 +58,6 @@ public class AnnualLeaveRequestController {
             leaveRequestService.insert(leaveRequestDTO,id);
         }
 
-        return "/pages/calendar/calendar";
+        return "redirect:/cal";
     }
 }
