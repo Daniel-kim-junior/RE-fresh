@@ -34,6 +34,10 @@ public class AnnualHistoryController {
             model.addAttribute("userName", member.getMemberName());
             model.addAttribute("annualCnt", memberService.getAnnualCount(id));
 
+            MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+            String memberId = memberLoginDTO.getId();
+            model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
+
             return "/pages/mypage/history/annualHistory";
         }
     }
