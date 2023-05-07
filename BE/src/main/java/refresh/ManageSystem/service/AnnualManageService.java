@@ -4,7 +4,6 @@ package refresh.ManageSystem.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import refresh.ManageSystem.dao.AnnualCountDAO;
-import refresh.ManageSystem.dao.AnnualSearchDAO;
 import refresh.ManageSystem.dao.AnnualStatusDAO;
 import refresh.ManageSystem.dto.AnnualHistoryDTO;
 import refresh.ManageSystem.dto.AnnualManageDTO;
@@ -18,9 +17,8 @@ import refresh.ManageSystem.vo.AnnualStatusVO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
+
 
 /**
  * Park JuHee
@@ -140,16 +138,42 @@ public class AnnualManageService {
         return result;
     }
 
-    public List<AnnualManageVO> getAnnualManageListByPage(PageDTO dto) {
-        return annualRepository.getAnnualManageListByPage(dto);
+    /**
+     * Park JuHee
+     * 연차 취소 서비스
+     * */
+
+    public boolean cancelAnnualRequest(AnnualStatusVO statusVO){
+        boolean memResult= true;
+
+        if(statusVO.getStatus().equals("승인")){
+            Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+
+            memResult =  memberRepository.addAnnulCount(AnnualCountDAO
+                    .builder()
+                    .annualUid(statusVO.getUid())
+                    .count(count)
+                    .build());
+        }
+        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+                .builder()
+                .uid(statusVO.getUid())
+                .status("취소")
+                .build());
+
+        return (memResult && annResult);
+    }
+
+    public List<AnnualManageDTO> getAnnualManageListByPage(PageDTO dto) {
+        return  voToDTO(annualRepository.getAnnualManageListByPage(dto));
     }
 
     public int countAnnualSearchList(AnnualSearchDTO dto) {
         return annualRepository.countAnnualSearchList(dto);
     }
 
-    public List<AnnualManageVO> getAnnualManageSearchList(AnnualSearchDTO dto) {
-        return annualRepository.getAnnualSearchList(dto);
+    public List<AnnualManageDTO> getAnnualManageSearchList(AnnualSearchDTO dto) {
+        return voToDTO(annualRepository.getAnnualSearchList(dto));
     }
 
 }

@@ -75,4 +75,9 @@
         update member set annual_count =  annual_count - #{count}
         where member_uid = (select member_uid from annual where annual_uid = #{annualUid});
     </update>
+
+    <update id="addAnnulCount" parameterType="AnnualCountDAO" >
+        update member set annual_count =  annual_count + #{count}
+        where member_uid = (select member_uid from annual where annual_uid = #{annualUid});
+    </update>
 </mapper>

@@ -22,4 +22,5 @@ public interface AnnualRepository {
     List<AnnualManageVO> getAnnualManageListByPage(PageDTO dto);
 
     int countAnnualSearchList(AnnualSearchDTO dto);
+
 }

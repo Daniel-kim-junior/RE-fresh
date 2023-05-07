@@ -4,11 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import refresh.ManageSystem.dto.AnnualCntDTO;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import refresh.ManageSystem.dto.MemberLoginDTO;
 import refresh.ManageSystem.service.AnnualManageService;
 import refresh.ManageSystem.service.MemberService;
+import refresh.ManageSystem.vo.AnnualStatusVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -25,7 +27,7 @@ public class AnnualHistoryController {
     @GetMapping("/mypage/history")
     public String getAnnualHistory(Model model){
         MemberLoginDTO member = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
-        if(member == null) return "redirect:/";
+        if(!isVerify()) return "redirect:/";
         else {
             String id = member.getId();
             model.addAttribute("history", annualManageService.getAnnualHistoryList(id));
@@ -36,5 +38,14 @@ public class AnnualHistoryController {
         }
     }
 
+    @PutMapping("/mypage/cancel")
+    @ResponseBody
+    public boolean cancleAnnualHistory(@RequestBody AnnualStatusVO status){
+        if(!isVerify()) return false;
+        return annualManageService.cancelAnnualRequest(status);
+    }
 
+    private boolean isVerify(){
+        return (session.getAttribute("MemberLogin") != null) ? true : false;
+    }
 }

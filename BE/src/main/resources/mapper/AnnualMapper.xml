@@ -72,8 +72,16 @@
     </select>
 
     <update id="updateAnnualStatus" parameterType="AnnualStatusDAO">
-        update annual set annual_status = #{status} , acceptor= #{acceptor}, update_tm = now()
-        where annual_uid = #{uid}
+        <choose>
+            <when test="acceptor != null and acceptor !=''">
+                update annual set annual_status = #{status} , acceptor= #{acceptor}, update_tm = now()
+                where annual_uid = #{uid}
+            </when>
+            <otherwise>
+                update annual set annual_status = #{status} , create_tm = now()
+                where annual_uid = #{uid}
+            </otherwise>
+        </choose>
     </update>
 
     <select id="getAnnualByMemberId" parameterType="String" resultType="AnnualHistoryVO">
@@ -82,5 +90,4 @@
                  inner join (select member_uid , member_id from member where member_id = #{id}) mem
                             on ann.member_uid = mem.member_uid;
     </select>
-
 </mapper>
