@@ -34,6 +34,11 @@ public class MemberController {
 
         model.addAttribute("department", departmentService.getDepartmentAllList());
         model.addAttribute("memberServiceDTO", new MemberServiceDTO());
+
+        MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        String memberId = memberLoginDTO.getId();
+        model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
+
         return "/pages/admin/member/createMemberForm";
     }
 
@@ -78,6 +83,11 @@ public class MemberController {
         model.addAttribute("currentPage", page);
 
         model.addAttribute("memberSearchDTO", new MemberSearchDTO());
+
+        MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        String memberId = memberLoginDTO.getId();
+        model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
+
         return "/pages/admin/member/memberList";
 
     }
@@ -101,6 +111,10 @@ public class MemberController {
         model.addAttribute("memberVO", memberService.getMemberSearchList(dto));
         model.addAttribute("pageDAO", pageDAO);
         model.addAttribute("currentPage", page);
+
+        MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        String memberId = memberLoginDTO.getId();
+        model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
 
         return "/pages/admin/member/memberList";
     }

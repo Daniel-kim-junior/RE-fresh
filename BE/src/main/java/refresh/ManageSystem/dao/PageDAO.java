@@ -30,7 +30,11 @@ public class PageDAO {
     private int totalPageCount = 5;
 
     public void pageMaker() {
-        totalPage = (totalCount % pageDTO.getPerPageNum() == 0) ? totalCount / getPageDTO().getPerPageNum() : totalCount / pageDTO.getPerPageNum() + 1;
+        if(totalCount == 0) {
+            totalPage = 1;
+        } else{
+            totalPage = (totalCount % pageDTO.getPerPageNum() == 0) ? totalCount / getPageDTO().getPerPageNum() : totalCount / pageDTO.getPerPageNum() + 1;
+        }
         startPage = ((pageDTO.getPage()-1) / totalPageCount) * totalPageCount + 1;
         endPage = startPage + (totalPageCount - 1);
         if(endPage > totalPage) {

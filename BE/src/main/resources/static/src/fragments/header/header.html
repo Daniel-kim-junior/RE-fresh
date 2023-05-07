@@ -12,9 +12,8 @@
 <!--    th:fragment="템플릿 조각 이름" -> th:fragment="header" -> header라는 템플릿 조각을 만든 것-->
 <header
         th:fragment="header"
-        class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
->
-  <div class="px-3 py-6 lg:px-5 lg:pl-3">
+        class="fixed top-0 z-50 w-full h-16 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 shadow-sm">
+  <div class="px-3 py-1 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start">
         <button
@@ -40,16 +39,12 @@
           </svg>
         </button>
         <a href="https://daum.net" class="flex ml-2 md:mr-24">
-          <img src="/src/assets/images/logo.svg" class="h-8 mr-3" alt="REfresh Logo" />
-          <span
-                  class="self-center font-semibold text-xl sm:text-4xl whitespace-nowrap dark:text-white"
-          ><span class="text-sky-500">RE</span>fresh</span
-          >
+          <span class="text-sky-500 text-3xl font-bold ml-4">RE</span><span class="text-xl font-bold">fresh</span>
         </a>
       </div>
       <div class="flex items-center">
         <div class="flex items-center ml-3">
-          <div>
+          <div class="mr-16 m-3">
             <button
                     type="button"
                     class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
@@ -58,10 +53,15 @@
             >
               <span class="sr-only">Open user menu</span>
               <img
-                      class="w-8 h-8 rounded-full"
+                      class="w-8 h-8"
                       src="/src/assets/images/user.svg"
                       alt="user photo"
               />
+            </button>
+          </div>
+          <div>
+            <button type="button" class="bg-blue-400 hover:bg-blue-500 text-white text-sm py-2 px-4 rounded-full shadow-sm">
+            로그아웃
             </button>
           </div>
           <div

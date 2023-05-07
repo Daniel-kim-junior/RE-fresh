@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import refresh.ManageSystem.dao.MemberDAO;
 import refresh.ManageSystem.dto.PageDTO;
+import refresh.ManageSystem.vo.MemberInfoVO;
 import refresh.ManageSystem.vo.MemberVO;
 import refresh.ManageSystem.dto.MemberSearchDTO;
 import refresh.ManageSystem.dto.MemberServiceDTO;
@@ -33,5 +34,7 @@ public interface MemberRepository {
     List<MemberVO> getMemberListByPage(PageDTO dto);
 
     int countMemberSearchList(MemberSearchDTO dto);
+
+    List<MemberInfoVO> getMemberInfo(String memberId);
 
 }

@@ -69,9 +69,9 @@ module.exports = {
       file: 'dist/fragments/header/header.html'
     }),
     new HtmlWebpackPlugin({
-      filename: 'header.html',
-      template: 'src/fragments/header/header.html',
-      file: 'dist/fragments/header/header.html'
+      filename: 'sidebar.html',
+      template: 'src/fragments/sidebar/sidebar.html',
+      file: 'dist/fragments/sidebar/sidebar.html'
     }),
     new HtmlWebpackPlugin({
       filename: 'annualHistory.html',

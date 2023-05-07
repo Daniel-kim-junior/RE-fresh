@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import refresh.ManageSystem.dao.MemberDAO;
 import refresh.ManageSystem.dto.PageDTO;
+import refresh.ManageSystem.vo.MemberInfoVO;
 import refresh.ManageSystem.vo.MemberVO;
 import refresh.ManageSystem.dto.MemberSearchDTO;
 import refresh.ManageSystem.repository.MemberRepository;
@@ -81,5 +82,9 @@ public class MemberService {
 
     public int countMemberSearchList(MemberSearchDTO dto) {
         return memberRepository.countMemberSearchList(dto);
+    }
+
+    public List<MemberInfoVO> getMemberInfo(String memberId) {
+        return memberRepository.getMemberInfo(memberId);
     }
 }
