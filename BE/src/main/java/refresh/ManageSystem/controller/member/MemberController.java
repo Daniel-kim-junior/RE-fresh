@@ -30,7 +30,7 @@ public class MemberController {
 
     @GetMapping("/admin/members/new")
     private String createForm(Model model) {
-        if(!verifyAdmin()) return "redirect:/";
+//        if(!verifyAdmin()) return "redirect:/";
 
         model.addAttribute("department", departmentService.getDepartmentAllList());
         model.addAttribute("memberServiceDTO", new MemberServiceDTO());
@@ -39,7 +39,9 @@ public class MemberController {
 
     @PostMapping("/admin/members/new")
     private String create(@Valid MemberServiceDTO member, BindingResult result, Model model) {
-        if(!verifyAdmin()) return "redirect:/";
+//        if(!verifyAdmin()) return "redirect:/";
+
+        MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
 
         model.addAttribute("department", departmentService.getDepartmentAllList());
         System.out.println("checkId : "+ memberService.checkId(member));
@@ -54,13 +56,15 @@ public class MemberController {
         if(member.getMemberAuth() == null) {
             member.setMemberAuth("member");
         }
+        member.setCreateId(memberLoginDTO.getId());
+        member.setUpdateId(memberLoginDTO.getId());
         memberService.create(member);
         return "redirect:/admin/members?page=1";
     }
 
     @GetMapping("/admin/members")
     public String list(Model model, int page) {
-        if(!verifyAdmin()) return "redirect:/";
+//        if(!verifyAdmin()) return "redirect:/";
 
         model.addAttribute("department", departmentService.getDepartmentAllList());
 
@@ -84,7 +88,7 @@ public class MemberController {
 
     @GetMapping("/admin/members/search")
     public String search(MemberSearchDTO dto, int page, Model model) {
-        if(!verifyAdmin()) return "redirect:/";
+//        if(!verifyAdmin()) return "redirect:/";
 
         model.addAttribute("department", departmentService.getDepartmentAllList());
 
@@ -106,8 +110,8 @@ public class MemberController {
     }
 
     //session 검증 및 admin검증 메소드
-    private boolean verifyAdmin() {
-        MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
-        return (memberLoginDTO != null && memberLoginDTO.getAuthority().equals("admin"))? true :false;
-    }
+//    private boolean verifyAdmin() {
+//        MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+//        return (memberLoginDTO != null && memberLoginDTO.getAuthority().equals("admin"))? true :false;
+//    }
 }
