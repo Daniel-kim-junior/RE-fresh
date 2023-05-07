@@ -5,12 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import refresh.ManageSystem.dao.PageDAO;
-import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
 import refresh.ManageSystem.dto.MemberLoginDTO;
 import refresh.ManageSystem.dto.PageDTO;
 import refresh.ManageSystem.service.AnnualManageService;
 import refresh.ManageSystem.service.DepartmentService;
+import refresh.ManageSystem.service.MemberService;
 import refresh.ManageSystem.vo.AnnualStatusVO;
 
 import javax.servlet.http.HttpSession;
@@ -30,6 +30,8 @@ public class AnnualManageController {
     private DepartmentService departmentService;
     @Autowired
     HttpSession session;
+    @Autowired
+    MemberService memberService;
 
     @GetMapping("/admin/annualManage")
     public String getAnnualManage(Model model, int page){
@@ -52,6 +54,10 @@ public class AnnualManageController {
         model.addAttribute("deptNames",deptNames);
 
         model.addAttribute("searchData", new AnnualSearchDTO());
+
+        MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        String memberId = memberLoginDTO.getId();
+        model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
 
         return "/pages/admin/annual/annualmanage";
     }
@@ -78,6 +84,10 @@ public class AnnualManageController {
         model.addAttribute("deptNames",deptNames);
 
         model.addAttribute("searchData", new AnnualSearchDTO());
+
+        MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        String memberId = memberLoginDTO.getId();
+        model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
 
         return "/pages/admin/annual/annualmanage";
     }

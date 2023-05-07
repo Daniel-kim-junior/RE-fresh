@@ -16,11 +16,11 @@ import refresh.ManageSystem.repository.MemberRepository;
 import refresh.ManageSystem.vo.AnnualHistoryVO;
 import refresh.ManageSystem.vo.AnnualManageVO;
 import refresh.ManageSystem.vo.AnnualStatusVO;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 
 /**
  * Park JuHee
@@ -153,16 +153,42 @@ public class AnnualManageService {
         return result;
     }
 
-    public List<AnnualManageVO> getAnnualManageListByPage(PageDTO dto) {
-        return annualRepository.getAnnualManageListByPage(dto);
+    /**
+     * Park JuHee
+     * 연차 취소 서비스
+     * */
+
+    public boolean cancelAnnualRequest(AnnualStatusVO statusVO){
+        boolean memResult= true;
+
+        if(statusVO.getStatus().equals("승인")){
+            Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+
+            memResult =  memberRepository.addAnnulCount(AnnualCountDAO
+                    .builder()
+                    .annualUid(statusVO.getUid())
+                    .count(count)
+                    .build());
+        }
+        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+                .builder()
+                .uid(statusVO.getUid())
+                .status("취소")
+                .build());
+
+        return (memResult && annResult);
+    }
+
+    public List<AnnualManageDTO> getAnnualManageListByPage(PageDTO dto) {
+        return  voToDTO(annualRepository.getAnnualManageListByPage(dto));
     }
 
     public int countAnnualSearchList(AnnualSearchDTO dto) {
         return annualRepository.countAnnualSearchList(dto);
     }
 
-    public List<AnnualManageVO> getAnnualManageSearchList(AnnualSearchDTO dto) {
-        return annualRepository.getAnnualSearchList(dto);
+    public List<AnnualManageDTO> getAnnualManageSearchList(AnnualSearchDTO dto) {
+        return voToDTO(annualRepository.getAnnualSearchList(dto));
     }
 
 }

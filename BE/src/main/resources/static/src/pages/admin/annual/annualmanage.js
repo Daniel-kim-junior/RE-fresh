@@ -62,7 +62,7 @@ function updateStatus() {
         }).then(res => {
             if(res){
                 closeEditAnnual();
-                window.location.replace("http://localhost:8090/admin/annualManage");
+                window.location.replace("http://localhost:8090/admin/annualManage?page=1");
             }else{
                 alert("요청한 처리를 실패했습니다. 다시 시도해 주세요.")
             }
