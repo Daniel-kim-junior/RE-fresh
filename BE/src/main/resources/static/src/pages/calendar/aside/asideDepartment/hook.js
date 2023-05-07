@@ -18,9 +18,14 @@ function Hook() {
     root: null,
     department: null,
     rootComponent: null,
+    checked: false,
   }
   function optionInit() {
     options.states = [];
+  }
+
+  function downChecked() {
+    return options.checked;
   }
 
 
@@ -80,7 +85,7 @@ function debounceFrame(callback) {
     2023-04-16
   */
   const _render = debounceFrame(() => {
-    const { root, rootComponent } = options;
+    const { root, rootComponent, checked } = options;
     if (!root || !rootComponent) return;
     root.innerHTML = rootComponent();
     options.currentStateKey = 0;
@@ -108,11 +113,11 @@ function debounceFrame(callback) {
 
     2023-04-16
   */
-  function render(rootComponent, root, department) {
+  function render(rootComponent, root, department, checked) {
     options.root = root;
     options.department = department;
     options.rootComponent = rootComponent;
-
+    options.checked = checked;
     _render();
   }
 
@@ -121,7 +126,7 @@ function debounceFrame(callback) {
   }
 
 
-  return { useState, render, getDepartment, optionInit, waitForRender };
+  return { useState, render, getDepartment, optionInit, waitForRender, downChecked };
 }
 
 function onLoad(callback) {
@@ -133,4 +138,4 @@ function onLoad(callback) {
 
 export { onLoad };
 
-export const {useState, render, getDepartment, optionInit, waitForRender} = Hook();
+export const {useState, render, getDepartment, optionInit, waitForRender, downChecked} = Hook();

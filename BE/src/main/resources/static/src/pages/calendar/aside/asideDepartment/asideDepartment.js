@@ -1,4 +1,4 @@
-import { useState, onLoad, getDepartment, waitForRender } from './hook.js';
+import { useState, onLoad, getDepartment, waitForRender, downChecked } from './hook.js';
 import { getAnnualtListByDepartment } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
@@ -13,7 +13,7 @@ export default function AsideDepartment() {
   onLoad(async () => {
     const department = getDepartment();
     const response = await getAnnualtListByDepartment(department, page.start, page.end);
-    
+  
     const list = makeAnnualList(response);
     if (start === 0) {
       setAnnual(list);

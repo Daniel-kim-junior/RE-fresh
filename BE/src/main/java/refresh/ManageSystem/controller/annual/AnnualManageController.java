@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import refresh.ManageSystem.dao.PageDAO;
-import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
 import refresh.ManageSystem.dto.MemberLoginDTO;
 import refresh.ManageSystem.dto.PageDTO;
@@ -97,6 +96,7 @@ public class AnnualManageController {
     @PutMapping("/admin/status")
     public boolean updateAnnualStatus(@RequestBody AnnualStatusVO status, @SessionAttribute("MemberLogin")MemberLoginDTO memberDTO){
         if(!verifyAdmin()) return false;
+
         return annualManageService.updateAnnualStatus(status, memberDTO.getId());
     }
 
