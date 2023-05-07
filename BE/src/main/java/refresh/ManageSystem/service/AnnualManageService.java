@@ -160,9 +160,16 @@ public class AnnualManageService {
 
     public boolean cancelAnnualRequest(AnnualStatusVO statusVO){
         boolean memResult= true;
-
+        boolean sumCountResult = true;
         if(statusVO.getStatus().equals("승인")){
             Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+            Optional<String> departmentNameById = departmentService.getDepartmentNameById(statusVO.getUid());
+            sumCountResult = annualSumCountRepository.decreaseAnnualSumCount(AnnualSumCountDAO
+                    .builder()
+                    .startDate(statusVO.getStartDate())
+                    .endDate(statusVO.getEndDate())
+                    .departmentName(departmentNameById.get())
+                    .build());
 
             memResult =  memberRepository.addAnnulCount(AnnualCountDAO
                     .builder()
@@ -176,7 +183,7 @@ public class AnnualManageService {
                 .status("취소")
                 .build());
 
-        return (memResult && annResult);
+        return (memResult && annResult && sumCountResult);
     }
 
     public List<AnnualManageDTO> getAnnualManageListByPage(PageDTO dto) {
