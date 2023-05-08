@@ -12,8 +12,9 @@ let deptName;
  const showEditAnnual = (uid, status, start, end, type, departmentName) => {
      let list = end.match(/\d+/g);
      endDate = new Date(list[0]+'-'+list[1]+'-'+list[2]);
-     if(status == '승인' || endDate < new Date()) return;
-     console.log(departmentName);
+
+     if(status == '취소' || status == '승인' || endDate < new Date()) return;
+
      list=start.match(/\d+/g);
      startDate = new Date(list[0]+'-'+list[1]+'-'+list[2]);
      annualType = type;
