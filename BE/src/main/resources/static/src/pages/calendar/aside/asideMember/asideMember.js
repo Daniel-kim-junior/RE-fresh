@@ -1,4 +1,4 @@
-import { useState, onLoad, getName, waitForRender } from './hook.js';
+import { useState, onLoad, getName, waitForRender, optionChecked } from './hook.js';
 import { getAnnualListByMember } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
@@ -8,6 +8,9 @@ export default function AsideMember() {
   const { start, end } = page;
   const asideContents = document.querySelector('#aside-contents');
   const loadingSpinner = document.querySelector('#aside-contents-status');
+  const checked = optionChecked();
+  const date = new Date();
+
 
   onLoad(async () => {
     const memberName = getName();
@@ -32,8 +35,7 @@ export default function AsideMember() {
         setTimeout(() => { 
           setPage({ ...page, start: start + 10 });
           loadingSpinner.style.display = 'none';
-        }, 1500); 
-        asideContents.onscroll = null;
+        }, 1500);
       }
     }
   });
@@ -41,7 +43,12 @@ export default function AsideMember() {
 
   function makeAnnualList(annualList) {
     let dom = '<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">';
-    annualList.forEach((item) => {
+    for (let i = 0; i < annualList.length; i++) {
+      if (checked) {
+        if (Date.parse(annualList[i].endDate) < Date.parse(date)) {
+          continue;
+        }
+      }
       dom += `<li class="pb-3 sm:pb-4">
       <div class="flex items-center space-x-4">
         <div class="flex-shrink-0">
@@ -49,19 +56,19 @@ export default function AsideMember() {
         </div>
         <div class="flex-1">
             <p class="text-xs font-medium text-gray-900 truncate dark:text-white">
-               ${item.name}
+               ${annualList[i].name}
             </p>
             <p class="text-xs text-gray-500 truncate dark:text-gray-400">
-               ${item.email}
+               ${annualList[i].email}
             </p>
          </div>
          <div class="inline-flex items-center text-xs font-semibold text-gray-900 dark:text-white">
-         ${item.startDate} ~ ${item.endDate}
+         ${annualList[i].startDate} ~ ${annualList[i].endDate}
         </div>
       </div>
       </li>
       `
-    });
+    }
     dom += '</ul>';
     return dom;
   }

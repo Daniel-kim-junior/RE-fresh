@@ -20,7 +20,6 @@ render($App, document.querySelector("#cal-header"));
 
 const main = document.querySelector("#main");
 const departCalHeader = document.querySelector("#depart-cal-header");
-
 departCalHeader.onchange = (e) => {
   render($App, main , e.target.value);
 }

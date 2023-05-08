@@ -5,17 +5,38 @@ import { render, optionInit } from "./hook.js";
 
 (function selectDepartment() {
   const select = document.querySelector('#department-select');
-  const checkboxForExcept = document.querySelector('#checkbox-for-except');
+  const checkboxWrapperDept = document.querySelector('#checkbox-wrapper-dept');
+  const checkboxForExceptDept = document.querySelector('#checkbox-for-except-dept');
   const aside = document.querySelector('#aside-contents');
   const loadingSpinner = document.querySelector('#aside-contents-status');
+
+  checkboxForExceptDept.onchange = (e) => {
+    aside.innerHTML = '';
+    aside.onscroll = null;
+    optionInit();
+    loadingSpinner.style.display = 'none';
+    const department = select.value;
+    if (!e.target.checked) {
+      render($App, aside, department);
+    } else {
+      render($App, aside, department, true);
+    }
+    aside.style.display = 'block';
+  }
 
   select.onchange = (e) => {
     aside.innerHTML = '';
     aside.onscroll = null;
     optionInit();
+    checkboxForExceptDept.checked = false;
+    checkboxWrapperDept.style.display = 'block';
     loadingSpinner.style.display = 'none';
     const department = e.target.value;
-    render($App, aside, department);
+    if (!checkboxForExceptDept.checked) {
+      render($App, aside, department);
+    } else {
+      render($App, aside, department, true);
+    }
     aside.style.display = 'block';
   }
 })();

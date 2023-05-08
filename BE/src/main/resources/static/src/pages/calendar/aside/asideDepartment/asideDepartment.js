@@ -2,21 +2,20 @@ import { useState, onLoad, getDepartment, waitForRender, downChecked } from './h
 import { getAnnualtListByDepartment } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
-let preDepartment = '';
 export default function AsideDepartment() {
   const asideContents = document.querySelector('#aside-contents');
   const loadingSpinner = document.querySelector('#aside-contents-status');
   const [annual, setAnnual] = useState([]);
   const [page, setPage] = useState({ start: 0, end: 10 });
   const { start, end } = page;
-
+  const checked = downChecked();
+  const date = new Date();
 
   onLoad(async () => {
     const department = getDepartment();
     const response = await getAnnualtListByDepartment(department, page.start, page.end);
     
     const list = makeAnnualList(response);
-
     if (start === 0) {
       setAnnual(list);
     } else if(scrollFlag) {
@@ -24,6 +23,8 @@ export default function AsideDepartment() {
       scrollFlag = false;
     }
   })
+
+
   waitForRender(asideContents, () => {
     asideContents.onscroll = (e) => {
       const el = e.target;
@@ -46,7 +47,12 @@ export default function AsideDepartment() {
 
   function makeAnnualList(annualList) {
     let dom = '<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">';
-    annualList.forEach((item) => {
+    for (let i = 0; i < annualList.length; i++) {
+      if(checked) {
+        if (Date.parse(annualList[i].endDate) < Date.parse(date)) {
+          continue;
+        }
+      }
       dom += `<li class="pb-3 sm:pb-4">
       <div class="flex items-center space-x-4">
         <div class="flex-shrink-0">
@@ -54,19 +60,19 @@ export default function AsideDepartment() {
         </div>
         <div class="flex-1 min-w-0">
             <p class="text-xs font-medium text-gray-900 truncate dark:text-white">
-               ${item.name}
+               ${annualList[i].name}
             </p>
             <p class="text-xs text-gray-500 truncate dark:text-gray-400">
-              ${item.email} 
+              ${annualList[i].email} 
             </p>
          </div>
          <div class="inline-flex items-center text-xs font-semibold text-gray-900 dark:text-white">
-         ${item.startDate} ~ ${item.endDate}
+         ${annualList[i].startDate} ~ ${annualList[i].endDate}
         </div>
       </div>
       </li>
       `
-    });
+    }
     dom += '</ul>';
     return dom;
   }
