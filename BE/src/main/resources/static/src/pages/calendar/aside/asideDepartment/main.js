@@ -7,15 +7,12 @@ import { render } from "./hook.js";
   const select = document.querySelector('#department-select');
   const checkboxForExcept = document.querySelector('#checkbox-for-except');
   const aside = document.querySelector('#aside-contents');
-
+  aside.onscroll = null;
   select.onchange = (e) => {
     aside.innerHTML = '';
     const department = e.target.value;
-    if (checkboxForExcept.checked) {
-      render($App, document.querySelector('#aside-contents'), department);
-    } else {
-      render($App, document.querySelector('#aside-contents'), department, true);
-    }
+    render($App, aside, department);
+    aside.style.display = 'block';
   }
 })();
 

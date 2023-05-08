@@ -13,8 +13,9 @@ export default function AsideDepartment() {
   onLoad(async () => {
     const department = getDepartment();
     const response = await getAnnualtListByDepartment(department, page.start, page.end);
-  
+    
     const list = makeAnnualList(response);
+    console.log(list);
     if (start === 0) {
       setAnnual(list);
     } else if(scrollFlag) {
