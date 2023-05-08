@@ -16,6 +16,8 @@ public class AnnualStatusVO {
     private String uid;
     private String status;
 
+    private String departmentName;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 

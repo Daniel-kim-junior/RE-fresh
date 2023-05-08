@@ -2,24 +2,24 @@ let annualuid;
 let endDate;
 let startDate;
 let annualType;
+let deptName;
 
 /**
     Park JuHee
     관리자가 연차 신청 승인여부를 변경할 modal을 보여주는 함수
     v2. 2023-05-06
     */
- const showEditAnnual = (uid,status,start,end,type) => {
+ const showEditAnnual = (uid, status, start, end, type, departmentName) => {
      let list = end.match(/\d+/g);
      endDate = new Date(list[0]+'-'+list[1]+'-'+list[2]);
-
      if(status == '승인' || endDate < new Date()) return;
-
+     console.log(departmentName);
      list=start.match(/\d+/g);
      startDate = new Date(list[0]+'-'+list[1]+'-'+list[2]);
      annualType = type;
 
      const modal = document.getElementById('modal');
-
+     deptName = departmentName;
      modal.classList.remove('hidden');
      annualuid = uid;
      modal.classList.add('flex');
@@ -58,9 +58,10 @@ function updateStatus() {
                 startDate: startDate,
                 annualType : annualType,
                 status: selectedOption,
+                departmentName: deptName
             })
         }).then(res => {
-            if(res){
+            if(res) {
                 closeEditAnnual();
                 window.location.replace("http://localhost:8090/admin/annualManage?page=1");
             }else{
