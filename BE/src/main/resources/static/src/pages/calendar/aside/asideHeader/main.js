@@ -26,10 +26,10 @@ const INIT_LENGTH = 0;
 
     if (e.target.value === 'department') {
       optionInit();
-      checkboxForExcept.checked = false;
       checkboxWrapper.style.display = 'block';
       departmentSelect.value = '부서 선택';
       department.style.display = 'block';
+      aside.style.display = 'block';
       if (select.childNodes.length === INIT_LENGTH) {
         render($App, select);
       }

@@ -23,7 +23,6 @@ import java.util.List;
  *  * */
 @Controller
 public class AnnualManageController {
-
     @Autowired
     private AnnualManageService annualManageService;
     @Autowired

@@ -1,6 +1,5 @@
 package refresh.ManageSystem.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import refresh.ManageSystem.dao.AnnualCountDAO;
@@ -156,18 +155,17 @@ public class AnnualManageService {
      * 연차 취소 서비스
      * */
 
-    public boolean cancelAnnualRequest(AnnualStatusVO statusVO){
+    public boolean cancelAnnualRequest(AnnualStatusVO statusVO, String deptName){
         int memResult = 0;
-//        int sumCountResult = 0;
+        int sumCountResult = 0;
         if(statusVO.getStatus().equals("승인")){
             Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
-//            Optional<String> departmentNameById = departmentService.getDepartmentNameById(statusVO.getUid());
-//            sumCountResult = annualSumCountRepository.decreaseAnnualSumCount(AnnualSumCountDAO
-//                    .builder()
-//                    .startDate(statusVO.getStartDate())
-//                    .endDate(statusVO.getEndDate())
-//                    .departmentName(departmentNameById.get())
-//                    .build());
+            sumCountResult = annualSumCountRepository.decreaseAnnualSumCount(AnnualSumCountDAO
+                    .builder()
+                    .startDate(statusVO.getStartDate())
+                    .endDate(statusVO.getEndDate())
+                    .departmentName(deptName)
+                    .build());
 
             memResult =  memberRepository.addAnnulCount(AnnualCountDAO
                     .builder()
@@ -181,7 +179,7 @@ public class AnnualManageService {
                 .status("취소")
                 .build());
 
-        return (memResult > 0 && annResult > 0);
+        return (memResult > 0 && annResult > 0 && sumCountResult > 0);
     }
 
     public List<AnnualManageDTO> getAnnualManageListByPage(PageDTO dto) {

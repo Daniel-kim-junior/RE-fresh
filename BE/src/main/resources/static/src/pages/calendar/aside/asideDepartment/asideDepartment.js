@@ -2,6 +2,7 @@ import { useState, onLoad, getDepartment, waitForRender, downChecked } from './h
 import { getAnnualtListByDepartment } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
+let preDepartment = '';
 export default function AsideDepartment() {
   const asideContents = document.querySelector('#aside-contents');
   const loadingSpinner = document.querySelector('#aside-contents-status');
@@ -13,8 +14,9 @@ export default function AsideDepartment() {
   onLoad(async () => {
     const department = getDepartment();
     const response = await getAnnualtListByDepartment(department, page.start, page.end);
-  
+    
     const list = makeAnnualList(response);
+
     if (start === 0) {
       setAnnual(list);
     } else if(scrollFlag) {
