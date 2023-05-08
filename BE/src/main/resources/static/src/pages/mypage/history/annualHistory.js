@@ -21,7 +21,6 @@ function cancelAnnual(uid,status,start,end,type) {
             annualType: type,
         })
     }).then(res =>{
-        console.log(res);
         if(res.ok){
             alert("정상적으로 취소 되었습니다.");
             window.location.replace("http://localhost:8090/mypage/history");
