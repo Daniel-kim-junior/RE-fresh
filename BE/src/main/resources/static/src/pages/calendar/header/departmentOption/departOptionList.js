@@ -27,16 +27,6 @@ export default function DepartmentOptionList() {
         dom += `<option value="${item}">${item}</option>`;
       }   
     });
-    dom += `<svg
-    class="fill-current w-6 h-6 ml-2 department-btn"
-    viewBox="0 0 20 20"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      class="department-btn"
-      d="M10 13a1 1 0 0 1-.707-.293l-3-3a1 1 0 1 1 1.414-1.414L10 10.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-3 3A1 1 0 0 1 10 13z"
-    />
-  </svg>`;
     return dom;
   }
 

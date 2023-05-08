@@ -88,7 +88,7 @@ function debounceFrame(callback) {
     const { root, rootComponent, checked } = options;
     if (!root || !rootComponent) return;
     waitForRender(root, () => {
-      root.innerHTML = rootComponent();
+      root.innerHTML = rootComponent(checked);
       options.currentStateKey = 0;
       options.renderCount += 1;
     })    

@@ -1,8 +1,6 @@
 package refresh.ManageSystem.controller.mypage;
 
-import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +13,6 @@ import refresh.ManageSystem.service.AnnualManageService;
 import refresh.ManageSystem.service.DepartmentService;
 import refresh.ManageSystem.service.MemberService;
 import refresh.ManageSystem.vo.AnnualStatusVO;
-import refresh.ManageSystem.vo.MemberInfoVO;
 
 import javax.servlet.http.HttpSession;
 

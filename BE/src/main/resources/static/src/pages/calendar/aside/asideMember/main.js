@@ -6,6 +6,26 @@ import { render, throttle } from "./hook.js";
 (function inputMemberName() {
   const input = document.querySelector('#member-input');
   const aside = document.querySelector('#aside-contents');
+  const checkboxForExceptMember = document.querySelector('#checkbox-for-except-member');
+
+  checkboxForExceptMember.checked = false; 
+  
+  checkboxForExceptMember.onchange = (e) => {
+    aside.innerHTML = '';
+    aside.onscroll = null;
+    const name = input.value;
+    if (name === '') return;
+
+    if (!e.target.checked) {
+      render($App, aside, name);
+    } else {
+      render($App, aside, name, true);
+    }
+    aside.style.display = 'block';
+  }
+
+
+  
   aside.innerHTML = '';
   aside.onscroll = null;
   input.onkeyup = throttle((e) => {
@@ -14,7 +34,11 @@ import { render, throttle } from "./hook.js";
       aside.innerHTML = '';
       return;
     }
-    render($App, aside, name);
+    if (checkboxForExceptMember.checked) {
+      render($App, aside, name, true);
+    } else {
+      render($App, aside, name);
+    }
     aside.style.display = 'block';
   }, 500);
 })();

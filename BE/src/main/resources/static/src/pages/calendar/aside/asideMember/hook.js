@@ -17,13 +17,16 @@ function Hook() {
     states: [],
     root: null,
     name: null,
+    checked: false,
     rootComponent: null,
   }
-  function optionInit() {
-
+  function optionMembers() {
     options.states = [];
   }
 
+  function optionChecked() {
+    return options.checked;
+  }
 
   /*
     Daniel Kim
@@ -97,10 +100,12 @@ function debounceFrame(callback) {
 
     2023-04-16
   */
-  function render(rootComponent, root, name) {
+  function render(rootComponent, root, name, checked) {
     options.root = root;
     options.rootComponent = rootComponent;
     options.name = name;
+    options.checked = checked;
+
     _render();
   }
 
@@ -119,7 +124,7 @@ function debounceFrame(callback) {
     });
   }
   
-  return { useState, render, getName, waitForRender};
+  return { useState, render, getName, waitForRender, optionMembers, optionChecked};
 }
 
 function onLoad(callback) {
@@ -140,4 +145,4 @@ function throttle(callback, delay) {
 
 export { onLoad, throttle };
 
-export const {useState, render, getName, waitForRender } = Hook();
+export const {useState, render, getName, waitForRender, optionMembers, optionChecked } = Hook();
