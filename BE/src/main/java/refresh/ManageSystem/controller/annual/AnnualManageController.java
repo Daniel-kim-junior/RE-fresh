@@ -92,10 +92,18 @@ public class AnnualManageController {
 
     //연차 승인 상태 컨트롤러
     @PutMapping("/admin/status")
+    @ResponseBody
     public boolean updateAnnualStatus(@RequestBody AnnualStatusVO status, @SessionAttribute("MemberLogin")MemberLoginDTO memberDTO){
 
-        return annualManageService.updateAnnualStatus(status, memberDTO.getId() );
+        if(!verifyAdmin()) return false;
+        return annualManageService.updateAnnualStatus(status, memberDTO.getId());
+    }
 
+   //session 검증 및 admin검증 메소드
+//    @ResponseBody
+    private boolean verifyAdmin() {
+       MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        return (memberLoginDTO != null && memberLoginDTO.getAuthority().equals("admin"))? true :false;
     }
     
 }

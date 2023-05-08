@@ -42,8 +42,8 @@ public interface MemberRepository {
 
     List<MemberInfoVO> getMemberInfo(String memberId);
 
-    boolean updateAnnulCount(AnnualCountDAO annualCountDAO);
+    int updateAnnulCount(AnnualCountDAO annualCountDAO);
 
-    boolean addAnnulCount(AnnualCountDAO annualCountDAO);
+    int addAnnulCount(AnnualCountDAO annualCountDAO);
 
 }
