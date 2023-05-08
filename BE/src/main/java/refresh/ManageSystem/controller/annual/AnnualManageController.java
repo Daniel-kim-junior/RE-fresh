@@ -23,7 +23,6 @@ import java.util.List;
  *  * */
 @Controller
 public class AnnualManageController {
-
     @Autowired
     private AnnualManageService annualManageService;
     @Autowired
@@ -97,7 +96,6 @@ public class AnnualManageController {
     @ResponseBody
     public boolean updateAnnualStatus(@RequestBody AnnualStatusVO status, @SessionAttribute("MemberLogin")MemberLoginDTO memberDTO){
         if(!verifyAdmin()) return false;
-        System.out.println(status);
         return annualManageService.updateAnnualStatus(status, memberDTO.getId());
     }
 

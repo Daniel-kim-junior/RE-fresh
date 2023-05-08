@@ -1,6 +1,5 @@
 package refresh.ManageSystem.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import refresh.ManageSystem.dao.AnnualCountDAO;

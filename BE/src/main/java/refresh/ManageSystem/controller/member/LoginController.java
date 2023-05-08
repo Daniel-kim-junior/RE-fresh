@@ -76,7 +76,7 @@ public class LoginController {
         model.addAttribute("MemberLogin", memberLogin);
         model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
 
-        return "/pages/calendar/calendar";
+        return "redirect:/cal";
     }
 
 }
