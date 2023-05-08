@@ -2,6 +2,7 @@ import { useState, onLoad, getName, waitForRender, optionChecked } from './hook.
 import { getAnnualListByMember } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
+let scrollEnd = false;
 export default function AsideMember() {
   const [annual, setAnnual] = useState([]);
   const [page, setPage] = useState({start: 0, end: 10});
@@ -11,10 +12,14 @@ export default function AsideMember() {
   const checked = optionChecked();
   const date = new Date();
 
-
   onLoad(async () => {
+    if (scrollEnd) return;
     const memberName = getName();
     const response = await getAnnualListByMember(memberName, start, end);
+    if (response.length === 0) {
+      scrollEnd = true;
+      return;
+    }
     const list = makeAnnualList(response);
     if (start === 0) {
       setAnnual(list);
@@ -29,7 +34,7 @@ export default function AsideMember() {
       const scrollHeight = el.scrollHeight;
       const scrollTop = el.scrollTop;
       const clinetHeight = el.clientHeight;
-      if (scrollHeight - scrollTop === clinetHeight) {
+      if (scrollHeight - scrollTop === clinetHeight && !scrollEnd) {
         loadingSpinner.style.display = 'block';
         scrollFlag = true;
         setTimeout(() => { 
