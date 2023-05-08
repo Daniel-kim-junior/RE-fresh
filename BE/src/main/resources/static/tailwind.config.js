@@ -28,8 +28,8 @@ module.exports = {
         'aside': '400px'
       },
       spacing: {
-        'cal-modal': '60%',
-        'cal-header': '500px',
+        'cal-modal': '750px',
+        'cal-header': '290px',
         'table-header-top': '76px',
       }
     },
