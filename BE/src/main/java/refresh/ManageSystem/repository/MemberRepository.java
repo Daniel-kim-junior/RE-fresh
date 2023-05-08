@@ -40,7 +40,7 @@ public interface MemberRepository {
 
     int countMemberSearchList(MemberSearchDTO dto);
 
-    List<MemberInfoVO> getMemberInfo(String memberId);
+    MemberInfoVO getMemberInfo(String memberId);
 
     int updateAnnulCount(AnnualCountDAO annualCountDAO);
 

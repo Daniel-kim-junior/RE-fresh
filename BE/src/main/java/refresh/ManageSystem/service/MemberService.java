@@ -92,7 +92,7 @@ public class MemberService {
         return memberRepository.countMemberSearchList(dto);
     }
 
-    public List<MemberInfoVO> getMemberInfo(String memberId) {
+    public MemberInfoVO getMemberInfo(String memberId) {
         return memberRepository.getMemberInfo(memberId);
     }
 }

@@ -22,16 +22,16 @@
         <div class="flex justify-center mb-4">
           <img class="h-24 w-24 rounded-full object-cover" src="/src/assets/images/user.svg" alt="profile">
         </div>
-        <div th:each="memberInfo : ${memberInfoVO}">
+        <div>
           <label class="flex justify-center mt-6" th:text="${session.MemberLogin['memberName']}"></label>
-          <label class="flex justify-center mt-2" th:text="${memberInfo.departmentName}"></label>
+          <label class="flex justify-center mt-2">[[${memberInfoVO.departmentName}]]</label>
           <div class="mt-4">
             <label class="ml-6">잔여 연차</label>
-            <label class="ml-20 text-blue-500" th:text="${memberInfo.annualCount}"></label>
+            <label class="ml-20 text-blue-500">[[${memberInfoVO.annualCount}]]</label>
           </div>
           <div class="mt-2">
             <label class="ml-6">예정 일정</label>
-            <a href="/mypage/history" class="ml-20 text-blue-500" th:text="${memberInfo.annualRequest}"></a>
+            <a href="/mypage/history" class="ml-20 text-blue-500">[[${memberInfoVO.annualRequest}]]</a>
           </div>
         </div>
       </div>
