@@ -19,7 +19,6 @@ import refresh.ManageSystem.vo.AnnualStatusVO;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 
 /**
@@ -73,17 +72,16 @@ public class AnnualManageService {
      * 2023-05-06
      * */
     public boolean updateAnnualStatus(AnnualStatusVO statusVO,String memberName){
-        boolean memResult= true;
-        boolean sumCountResult = true;
+        int memResult = 0;
+        int sumCountResult = 0;
         if(statusVO.getStatus().equals("승인")){
-            Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+            Double count = statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
             // 집계 로직
-            Optional<String> departmentNameById = departmentService.getDepartmentNameById(statusVO.getUid());
             sumCountResult = annualSumCountRepository.setAnnualSumCount(AnnualSumCountDAO
                     .builder()
                     .startDate(statusVO.getStartDate())
                     .endDate(statusVO.getEndDate())
-                    .departmentName(departmentNameById.get())
+                    .departmentName(statusVO.getDepartmentName())
                     .build());
 
             memResult =  memberRepository.updateAnnulCount(AnnualCountDAO
@@ -92,14 +90,14 @@ public class AnnualManageService {
                         .count(count)
                         .build());
         }
-        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+        int annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
                                 .builder()
                                 .uid(statusVO.getUid())
                                 .acceptor(memberName)
                                 .status(statusVO.getStatus())
                                 .build());
 
-         return (memResult && annResult && sumCountResult);
+         return (memResult > 0 && annResult > 0 && sumCountResult > 0);
     }
 
 
@@ -159,17 +157,17 @@ public class AnnualManageService {
      * */
 
     public boolean cancelAnnualRequest(AnnualStatusVO statusVO){
-        boolean memResult= true;
-        boolean sumCountResult = true;
+        int memResult = 0;
+//        int sumCountResult = 0;
         if(statusVO.getStatus().equals("승인")){
             Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
-            Optional<String> departmentNameById = departmentService.getDepartmentNameById(statusVO.getUid());
-            sumCountResult = annualSumCountRepository.decreaseAnnualSumCount(AnnualSumCountDAO
-                    .builder()
-                    .startDate(statusVO.getStartDate())
-                    .endDate(statusVO.getEndDate())
-                    .departmentName(departmentNameById.get())
-                    .build());
+//            Optional<String> departmentNameById = departmentService.getDepartmentNameById(statusVO.getUid());
+//            sumCountResult = annualSumCountRepository.decreaseAnnualSumCount(AnnualSumCountDAO
+//                    .builder()
+//                    .startDate(statusVO.getStartDate())
+//                    .endDate(statusVO.getEndDate())
+//                    .departmentName(departmentNameById.get())
+//                    .build());
 
             memResult =  memberRepository.addAnnulCount(AnnualCountDAO
                     .builder()
@@ -177,13 +175,13 @@ public class AnnualManageService {
                     .count(count)
                     .build());
         }
-        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+        int annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
                 .builder()
                 .uid(statusVO.getUid())
                 .status("취소")
                 .build());
 
-        return (memResult && annResult && sumCountResult);
+        return (memResult > 0 && annResult > 0);
     }
 
     public List<AnnualManageDTO> getAnnualManageListByPage(PageDTO dto) {

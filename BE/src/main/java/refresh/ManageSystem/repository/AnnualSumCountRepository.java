@@ -4,6 +4,6 @@ import refresh.ManageSystem.dao.AnnualSumCountDAO;
 
 public interface AnnualSumCountRepository {
 
-    boolean setAnnualSumCount(AnnualSumCountDAO dao);
-    boolean decreaseAnnualSumCount(AnnualSumCountDAO dao);
+    int setAnnualSumCount(AnnualSumCountDAO dao);
+    int decreaseAnnualSumCount(AnnualSumCountDAO dao);
 }

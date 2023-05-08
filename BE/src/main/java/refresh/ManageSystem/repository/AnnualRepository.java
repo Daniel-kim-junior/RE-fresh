@@ -17,7 +17,7 @@ public interface AnnualRepository {
 
     List<AnnualHistoryVO> getAnnualByMemberId(String id);
 
-    boolean updateAnnualStatus(AnnualStatusDAO statusDAO);
+    int updateAnnualStatus(AnnualStatusDAO statusDAO);
 
     List<AnnualManageVO> getAnnualManageListByPage(PageDTO dto);
 
