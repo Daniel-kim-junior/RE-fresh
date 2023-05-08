@@ -34,11 +34,11 @@ class DepartmentServiceTest {
     @Test
     void 회원_ID_부서_이름_찾기() {
         // 존재하지 않는 id로 조회했을 때 Optional 객체가 비었는지 확인
-        Optional<String> member1 = departmentService.getDepartmentNameById("member1");
+        Optional<String> member1 = departmentService.getDepartmentNameById("mem");
         Assertions.assertThat(member1).isEmpty();
 
         // 존재하는 id로 조회했을 때 부서를 잘 가져오는지 확인
-        Optional<String> member2 = departmentService.getDepartmentNameById("member2");
+        Optional<String> member2 = departmentService.getDepartmentNameById("admin");
         Assertions.assertThat(member2).isEqualTo(Optional.of("개발팀"));
     }
     /**
@@ -52,11 +52,11 @@ class DepartmentServiceTest {
     @Test
     void 회원_ID_부서_사원수_찾기() {
         // 존재하는 회원으로 조회했을 때 부서 사원수를 잘 가져오는지 확인
-        Optional<Integer> t1 = departmentService.getDepartmentTotalById("member2");
+        Optional<Integer> t1 = departmentService.getDepartmentTotalById("admin");
         Assertions.assertThat(t1).isEqualTo(Optional.of(5));
 
         // 존재하지 않는 id로 조회했을 때 Optional 객체가 비었는지 확인
-        Optional<Integer> t2 = departmentService.getDepartmentTotalById("member1");
+        Optional<Integer> t2 = departmentService.getDepartmentTotalById("star");
         Assertions.assertThat(t2).isEmpty();
     }
 

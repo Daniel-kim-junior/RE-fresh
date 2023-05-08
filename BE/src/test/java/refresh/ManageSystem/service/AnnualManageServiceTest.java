@@ -3,13 +3,16 @@ package refresh.ManageSystem.service;
 import java.text.SimpleDateFormat;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
+import org.springframework.test.context.jdbc.Sql;
+import refresh.ManageSystem.dao.AnnualSumCountDAO;
 import refresh.ManageSystem.dto.AnnualManageDTO;
+import refresh.ManageSystem.repository.AnnualSumCountRepository;
 
 /**
  * Daniel Kim
@@ -18,11 +21,18 @@ import refresh.ManageSystem.dto.AnnualManageDTO;
  *
  * 2023-05-02
  */
-@SpringBootTest
+@MybatisTest
 class AnnualManageServiceTest {
 
     @Autowired
-    private AnnualManageService annualManageService;
+    private AnnualSumCountRepository annualSumCountRepository;
+
+    @AfterEach
+    void setClearDB() {
+        annualSumCountRepository.dropTable();
+    }
+
+
 
     /**
      * Daniel Kim
@@ -45,17 +55,30 @@ class AnnualManageServiceTest {
     }
 
 
-
     /**
      * Daniel Kim
      *
-     * 연차 신청 집계 서비스 테스트
+     * 연차 신청 집계 업데이트 테스트
      *
-     * 2023-05-02
+     * 2023-05-08
      */
     @Test
-    void 연차_신청_집계_서비스_테스트() throws Exception {
+    @Sql("classpath:db/MakeTable.sql")
+    @Sql("classpath:db/MakeDepartment.sql")
+    @Sql("classpath:db/MakeMember.sql")
+    @Sql("classpath:db/MakeAnnual.sql")
+    @Sql("classpath:db/MakeAnnualCount.sql")
+    void 부서별_연차_집계_서비스_테스트() throws Exception {
+        java.util.Date date1= new SimpleDateFormat("yyyy-MM-dd").parse("2023-05-05");
+        java.util.Date date2= new SimpleDateFormat("yyyy-MM-dd").parse("2023-05-07");
+        int updateRows = annualSumCountRepository.setAnnualSumCount(AnnualSumCountDAO.builder()
+                                                                              .startDate(date1)
+                                                                              .endDate(date2)
+                                                                              .departmentName("개발팀")
+                                                                                     .build());
+        Assertions.assertThat(updateRows).isEqualTo(3);
 
     }
+
 
 }

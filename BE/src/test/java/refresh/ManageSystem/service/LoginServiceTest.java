@@ -25,13 +25,13 @@ public class LoginServiceTest {
 
     @Test
     void 성공_로그인_테스트() throws Exception {
-        Optional<String> member = memberService.login("member2", sha256.getHash("5678", "SHA-256"));
+        Optional<String> member = memberService.login("admin", sha256.getHash("1234", "SHA-256"));
         assertThat(member.isPresent()).isTrue();
     }
 
     @Test
     void 실패_로그인_테스트() throws Exception {
-        Optional<String> member = memberService.login("member3", sha256.getHash("abca", "SHA-256"));
+        Optional<String> member = memberService.login("qweit", sha256.getHash("abca", "SHA-256"));
         assertThat(member.isPresent()).isFalse();
     }
 

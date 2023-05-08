@@ -9,6 +9,13 @@ import refresh.ManageSystem.service.MemberService;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Daniel Kim
+ *
+ * calendar 페이지로 로그인 시 이동하기 위한 컨트롤러
+ *
+ * 2023-05-08
+ */
 @Controller
 public class CalendarController {
 
