@@ -20,10 +20,9 @@
 
 <div th:replace="~{/fragments/sidebar/sidebar.html :: sidebar}"></div>
 
-<main class="flex pt-20 mt-2 pl-64  flex-col">
+<main class="flex pt-16 pl-64 flex-col bg-gray-50 h-full">
   <div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
   <div class=" flex justify-center pt-10">
-
     <form id="searchForm" th:action="@{/admin/annualManage/search}" th:object="${searchData}" method="get"  >
       <div class="bg-white p-3 rounded-lg shadow-md">
         <lable for="dept" class="mx-4">부서</lable>
@@ -59,7 +58,7 @@
         </thead>
 
         <tbody th:if="${annualList}">
-        <tr th:each="data : ${ annualList}" class="bg-white border-b  hover:bg-sky-50 text-center">
+        <tr th:each="data : ${annualList}" class="bg-white border-b  hover:bg-sky-50 text-center">
           <td class="px-6 py-3">[[${data.createTm}]]</td>
           <td class="px-6 py-3">[[${data.memberName}]]</td>
           <td class="px-6 py-3">[[${data.departmentName}]]</td>
@@ -69,8 +68,8 @@
             <span>[[${data.endDate}]]</span>
           </td>
           <td class="px-6 py-3">
-            <button id="statusBnt" th:onclick="showEditAnnual( [[${data.annualUid}]] , [[${data.annualStatus}]], [[${data.startDate}]], [[${data.endDate}]],[[${data.annualType}]] )">
-              <span th:class="|mr-2 fa fa-circle  ${data.annualStatus eq '승인' ? 'text-green-700' : data.annualStatus eq '반려' ? 'text-gray-300' : data.annualStatus eq '취소' ? 'text-red-500' : 'text-blue-700'}|"></span>
+            <button id="statusBnt" th:onclick="showEditAnnual( [[${data.annualUid}]] , [[${data.annualStatus}]], [[${data.startDate}]], [[${data.endDate}]],[[${data.annualType}]], [[${data.departmentName}]] )">
+              <span class="mr-2" th:class="|fa fa-circle  ${data.annualStatus eq '승인' ? 'text-green-700' : data.annualStatus eq '반려' ? 'text-gray-300' : data.annualStatus eq '취소' ? 'text-red-500' : 'text-blue-700'}|"></span>
               <span class="bg-inherit ">[[${data.annualStatus}]]</span>
             </button>
             <div th:replace="/pages/admin/annual/annualmodal.html :: editAnnual-modal" ></div>

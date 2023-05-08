@@ -5,16 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import refresh.ManageSystem.dao.AnnualCountDAO;
 import refresh.ManageSystem.dao.AnnualStatusDAO;
+import refresh.ManageSystem.dao.AnnualSumCountDAO;
 import refresh.ManageSystem.dto.AnnualHistoryDTO;
 import refresh.ManageSystem.dto.AnnualManageDTO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
 import refresh.ManageSystem.dto.PageDTO;
 import refresh.ManageSystem.repository.AnnualRepository;
+import refresh.ManageSystem.repository.AnnualSumCountRepository;
 import refresh.ManageSystem.repository.MemberRepository;
 import refresh.ManageSystem.vo.AnnualHistoryVO;
 import refresh.ManageSystem.vo.AnnualManageVO;
 import refresh.ManageSystem.vo.AnnualStatusVO;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,11 @@ public class AnnualManageService {
     private AnnualRepository annualRepository;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private AnnualSumCountRepository annualSumCountRepository;
+
+    @Autowired
+    private DepartmentService departmentService;
 
 
     /**
@@ -66,10 +72,17 @@ public class AnnualManageService {
      * 2023-05-06
      * */
     public boolean updateAnnualStatus(AnnualStatusVO statusVO,String memberName){
-        boolean memResult= true;
-
+        int memResult = 0;
+        int sumCountResult = 0;
         if(statusVO.getStatus().equals("승인")){
-            Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+            Double count = statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+            // 집계 로직
+            sumCountResult = annualSumCountRepository.setAnnualSumCount(AnnualSumCountDAO
+                    .builder()
+                    .startDate(statusVO.getStartDate())
+                    .endDate(statusVO.getEndDate())
+                    .departmentName(statusVO.getDepartmentName())
+                    .build());
 
             memResult =  memberRepository.updateAnnulCount(AnnualCountDAO
                         .builder()
@@ -77,14 +90,14 @@ public class AnnualManageService {
                         .count(count)
                         .build());
         }
-        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+        int annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
                                 .builder()
                                 .uid(statusVO.getUid())
                                 .acceptor(memberName)
                                 .status(statusVO.getStatus())
                                 .build());
 
-         return (memResult && annResult);
+         return (memResult > 0 && annResult > 0 && sumCountResult > 0);
     }
 
 
@@ -144,10 +157,17 @@ public class AnnualManageService {
      * */
 
     public boolean cancelAnnualRequest(AnnualStatusVO statusVO){
-        boolean memResult= true;
-
+        int memResult = 0;
+//        int sumCountResult = 0;
         if(statusVO.getStatus().equals("승인")){
             Double count =statusVO.getAnnualType().contains("반차") ? 0.5 : (statusVO.getEndDate().getTime() -statusVO.getStartDate().getTime())/ (24*60*60*1000) ;
+//            Optional<String> departmentNameById = departmentService.getDepartmentNameById(statusVO.getUid());
+//            sumCountResult = annualSumCountRepository.decreaseAnnualSumCount(AnnualSumCountDAO
+//                    .builder()
+//                    .startDate(statusVO.getStartDate())
+//                    .endDate(statusVO.getEndDate())
+//                    .departmentName(departmentNameById.get())
+//                    .build());
 
             memResult =  memberRepository.addAnnulCount(AnnualCountDAO
                     .builder()
@@ -155,13 +175,13 @@ public class AnnualManageService {
                     .count(count)
                     .build());
         }
-        boolean annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
+        int annResult = annualRepository.updateAnnualStatus(AnnualStatusDAO
                 .builder()
                 .uid(statusVO.getUid())
                 .status("취소")
                 .build());
 
-        return (memResult && annResult);
+        return (memResult > 0 && annResult > 0);
     }
 
     public List<AnnualManageDTO> getAnnualManageListByPage(PageDTO dto) {

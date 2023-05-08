@@ -1,9 +1,6 @@
 package refresh.ManageSystem.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -47,5 +44,18 @@ class AnnualManageServiceTest {
         Assertions.assertThat(annualManageDTO.getStartDate()).isEqualTo(startDate);
     }
 
+
+
+    /**
+     * Daniel Kim
+     *
+     * 연차 신청 집계 서비스 테스트
+     *
+     * 2023-05-02
+     */
+    @Test
+    void 연차_신청_집계_서비스_테스트() throws Exception {
+
+    }
 
 }
