@@ -1,5 +1,5 @@
 import { $App } from "./app.js";
-import { render } from "./hook.js";
+import { render, optionInit } from "./hook.js";
 
 
 
@@ -7,9 +7,13 @@ import { render } from "./hook.js";
   const select = document.querySelector('#department-select');
   const checkboxForExcept = document.querySelector('#checkbox-for-except');
   const aside = document.querySelector('#aside-contents');
-  aside.onscroll = null;
+  const loadingSpinner = document.querySelector('#aside-contents-status');
+
   select.onchange = (e) => {
     aside.innerHTML = '';
+    aside.onscroll = null;
+    optionInit();
+    loadingSpinner.style.display = 'none';
     const department = e.target.value;
     render($App, aside, department);
     aside.style.display = 'block';

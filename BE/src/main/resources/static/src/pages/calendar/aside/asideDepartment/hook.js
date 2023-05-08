@@ -87,9 +87,11 @@ function debounceFrame(callback) {
   const _render = debounceFrame(() => {
     const { root, rootComponent, checked } = options;
     if (!root || !rootComponent) return;
-    root.innerHTML = rootComponent();
-    options.currentStateKey = 0;
-    options.renderCount += 1;
+    waitForRender(root, () => {
+      root.innerHTML = rootComponent();
+      options.currentStateKey = 0;
+      options.renderCount += 1;
+    })    
   });
 
    function waitForRender(elem, callback) {
