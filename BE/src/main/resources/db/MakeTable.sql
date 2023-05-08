@@ -1,7 +1,7 @@
-create schema refresh;
+CREATE SCHEMA IF NOT EXISTS refresh;
 use refresh;
 
-create table member (
+create table IF NOT EXISTS member (
 	member_uid VARCHAR(36) NOT NULL PRIMARY KEY COMMENT '사용자 uid',
     department_uid VARCHAR(36) COMMENT '부서 Id',
     member_id VARCHAR(25) NOT NULL COMMENT '사용자 id',
@@ -18,7 +18,7 @@ create table member (
 	update_id	VARCHAR(25)	NOT NULL	COMMENT '계정 수정자',
 	update_tm	DATETIME	NOT NULL	COMMENT '계정 수정 시간'
 );
-create table annual(
+create table IF NOT EXISTS annual (
 	annual_uid VARCHAR(36)  NOT NULL PRIMARY KEY COMMENT '연차 uid',
     member_uid VARCHAR(36)  NOT NULL COMMENT 'member uid',
     annual_type	VARCHAR(50)	NOT NULL	COMMENT '연차타입(반차,연차,월차)',
@@ -30,7 +30,7 @@ create table annual(
 	update_tm	DATETIME	NULL	COMMENT '연차 수정일자'
 );
 
-create table department(
+create table IF NOT EXISTS department (
 	department_uid VARCHAR(36) NOT NULL PRIMARY KEY COMMENT '부서 uid',
     department_id VARCHAR(25) NOT NULL COMMENT '부서 id',
     department_name VARCHAR(25) NOT NULL COMMENT '부서 명',
@@ -41,14 +41,14 @@ create table department(
 	update_tm	DATETIME	NOT NULL	COMMENT '부서 수정시간'
 );
 
-CREATE TABLE HOLIDAY (
+CREATE TABLE IF NOT EXISTS HOLIDAY  (
    id MEDIUMINT NOT NULL AUTO_INCREMENT COMMENT '공휴일 uid',
    date_name CHAR(30) NOT NULL COMMENT '공휴일 이름',
    locdate CHAR(100) NOT NULL COMMENT '날짜',
    PRIMARY KEY (id)
 );
 
-CREATE TABLE annual_count (
+CREATE TABLE IF NOT EXISTS annual_count (
 	id int NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT '연차 집계 ID',
     annual_date DATETIME not null COMMENT '연차 날짜',
 	sum_count int not null COMMENT '날짜 당 집계 숫자',
