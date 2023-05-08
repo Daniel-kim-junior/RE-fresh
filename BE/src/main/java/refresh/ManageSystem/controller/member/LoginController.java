@@ -39,10 +39,10 @@ public class LoginController {
      */
     @GetMapping("/")
     public String get(Model model) {
-        MemberLoginDTO memberLogin = (MemberLoginDTO) model.getAttribute("MemberLogin");
-        if(memberLogin != null && memberLogin.getId() != null && memberLogin.getPassword() != null) {
-            return "/pages/calendar/calendar";
-        }
+//        MemberLoginDTO memberLogin = (MemberLoginDTO) model.getAttribute("MemberLogin");
+//        if(memberLogin != null && memberLogin.getId() != null && memberLogin.getPassword() != null) {
+//            return "/pages/calendar/calendar";
+//        }
         model.addAttribute("MemberLogin", new MemberLoginDTO());
         return "/index";
     }
