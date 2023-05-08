@@ -1,5 +1,8 @@
 package refresh.ManageSystem.controller.mypage;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import refresh.ManageSystem.dto.MemberLoginDTO;
 import refresh.ManageSystem.service.AnnualManageService;
+import refresh.ManageSystem.service.DepartmentService;
 import refresh.ManageSystem.service.MemberService;
 import refresh.ManageSystem.vo.AnnualStatusVO;
+import refresh.ManageSystem.vo.MemberInfoVO;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +24,8 @@ public class AnnualHistoryController {
 
     @Autowired
     private AnnualManageService annualManageService;
+    @Autowired
+    private DepartmentService departmentService;
     @Autowired
     private MemberService memberService;
     @Autowired
@@ -46,7 +53,9 @@ public class AnnualHistoryController {
     @ResponseBody
     public boolean cancleAnnualHistory(@RequestBody AnnualStatusVO status){
         if(!isVerify()) return false;
-        return annualManageService.cancelAnnualRequest(status);
+        MemberLoginDTO member = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        Optional<String> departmentName = departmentService.getDepartmentNameById(member.getId());
+        return annualManageService.cancelAnnualRequest(status, departmentName.get());
     }
 
     private boolean isVerify(){
