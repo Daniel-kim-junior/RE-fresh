@@ -47,7 +47,6 @@ public class MemberController {
         MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
 
         model.addAttribute("department", departmentService.getDepartmentAllList());
-        System.out.println("checkId : "+ memberService.checkId(member));
 
         if(memberService.checkId(member)) {
             model.addAttribute("idCheckValue", "이미 사용하고 있는 아이디입니다. <br> 다른 아이디를 입력하세요.");
