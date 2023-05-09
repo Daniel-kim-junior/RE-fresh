@@ -1,5 +1,7 @@
 package refresh.ManageSystem.dao;
 
+import java.util.Date;
+
 import lombok.Builder;
 import lombok.Getter;
 

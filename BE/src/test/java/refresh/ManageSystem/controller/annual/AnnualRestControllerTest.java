@@ -4,17 +4,25 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+
+import refresh.ManageSystem.dto.MemberLoginDTO;
+import refresh.ManageSystem.dto.PageDTO;
+import refresh.ManageSystem.util.hash.SHA256;
 
 /**
  * Daniel Kim
@@ -27,26 +35,32 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @SpringBootTest
 @AutoConfigureMockMvc
 class AnnualRestControllerTest {
-    private MockMvc mockMvc;
     @Autowired
-    private WebApplicationContext wac;
+    private MockMvc mockMvc;
 
-    /**
-     * Daniel Kim
-     *
-     * MockMvc 객체 생성
-     * 필터 추가
-     * 모든 요청에 대해 print() 수행
-     *
-     * 2023-05-02
-     */
+    private static MockHttpSession httpSession;
+    private MockHttpServletRequest httpServletRequest;
+    private SHA256 sha256;
+    private MemberLoginDTO memberLoginDTO;
+    private PageDTO pageDTO;
     @BeforeEach
-    public void setup() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(wac)
-                                      .addFilters(new CharacterEncodingFilter("UTF-8", true))  // 필터 추가
-                                      .alwaysDo(print())
-                                      .build();
+    void setUp() throws Exception {
+        sha256 = new SHA256();
+        httpServletRequest = new MockHttpServletRequest();
+        memberLoginDTO = new MemberLoginDTO();
+        memberLoginDTO.setId("admin");
+        memberLoginDTO.setPassword(sha256.getHash("1234", "SHA-256"));
+        memberLoginDTO.setAuthority("admin");
+        httpSession = new MockHttpSession();
+        httpSession.setAttribute("MemberLogin", memberLoginDTO);
+        httpServletRequest.setSession(httpSession);
     }
+    @AfterAll
+    static void 세션_해제() {
+        httpSession.clearAttributes();
+        httpSession = null;
+    }
+
     /**
      * Daniel Kim
      *
@@ -59,10 +73,10 @@ class AnnualRestControllerTest {
     void 사원_이름으로_연차_정보_검색() throws Exception {
         String expectByMemberName = "$.[?(@.name == '%s')]";
 
-        mockMvc.perform(get("/annual/member?name=강감&start=0&end=10"))
+        mockMvc.perform(get("/annual/member?name=박영&start=0&end=10").session(httpSession))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath(expectByMemberName, "강감찬").exists());
+                .andExpect(jsonPath(expectByMemberName, "박영희").exists());
     }
 
     /**
@@ -77,10 +91,10 @@ class AnnualRestControllerTest {
     void 부서_이름으로_연차_정보_검색() throws Exception {
         String expectByMemberName = "$.[?(@.name == '%s')]";
 
-        mockMvc.perform(get("/annual/department?name=개발팀&start=0&end=10"))
-               .andDo(print())
-               .andExpect(status().isOk())
-               .andExpect(jsonPath(expectByMemberName, "강감찬").exists());
+        mockMvc.perform(get("/annual/department?name=개발팀&start=0&end=10").session(httpSession))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath(expectByMemberName, "박영희").exists());
     }
 
 }
