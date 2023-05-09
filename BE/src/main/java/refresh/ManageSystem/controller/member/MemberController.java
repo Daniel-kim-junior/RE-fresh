@@ -50,9 +50,13 @@ public class MemberController {
 
         if(memberService.checkId(member)) {
             model.addAttribute("idCheckValue", "이미 사용하고 있는 아이디입니다. <br> 다른 아이디를 입력하세요.");
+            String memberId = memberLoginDTO.getId();
+            model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
             return "/pages/admin/member/createMemberForm";
         }
         if(result.hasErrors()) {
+            String memberId = memberLoginDTO.getId();
+            model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
             return "/pages/admin/member/createMemberForm";
         }
 
@@ -118,5 +122,5 @@ public class MemberController {
 
         return "/pages/admin/member/memberList";
     }
-    
+
 }
