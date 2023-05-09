@@ -28,7 +28,15 @@
     <div class="relative py-8 pl-64 ">
         <div class="flex">
              <span class="absolute text-center text-xl text-slate-600 font-semibold">휴가 신청/사용 내역</span>
-             <span class="absolute right-1/4 top-12 text-sm font-semibold text-slate-600">사용/잔여 : <span class="text-blue-700"> [[${annualCnt.usageCount}]] / [[${annualCnt.remainCount}]]</span></span>
+             <div class="absolute right-1/4 top-12 text-sm font-semibold text-slate-600">
+                남은 연차:
+                <span class="text-blue-500"
+                >[[${annualCnt.remainCount}]]</span
+                >
+                일 / 사용한 연차:
+                <span class="text-red-500">[[${annualCnt.usageCount}]]</span
+                >일
+              </div>
         </div>
 
         <div class="absolute text-center  top-20 overflow-x-auto shadow-md sm:rounded-lg">
