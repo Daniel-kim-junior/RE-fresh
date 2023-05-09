@@ -5,6 +5,6 @@ import refresh.ManageSystem.dto.LeaveRequestDTO;
 
 public interface LeaveRequestRepository {
 
-    void insertAnnual(LeaveRequestDAO dao);
+    int insertAnnual(LeaveRequestDAO dao);
 
 }

@@ -1,11 +1,14 @@
-package refresh.ManageSystem.controller.annual;
+package refresh.ManageSystem.controller.member;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,15 +22,20 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import refresh.ManageSystem.dto.MemberLoginDTO;
+import refresh.ManageSystem.dto.MemberServiceDTO;
 import refresh.ManageSystem.dto.PageDTO;
+import refresh.ManageSystem.service.MemberService;
 import refresh.ManageSystem.util.hash.SHA256;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class AnnualManageControllerTest {
+class MemberControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private MemberService memberService;
 
     private static MockHttpSession httpSession;
     private static MockHttpServletRequest httpServletRequest;
@@ -52,21 +60,39 @@ class AnnualManageControllerTest {
         httpSession = null;
     }
 
-
-
-    /**
-     * Daniel Kim
-     *
-     * 권한 없을때 302 리다이렉트
-     *
-     * 2023-05-02
-     */
     @Test
-    void 연차_정보_Get_요청() throws Exception {
-        mockMvc.perform(get("/admin/annualManage"))
-               .andDo(print())
-               .andExpect(status().is3xxRedirection());
+    void 권한_없을때_302_페이지_리다이렉트() throws Exception {
+        mockMvc.perform(get("/admin/members/new"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/auth"));
     }
+
+    @Test
+    void 멤버_생성_페이지_이동() throws Exception {
+        mockMvc.perform(get("/admin/members/new").session(httpSession))
+               .andExpect(status().isOk())
+                .andExpect(model().attributeExists("memberInfoVO"))
+               .andExpect(view().name("/pages/admin/member/createMemberForm"));
+    }
+
+    @Test
+    void 멤버_생성_기능() throws Exception {
+        MemberServiceDTO memberServiceDTO = new MemberServiceDTO();
+        memberServiceDTO.setMemberId("admin");
+        memberServiceDTO.setMemberPassword("1234");
+        memberServiceDTO.setMemberName("admin");
+        memberServiceDTO.setMemberEmail("now@gmail.com");
+
+        memberService.checkId(memberServiceDTO);
+        mockMvc.perform(post("/admin/members/new").session(httpSession))
+                .andExpect(status().isOk())
+                .andExpect()
+    }
+
+
+
+
+
 
 
 }
