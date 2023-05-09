@@ -69,7 +69,7 @@ class DepartmentRestControllerTest {
 
     @Test
     void 모든_부서_Get_컨트롤러_테스트() throws Exception {
-        mockMvc.perform(get("/department/allList"))
+        mockMvc.perform(get("/department/allList").session(session))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$").isArray())
                .andExpect(jsonPath("$").isNotEmpty())

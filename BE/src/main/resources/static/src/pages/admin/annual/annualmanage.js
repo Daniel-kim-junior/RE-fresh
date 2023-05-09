@@ -13,8 +13,8 @@ let deptName;
      let list = end.match(/\d+/g);
      endDate = new Date(list[0]+'-'+list[1]+'-'+list[2]);
 
-     if(status == '취소' || status == '승인' || endDate < new Date()) return;
-
+     if(status == '취소' || status == '승인') return;
+    //  endDate < new Date()
      list=start.match(/\d+/g);
      startDate = new Date(list[0]+'-'+list[1]+'-'+list[2]);
      annualType = type;

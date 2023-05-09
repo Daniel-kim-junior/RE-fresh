@@ -13,8 +13,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 import refresh.ManageSystem.dto.MemberLoginDTO;
 import refresh.ManageSystem.util.hash.SHA256;
 
@@ -78,7 +83,7 @@ class CalendarRestControllerTest {
      */
     @Test
     void 부서_이름_달력_정보_요청() throws Exception {
-        mvc.perform(get("/calendar/department?year=2023&month=10&departmentName=개발팀"))
+        mvc.perform(get("/calendar/department?year=2023&month=10&departmentName=개발팀").session(session))
                 .andExpect(status().isOk());
     }
 
@@ -86,6 +91,12 @@ class CalendarRestControllerTest {
     void 세션_정보_달력_정보_요청() throws Exception {
         mvc.perform(get("/calendar?year=2023&month=10").session(session))
                 .andExpect(status().isOk());
+    }
 
+    @Test
+    void 로그인_요청_성공_달력_컨트롤러() throws Exception {
+        mvc.perform(get("/cal").session(session))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/pages/calendar/calendar"));
     }
 }

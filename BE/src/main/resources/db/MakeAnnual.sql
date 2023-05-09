@@ -1,0 +1,4 @@
+INSERT INTO annual (annual_uid, member_uid, annual_type, start_date, end_date, annual_status, acceptor, create_tm, update_tm)
+VALUES (uuid() , (Select member_uid from member where member_name = '박영희'), '연차', '2023-04-26 10:00:00', '2023-04-30 12:00:00', '수락', 'admin', '2023-04-25 13:00:00', '2023-04-25 13:00:00'),
+(uuid() , (Select member_uid from member where member_name = '박영희'), '연차', '2023-05-05 10:00:00', '2023-05-07 12:00:00', '수락', 'admin', '2023-04-25 13:00:00', '2023-04-25 13:00:00'),
+(uuid() , (Select member_uid from member where member_name = '박영희'), '연차', '2023-06-06 10:00:00', '2023-06-07 12:00:00', '수락', 'admin', '2023-04-25 13:00:00', '2023-04-25 13:00:00');
