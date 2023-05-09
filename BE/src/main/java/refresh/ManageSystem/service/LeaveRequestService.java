@@ -19,7 +19,7 @@ public class LeaveRequestService {
     *
     * */
     public void insert(LeaveRequestDTO dto, String id, String name) {
-        String type = (dto.getLeaveType().equals("full-day") ? "연차" : (dto.getLeaveType()).equals("am-half-day") ? "오전 반차" : "오후 반차"  );
+        String type = (dto.getLeaveType().equals("full-day") ? "연차" : (dto.getLeaveType().equals("am-half-day") ? "오전 반차" : "오후 반차"));
         leaveRequestRepository.insertAnnual(LeaveRequestDAO
                 .builder()
                 .name(name)
