@@ -98,11 +98,11 @@ public class AnnualManageController {
         return annualManageService.updateAnnualStatus(status, memberDTO.getId());
     }
 
-   //session 검증 및 admin검증 메소드
+    //session 검증 및 admin검증 메소드
 //    @ResponseBody
     private boolean verifyAdmin() {
-       MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
         return (memberLoginDTO != null && memberLoginDTO.getAuthority().equals("admin"))? true :false;
     }
-    
+
 }
