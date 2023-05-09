@@ -1,6 +1,7 @@
 import { $App } from "./app.js";
 import { render } from "./hook.js";
 import { optionInit } from "../asideDepartment/hook.js";
+import { memberScrollInit } from '../asideMember/asideMember.js';
 const INIT_LENGTH = 0;
 
 
@@ -38,6 +39,7 @@ const INIT_LENGTH = 0;
       member.style.display = 'none';
     } else if (e.target.value === 'member') {
       input.value = '';
+      memberScrollInit();
       checkboxWrapperDept.style.display = 'none';
       checkboxWrapperMember.style.display = 'block';
       member.style.display = 'block';
