@@ -9,7 +9,7 @@
               from member mem
                        left join department dept on mem.department_uid = dept.department_uid) m
              on a.member_uid = m.member_uid
-        order by create_tm desc
+        order by a.create_tm desc
     </select>
 
     <select id="getAnnualManageListByPage" resultType="AnnualManageVO" parameterType="PageDTO">
@@ -20,6 +20,7 @@
               from member mem
                        left join department dept on mem.department_uid = dept.department_uid) m
              on a.member_uid = m.member_uid
+             order by a.create_tm desc
         limit #{start}, #{perPageNum}
     </select>
 
@@ -91,6 +92,7 @@
         select annual_uid, annual_type, annual_status, start_date, end_date, create_tm, acceptor
         from annual ann
                  inner join (select member_uid , member_id from member where member_id = #{id}) mem
-                            on ann.member_uid = mem.member_uid;
+                            on ann.member_uid = mem.member_uid
+        order by create_tm desc
     </select>
 </mapper>
