@@ -33,7 +33,7 @@
           </th:block>
         </select>
         <label class="mx-4">사원 명</label>
-        <input th:field="*{memberName}" type="text" placeholder="사원명 입력" class="mx-1 border rounded-lg px-1 py-1  text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 " />
+        <input th:field="*{memberName}" type="text" placeholder="사원명 입력" autocomplete="off" class="mx-1 border rounded-lg px-1 py-1  text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 " />
         <label class="mx-4">기간</label>
         <input th:field="*{startDate}" type="date" class="mx-2 border rounded-lg px-1 py-1  text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 "/> ~
         <input th:field="*{endDate}" type="date" class="mx-2 border rounded-lg px-1 py-1 text-gray-800 text-sm focus:border-blue-400 hover:border-blue-400 "/>
