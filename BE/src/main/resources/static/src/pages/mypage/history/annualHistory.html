@@ -1,612 +1,371 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>Annual Manage</title>
     <link rel="stylesheet" th:href="@{/dist/output.css}" />
     <link rel="stylesheet" href="/dist/output.css" />
     <script
-            src="/src/pages/mypage/history/annualHistory.js"
-            type="module"
+      src="/src/pages/mypage/history/annualHistory.js"
+      type="module"
     ></script>
     <!--fontAwesome-->
     <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     />
 
     <script src="/src/pages/admin/member/adminTab.js" type="module"></script>
     <script
-            th:inline="javascript"
-            th:src="@{/src/pages/mypage/history/annualHistory.js}"
+      th:inline="javascript"
+      th:src="@{/src/pages/mypage/history/annualHistory.js}"
     ></script>
-</head>
-<body class="bg-gray-50 vsc-initialized" cz-shortcut-listen="true">
-<header
-        class="fixed top-0 z-50 w-full h-16 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 shadow-sm"
->
-    <div class="px-3 py-1 lg:px-5 lg:pl-3">
-        <div class="flex items-center justify-between">
-            <div class="flex items-center justify-start">
-                <button
-                        data-drawer-target="logo-sidebar"
-                        data-drawer-toggle="logo-sidebar"
-                        aria-controls="logo-sidebar"
-                        type="button"
-                        class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                >
-                    <span class="sr-only">Open sidebar</span>
-                    <svg
-                            class="w-6 h-6"
-                            aria-hidden="true"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                                clip-rule="evenodd"
-                                fill-rule="evenodd"
-                                d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                        ></path>
-                    </svg>
-                </button>
-                <a href="/cal" class="flex ml-2 md:mr-24">
-              <span class="text-sky-500 text-3xl font-bold ml-4"
-              >RE<span class="text-black">fresh</span></span
-              >
-                </a>
-            </div>
-            <div class="flex items-center">
-                <div class="flex items-center ml-3 m-3 mr-16">
-                    <div>
-                        <form action="/logout" method="POST">
-                            <button
-                                    type="submit"
-                                    class="bg-blue-400 hover:bg-blue-500 text-white text-sm py-2 px-4 rounded-full shadow-sm"
-                            >
-                                로그아웃
-                            </button>
-                        </form>
-                    </div>
-                    <div
-                            class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
-                            id="dropdown-user"
-                    >
-                        <div class="px-4 py-3" role="none">
-                            <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                Neil Sims
-                            </p>
-                            <p
-                                    class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
-                                    role="none"
-                            >
-                                <path
-                                        clip-rule="evenodd"
-                                        fill-rule="evenodd"
-                                        d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-                                ></path>
+  </head>
+  <body class="bg-gray-50 vsc-initialized" cz-shortcut-listen="true">
+<!--    <header-->
+<!--      class="fixed top-0 z-50 w-full h-16 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 shadow-sm"-->
+<!--    >-->
+<!--      <div class="px-3 py-1 lg:px-5 lg:pl-3">-->
+<!--        <div class="flex items-center justify-between">-->
+<!--          <div class="flex items-center justify-start">-->
+<!--            <button-->
+<!--              data-drawer-target="logo-sidebar"-->
+<!--              data-drawer-toggle="logo-sidebar"-->
+<!--              aria-controls="logo-sidebar"-->
+<!--              type="button"-->
+<!--              class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"-->
+<!--            >-->
+<!--              <span class="sr-only">Open sidebar</span>-->
+<!--              <svg-->
+<!--                class="w-6 h-6"-->
+<!--                aria-hidden="true"-->
+<!--                fill="currentColor"-->
+<!--                viewBox="0 0 20 20"-->
+<!--                xmlns="http://www.w3.org/2000/svg"-->
+<!--              >-->
+<!--                <path-->
+<!--                  clip-rule="evenodd"-->
+<!--                  fill-rule="evenodd"-->
+<!--                  d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"-->
+<!--                ></path>-->
+<!--              </svg>-->
+<!--            </button>-->
+<!--            <a href="/cal" class="flex ml-2 md:mr-24">-->
+<!--              <span class="text-sky-500 text-3xl font-bold ml-4"-->
+<!--                >RE<span class="text-black">fresh</span></span-->
+<!--              >-->
+<!--            </a>-->
+<!--          </div>-->
+<!--          <div class="flex items-center">-->
+<!--            <div class="flex items-center ml-3 m-3 mr-16">-->
+<!--              <div>-->
+<!--                <form action="/logout" method="POST">-->
+<!--                  <button-->
+<!--                    type="submit"-->
+<!--                    class="bg-blue-400 hover:bg-blue-500 text-white text-sm py-2 px-4 rounded-full shadow-sm"-->
+<!--                  >-->
+<!--                    로그아웃-->
+<!--                  </button>-->
+<!--                </form>-->
+<!--              </div>-->
+<!--              <div-->
+<!--                class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"-->
+<!--                id="dropdown-user"-->
+<!--              >-->
+<!--                <div class="px-4 py-3" role="none">-->
+<!--                  <p class="text-sm text-gray-900 dark:text-white" role="none">-->
+<!--                    Neil Sims-->
+<!--                  </p>-->
+<!--                  <p-->
+<!--                    class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"-->
+<!--                    role="none"-->
+<!--                  >-->
+<!--                    <path-->
+<!--                      clip-rule="evenodd"-->
+<!--                      fill-rule="evenodd"-->
+<!--                      d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"-->
+<!--                    ></path>-->
 
-                                <a href="https://daum.net" class="flex ml-2 md:mr-24">
-                                    <img
-                                            src="/src/assets/images/logo.svg"
-                                            class="h-8 mr-3"
-                                            alt="REfresh Logo"
-                                    />
-                                    <span
-                                            class="self-center font-semibold text-xl sm:text-4xl whitespace-nowrap dark:text-white"
-                                    ><span class="text-sky-500">RE</span>fresh</span
-                                    >
-                                </a>
-                            </p>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="flex items-center ml-3">
-                                <div>
-                                    <button
-                                            type="button"
-                                            class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                                            aria-expanded="false"
-                                            data-dropdown-toggle="dropdown-user"
-                                    >
-                                        <span class="sr-only">Open user menu</span>
-                                        <img
-                                                class="w-8 h-8 rounded-full"
-                                                src="/src/assets/images/user.svg"
-                                                alt="user photo"
-                                        />
-                                    </button>
-                                </div>
-                                <div
-                                        class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
-                                        id="dropdown-user"
-                                >
-                                    <div class="px-4 py-3" role="none">
-                                        <p
-                                                class="text-sm text-gray-900 dark:text-white"
-                                                role="none"
-                                        >
-                                            Neil Sims
-                                        </p>
-                                        <p
-                                                class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
-                                                role="none"
-                                        >
-                                            neil.sims@flowbite.com
-                                        </p>
-                                    </div>
-                                    <ul class="py-1" role="none">
-                                        <li>
-                                            <a
-                                                    href="#"
-                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                                    role="menuitem"
-                                            >Dashboard</a
-                                            >
-                                        </li>
-                                        <li>
-                                            <a
-                                                    href="#"
-                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                                    role="menuitem"
-                                            >Settings</a
-                                            >
-                                        </li>
-                                        <li>
-                                            <a
-                                                    href="#"
-                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                                    role="menuitem"
-                                            >Earnings</a
-                                            >
-                                        </li>
-                                        <li>
-                                            <a
-                                                    href="#"
-                                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                                                    role="menuitem"
-                                            >Sign out</a
-                                            >
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
+<!--                    <a href="https://daum.net" class="flex ml-2 md:mr-24">-->
+<!--                      <img-->
+<!--                        src="/src/assets/images/logo.svg"-->
+<!--                        class="h-8 mr-3"-->
+<!--                        alt="REfresh Logo"-->
+<!--                      />-->
+<!--                      <span-->
+<!--                        class="self-center font-semibold text-xl sm:text-4xl whitespace-nowrap dark:text-white"-->
+<!--                        ><span class="text-sky-500">RE</span>fresh</span-->
+<!--                      >-->
+<!--                    </a>-->
+<!--                  </p>-->
+<!--                </div>-->
+<!--                <div class="flex items-center">-->
+<!--                  <div class="flex items-center ml-3">-->
+<!--                    <div>-->
+<!--                      <button-->
+<!--                        type="button"-->
+<!--                        class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"-->
+<!--                        aria-expanded="false"-->
+<!--                        data-dropdown-toggle="dropdown-user"-->
+<!--                      >-->
+<!--                        <span class="sr-only">Open user menu</span>-->
+<!--                        <img-->
+<!--                          class="w-8 h-8 rounded-full"-->
+<!--                          src="/src/assets/images/user.svg"-->
+<!--                          alt="user photo"-->
+<!--                        />-->
+<!--                      </button>-->
+<!--                    </div>-->
+<!--                    <div-->
+<!--                      class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"-->
+<!--                      id="dropdown-user"-->
+<!--                    >-->
+<!--                      <div class="px-4 py-3" role="none">-->
+<!--                        <p-->
+<!--                          class="text-sm text-gray-900 dark:text-white"-->
+<!--                          role="none"-->
+<!--                        >-->
+<!--                          Neil Sims-->
+<!--                        </p>-->
+<!--                        <p-->
+<!--                          class="text-sm font-medium text-gray-900 truncate dark:text-gray-300"-->
+<!--                          role="none"-->
+<!--                        >-->
+<!--                          neil.sims@flowbite.com-->
+<!--                        </p>-->
+<!--                      </div>-->
+<!--                      <ul class="py-1" role="none">-->
+<!--                        <li>-->
+<!--                          <a-->
+<!--                            href="#"-->
+<!--                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"-->
+<!--                            role="menuitem"-->
+<!--                            >Dashboard</a-->
+<!--                          >-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                          <a-->
+<!--                            href="#"-->
+<!--                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"-->
+<!--                            role="menuitem"-->
+<!--                            >Settings</a-->
+<!--                          >-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                          <a-->
+<!--                            href="#"-->
+<!--                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"-->
+<!--                            role="menuitem"-->
+<!--                            >Earnings</a-->
+<!--                          >-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                          <a-->
+<!--                            href="#"-->
+<!--                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"-->
+<!--                            role="menuitem"-->
+<!--                            >Sign out</a-->
+<!--                          >-->
+<!--                        </li>-->
+<!--                      </ul>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </header>-->
 
-<aside
-        id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
-        aria-label="Sidebar"
->
-    <div
-            class="h-full px-3 pt-4 pb-4 overflow-y-auto bg-white dark:bg-gray-800"
-    >
-        <div class="h-72 bg-white rounded-lg">
-            <div class="flex justify-center mb-4">
-                <img
-                        class="h-24 w-24 rounded-full object-cover"
-                        src="/src/assets/images/user.svg"
-                        alt="profile"
-                />
-            </div>
-            <div>
-                <label class="flex justify-center mt-6">박영희</label>
-                <label class="flex justify-center mt-2">개발팀</label>
-                <div class="mt-4">
-                    <label class="ml-6">잔여 연차</label>
-                    <label class="ml-20 text-blue-500">5.0</label>
-                </div>
-                <div class="mt-2">
-                    <label class="ml-6">예정 일정</label>
-                    <a href="/mypage/history" class="ml-20 text-blue-500">0</a>
-                </div>
-            </div>
-        </div>
+<!--    <aside-->
+<!--      id="logo-sidebar"-->
+<!--      class="fixed top-0 left-0 z-40 w-64 h-screen pt-16 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700"-->
+<!--      aria-label="Sidebar"-->
+<!--    >-->
+<!--      <div-->
+<!--        class="h-full px-3 pt-4 pb-4 overflow-y-auto bg-white dark:bg-gray-800"-->
+<!--      >-->
+<!--        <div class="h-72 bg-white rounded-lg">-->
+<!--          <div class="flex justify-center mb-4">-->
+<!--            <img-->
+<!--              class="h-24 w-24 rounded-full object-cover"-->
+<!--              src="/src/assets/images/user.svg"-->
+<!--              alt="profile"-->
+<!--            />-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <label class="flex justify-center mt-6">박영희</label>-->
+<!--            <label class="flex justify-center mt-2">개발팀</label>-->
+<!--            <div class="mt-4">-->
+<!--              <label class="ml-6">잔여 연차</label>-->
+<!--              <label class="ml-20 text-blue-500">5.0</label>-->
+<!--            </div>-->
+<!--            <div class="mt-2">-->
+<!--              <label class="ml-6">예정 일정</label>-->
+<!--              <a href="/mypage/history" class="ml-20 text-blue-500">0</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <ul class="h-80 space-y-6 font-medium">
-            <li>
-                <a
-                        href="/cal"
-                        class="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                    <svg
-                            aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                                fill-rule="evenodd"
-                                d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"
-                                clip-rule="evenodd"
-                        ></path>
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">연차 달력</span>
-                </a>
-            </li>
-            <li>
-                <a
-                        href="/leaveRequest"
-                        class="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                    <svg
-                            aria-hidden="true"
-                            class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-                        <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-                    </svg>
-                    <span class="ml-3">연차 신청</span>
-                </a>
-            </li>
-            <li>
-                <a
-                        href="/mypage/history"
-                        class="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                    <svg
-                            aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                                fill-rule="evenodd"
-                                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                clip-rule="evenodd"
-                        ></path>
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">마이페이지</span>
-                </a>
-            </li>
+<!--        <ul class="h-80 space-y-6 font-medium">-->
+<!--          <li>-->
+<!--            <a-->
+<!--              href="/cal"-->
+<!--              class="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"-->
+<!--            >-->
+<!--              <svg-->
+<!--                aria-hidden="true"-->
+<!--                class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"-->
+<!--                fill="currentColor"-->
+<!--                viewBox="0 0 20 20"-->
+<!--                xmlns="http://www.w3.org/2000/svg"-->
+<!--              >-->
+<!--                <path-->
+<!--                  fill-rule="evenodd"-->
+<!--                  d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"-->
+<!--                  clip-rule="evenodd"-->
+<!--                ></path>-->
+<!--              </svg>-->
+<!--              <span class="flex-1 ml-3 whitespace-nowrap">연차 달력</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a-->
+<!--              href="/leaveRequest"-->
+<!--              class="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"-->
+<!--            >-->
+<!--              <svg-->
+<!--                aria-hidden="true"-->
+<!--                class="w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"-->
+<!--                fill="currentColor"-->
+<!--                viewBox="0 0 20 20"-->
+<!--                xmlns="http://www.w3.org/2000/svg"-->
+<!--              >-->
+<!--                <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>-->
+<!--                <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>-->
+<!--              </svg>-->
+<!--              <span class="ml-3">연차 신청</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--          <li>-->
+<!--            <a-->
+<!--              href="/mypage/history"-->
+<!--              class="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"-->
+<!--            >-->
+<!--              <svg-->
+<!--                aria-hidden="true"-->
+<!--                class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"-->
+<!--                fill="currentColor"-->
+<!--                viewBox="0 0 20 20"-->
+<!--                xmlns="http://www.w3.org/2000/svg"-->
+<!--              >-->
+<!--                <path-->
+<!--                  fill-rule="evenodd"-->
+<!--                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"-->
+<!--                  clip-rule="evenodd"-->
+<!--                ></path>-->
+<!--              </svg>-->
+<!--              <span class="flex-1 ml-3 whitespace-nowrap">마이페이지</span>-->
+<!--            </a>-->
+<!--          </li>-->
 
-            <li>
-                <a
-                        href="/admin/members?page=1"
-                        class="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                    <svg
-                            aria-hidden="true"
-                            class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                                d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
-                        ></path>
-                    </svg>
-                    <span class="flex-1 ml-3 whitespace-nowrap">관리자 페이지</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-</aside>
+<!--          <li>-->
+<!--            <a-->
+<!--              href="/admin/members?page=1"-->
+<!--              class="flex items-center p-2 text-gray-500 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"-->
+<!--            >-->
+<!--              <svg-->
+<!--                aria-hidden="true"-->
+<!--                class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"-->
+<!--                fill="currentColor"-->
+<!--                viewBox="0 0 20 20"-->
+<!--                xmlns="http://www.w3.org/2000/svg"-->
+<!--              >-->
+<!--                <path-->
+<!--                  d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"-->
+<!--                ></path>-->
+<!--              </svg>-->
+<!--              <span class="flex-1 ml-3 whitespace-nowrap">관리자 페이지</span>-->
+<!--            </a>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </aside>-->
+    <div th:replace="~{/fragments/header/header.html :: header}"></div>
+    <div th:replace="~{/fragments/sidebar/sidebar.html :: sidebar}"></div>
 
-<main class="">
-    <div class="h-screen pl-64">
+    <main class="">
+      <div class="h-screen pl-64">
         <div class="flex flex-col py-20 pl-56">
-            <div class="flex flex-col text-center">
-                <div class="mb-20 text-slate-600 text-3xl font-bold py-6">
-                    <p><span class="text-blue-500">박영희</span>의 연차 신청 내역</p>
-                </div>
-                <div class="text-center top-20 flex justify-center">
-                    <table class="text-sm text-left text-gray-800">
-                        <thead
-                                class="text-sm w-2/3 text-gray-700 uppercase bg-blue-100 text-center"
-                        >
-                        <tr>
-                            <th scope="col" class="px-6 py-3">요청 날짜</th>
-                            <th scope="col" class="px-6 py-3">연차 기간</th>
-                            <th scope="col" class="px-6 py-3">연차 종류</th>
-                            <th scope="col" class="px-6 py-3">연차 상태</th>
-                            <th scope="col" class="px-6 py-3">연차 승인자</th>
-                            <th scope="col" class="px-6 py-3">연차 취소</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 10일</td>
-                            <td class="px-6 py-3">
-                                <span>6666년 06월 06일</span> ~
-                                <span>6666년 06월 06일</span>
-                            </td>
-                            <td class="px-6 py-3">오전 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("37a6a3f5-ee40-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "6666\uB144 06\uC6D4 06\uC77C", "6666\uB144 06\uC6D4 06\uC77C","\uC624\uC804 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 10일</td>
-                            <td class="px-6 py-3">
-                                <span>5555년 05월 05일</span> ~
-                                <span>5555년 05월 05일</span>
-                            </td>
-                            <td class="px-6 py-3">오전 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("ee5906f9-ee3f-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "5555\uB144 05\uC6D4 05\uC77C", "5555\uB144 05\uC6D4 05\uC77C","\uC624\uC804 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 10일</td>
-                            <td class="px-6 py-3">
-                                <span>4444년 04월 04일</span> ~
-                                <span>4444년 04월 04일</span>
-                            </td>
-                            <td class="px-6 py-3">오전 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("d92e76d7-ee3f-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "4444\uB144 04\uC6D4 04\uC77C", "4444\uB144 04\uC6D4 04\uC77C","\uC624\uC804 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 10일</td>
-                            <td class="px-6 py-3">
-                                <span>7777년 07월 07일</span> ~
-                                <span>7777년 07월 07일</span>
-                            </td>
-                            <td class="px-6 py-3">오후 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("a3009c84-ee3a-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "7777\uB144 07\uC6D4 07\uC77C", "7777\uB144 07\uC6D4 07\uC77C","\uC624\uD6C4 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 10일</td>
-                            <td class="px-6 py-3">
-                                <span>1234년 01월 01일</span> ~
-                                <span>1234년 01월 01일</span>
-                            </td>
-                            <td class="px-6 py-3">오후 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("b95a9676-ee38-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "1234\uB144 01\uC6D4 01\uC77C", "1234\uB144 01\uC6D4 01\uC77C","\uC624\uD6C4 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 10일</td>
-                            <td class="px-6 py-3">
-                                <span>1111년 01월 01일</span> ~
-                                <span>1111년 01월 01일</span>
-                            </td>
-                            <td class="px-6 py-3">오후 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("bb9fa75c-ee37-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "1111\uB144 01\uC6D4 01\uC77C", "1111\uB144 01\uC6D4 01\uC77C","\uC624\uD6C4 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 10일</td>
-                            <td class="px-6 py-3">
-                                <span>9999년 09월 09일</span> ~
-                                <span>9999년 09월 09일</span>
-                            </td>
-                            <td class="px-6 py-3">오후 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("4e2dd9bd-ee37-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "9999\uB144 09\uC6D4 09\uC77C", "9999\uB144 09\uC6D4 09\uC77C","\uC624\uD6C4 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 10일</td>
-                            <td class="px-6 py-3">
-                                <span>3333년 03월 03일</span> ~
-                                <span>3333년 03월 03일</span>
-                            </td>
-                            <td class="px-6 py-3">오후 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("8ee327b6-ee35-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "3333\uB144 03\uC6D4 03\uC77C", "3333\uB144 03\uC6D4 03\uC77C","\uC624\uD6C4 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 10일</td>
-                            <td class="px-6 py-3">
-                                <span>1000년 10월 10일</span> ~
-                                <span>1000년 10월 10일</span>
-                            </td>
-                            <td class="px-6 py-3">오후 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("6bf78e46-ee35-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "1000\uB144 10\uC6D4 10\uC77C", "1000\uB144 10\uC6D4 10\uC77C","\uC624\uD6C4 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 10일</td>
-                            <td class="px-6 py-3">
-                                <span>2025년 05월 08일</span> ~
-                                <span>2025년 08월 09일</span>
-                            </td>
-                            <td class="px-6 py-3">오후 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("43cd1e81-ee35-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "2025\uB144 05\uC6D4 08\uC77C", "2025\uB144 08\uC6D4 09\uC77C","\uC624\uD6C4 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 09일</td>
-                            <td class="px-6 py-3">
-                                <span>2023년 05월 08일</span> ~
-                                <span>2023년 05월 08일</span>
-                            </td>
-                            <td class="px-6 py-3">오전 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-amber-500"></span>
-                                취소
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        disabled=""
-                                        class="text-white py-1 px-2 border rounded-md bg-gray-400 hover:bg-gray-500"
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 08일</td>
-                            <td class="px-6 py-3">
-                                <span>2023년 05월 12일</span> ~
-                                <span>2023년 05월 14일</span>
-                            </td>
-                            <td class="px-6 py-3">오전 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("107d7e90-ed33-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "2023\uB144 05\uC6D4 12\uC77C", "2023\uB144 05\uC6D4 14\uC77C","\uC624\uC804 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        <tr class="bg-white border-b hover:bg-sky-50 text-center">
-                            <td class="px-6 py-3">2023년 05월 08일</td>
-                            <td class="px-6 py-3">
-                                <span>2023년 05월 09일</span> ~
-                                <span>2023년 05월 10일</span>
-                            </td>
-                            <td class="px-6 py-3">오후 반차</td>
-                            <td class="px-6 py-3">
-                                <span class="fa fa-circle text-blue-700"></span>
-                                대기
-                            </td>
-                            <td class="px-6 py-3">admin</td>
-                            <td class="px-6 py-3">
-                                <button
-                                        id="cancelBnt"
-                                        class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
-                                        onclick='cancelAnnual("7c718c31-ed32-11ed-a7af-04ed3337b8af", "\uB300\uAE30", "2023\uB144 05\uC6D4 09\uC77C", "2023\uB144 05\uC6D4 10\uC77C","\uC624\uD6C4 \uBC18\uCC28")'
-                                >
-                                    취소
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+          <div class="flex flex-col text-center">
+            <div class="mb-20 text-slate-600 text-3xl font-bold py-6">
+              <p><span class="text-blue-500">[[${userName}]]</span>의 연차 신청 내역</p>
             </div>
+            <div class="text-center top-20 flex justify-center">
+              <table class="text-sm text-left text-gray-800">
+                <thead
+                  class="text-sm w-2/3 text-gray-700 uppercase bg-blue-100 text-center"
+                >
+                  <tr>
+                    <th scope="col" class="px-6 py-3">요청 날짜</th>
+                    <th scope="col" class="px-6 py-3">연차 기간</th>
+                    <th scope="col" class="px-6 py-3">연차 종류</th>
+                    <th scope="col" class="px-6 py-3">연차 상태</th>
+                    <th scope="col" class="px-6 py-3">연차 승인자</th>
+                    <th scope="col" class="px-6 py-3">연차 취소</th>
+                  </tr>
+                </thead>
+
+                <tbody th:if="${history}">
+                  <tr
+                    th:each="data : ${history}"
+                    class="bg-white border-b hover:bg-sky-50 text-center"
+                  >
+                    <td class="px-6 py-3">[[${data.createTm}]]</td>
+                    <td class="px-6 py-3">
+                      <span>[[${data.startDate}]]</span> ~
+                      <span>[[${data.endDate}]]</span>
+                    </td>
+                    <td class="px-6 py-3">[[${data.annualType}]]</td>
+                    <td class="px-6 py-3">
+                      <span
+                        class="mr-2"
+                        th:class="|fa fa-circle  ${data.annualStatus eq '승인' ? 'text-green-700' : data.annualStatus eq '반려' ? 'text-gray-300' : data.annualStatus eq '취소' ? 'text-amber-500' : 'text-blue-700'}|"
+                      ></span>
+                      [[${data.annualStatus}]]
+                    </td>
+                    <td class="px-6 py-3">[[${data.acceptor}]]</td>
+                    <td class="px-6 py-3">
+                      <th:block
+                        th:if="${data.annualStatus eq '반려' or data.annualStatus eq '취소'}"
+                      >
+                        <button
+                          disabled
+                          class="text-white py-1 px-2 border rounded-md bg-gray-400 hover:bg-gray-500"
+                        >
+                          취소
+                        </button>
+                      </th:block>
+                      <th:block
+                        th:unless="${data.annualStatus eq '반려' or data.annualStatus eq '취소'}"
+                      >
+                        <button
+                          id="cancelBnt"
+                          class="text-white py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
+                          th:onclick="cancelAnnual([[${data.annualUid}]], [[${data.annualStatus}]], [[${data.startDate}]], [[${data.endDate}]],[[${data.annualType}]])"
+                        >
+                          취소
+                        </button>
+                      </th:block>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-    </div>
-</main>
-</body>
+      </div>
+    </main>
+  </body>
 </html>
