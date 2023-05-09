@@ -1,6 +1,3 @@
-CREATE SCHEMA IF NOT EXISTS refresh;
-use refresh;
-
 create table IF NOT EXISTS member (
 	member_uid VARCHAR(36) NOT NULL PRIMARY KEY COMMENT '사용자 uid',
     department_uid VARCHAR(36) COMMENT '부서 Id',

@@ -26,7 +26,7 @@ public class AnnualLeaveRequestController {
     public String requestSuccess(Model model){
         // 모델 객체를 인자로 받아서 leaveRequest 템플릿을 렌더링함
         // 템플릿을 통해 응답
-        model.addAttribute("LeaveRequestDTO", new LeaveRequestDTO());
+        model.addAttribute("LeaveRequest", new LeaveRequestDTO());
         // LeaveReqeustDTO 객체를 모델에 추가
 
         MemberLoginDTO member = (MemberLoginDTO) (session.getAttribute("MemberLogin"));
@@ -55,7 +55,7 @@ public class AnnualLeaveRequestController {
         }
 
         String id = member.getId();
-        leaveRequestService.insert(leaveRequestDTO,id);
+        leaveRequestService.insert(leaveRequestDTO,id,member.getMemberName());
 
         return "redirect:/cal";
     }

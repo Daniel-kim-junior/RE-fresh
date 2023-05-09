@@ -9,6 +9,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,8 +33,13 @@ import refresh.ManageSystem.vo.AnnualManageVO;
  *
  * 2023-05-02
  */
-@MybatisTest
-
+@SpringBootTest
+@Sql("classpath:db/MakeTable.sql")
+@Sql("classpath:db/MakeDepartment.sql")
+@Sql("classpath:db/MakeMember.sql")
+@Sql("classpath:db/MakeAnnual.sql")
+@Sql("classpath:db/MakeAnnualCount.sql")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class AnnualManageServiceTest {
 
     @Autowired
@@ -71,11 +78,6 @@ class AnnualManageServiceTest {
      */
     @Test
     @Transactional
-    @Sql("classpath:db/MakeTable.sql")
-    @Sql("classpath:db/MakeDepartment.sql")
-    @Sql("classpath:db/MakeMember.sql")
-    @Sql("classpath:db/MakeAnnual.sql")
-    @Sql("classpath:db/MakeAnnualCount.sql")
     @Rollback
     void 부서별_연차_집계_서비스_테스트() throws Exception {
         java.util.Date date1= new SimpleDateFormat("yyyy-MM-dd").parse("2023-05-05");
@@ -99,11 +101,6 @@ class AnnualManageServiceTest {
      */
     @Test
     @Transactional
-    @Sql("classpath:db/MakeTable.sql")
-    @Sql("classpath:db/MakeDepartment.sql")
-    @Sql("classpath:db/MakeMember.sql")
-    @Sql("classpath:db/MakeAnnual.sql")
-    @Sql("classpath:db/MakeAnnualCount.sql")
     @Rollback
     void 멤버_연차_개수_서비스_테스트() throws Exception {
         int updateRows = memberRepository.updateAnnulCount(AnnualCountDAO.builder()
@@ -123,11 +120,6 @@ class AnnualManageServiceTest {
      */
     @Test
     @Transactional
-    @Sql("classpath:db/MakeTable.sql")
-    @Sql("classpath:db/MakeDepartment.sql")
-    @Sql("classpath:db/MakeMember.sql")
-    @Sql("classpath:db/MakeAnnual.sql")
-    @Sql("classpath:db/MakeAnnualCount.sql")
     @Rollback
     void 연차_상태_업데이트_서비스_테스트() throws Exception {
         int updateRows = annualRepository.updateAnnualStatus(AnnualStatusDAO.builder()
@@ -147,11 +139,6 @@ class AnnualManageServiceTest {
      */
     @Test
     @Transactional
-    @Sql("classpath:db/MakeTable.sql")
-    @Sql("classpath:db/MakeDepartment.sql")
-    @Sql("classpath:db/MakeMember.sql")
-    @Sql("classpath:db/MakeAnnual.sql")
-    @Sql("classpath:db/MakeAnnualCount.sql")
     @Rollback
     void 연차_상태_관리_리스트_페이지_서비스_테스트() throws Exception {
         PageDTO pageDTO = new PageDTO();
@@ -171,11 +158,6 @@ class AnnualManageServiceTest {
      */
     @Test
     @Transactional
-    @Sql("classpath:db/MakeTable.sql")
-    @Sql("classpath:db/MakeDepartment.sql")
-    @Sql("classpath:db/MakeMember.sql")
-    @Sql("classpath:db/MakeAnnual.sql")
-    @Sql("classpath:db/MakeAnnualCount.sql")
     @Rollback
     void 연차_개수_조회_서비스_테스트() throws Exception {
         AnnualSearchDTO annualSearchDTO = new AnnualSearchDTO();
@@ -188,11 +170,6 @@ class AnnualManageServiceTest {
 
     @Test
     @Transactional
-    @Sql("classpath:db/MakeTable.sql")
-    @Sql("classpath:db/MakeDepartment.sql")
-    @Sql("classpath:db/MakeMember.sql")
-    @Sql("classpath:db/MakeAnnual.sql")
-    @Sql("classpath:db/MakeAnnualCount.sql")
     @Rollback
     void 멤버_연차_리스트_서비스_테스트() throws Exception {
         PageDTO pageDTO = new PageDTO();

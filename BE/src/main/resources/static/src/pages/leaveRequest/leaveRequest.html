@@ -14,7 +14,9 @@
 <div th:replace="~{/fragments/header/header.html :: header}"></div>
 <main class="flex">
   <div th:replace="~{/fragments/sidebar/sidebar.html :: sidebar}"></div>
-  <section class="h-screen w-screen bg-gray-100">
+  <section
+          class="h-screen w-screen bg-gradient-to-br from-sky-50 to-gray-200"
+  >
     <!-- 연차 신청 폼-->
     <article class="flex-1 sm:ml-64 sm:mt-48 sm:mx-auto my-56">
       <form
@@ -52,8 +54,8 @@
                       type="text"
                       placeholder="신청인"
                       id="name"
-                      name="name"
                       th:value="${session.MemberLogin['memberName']}"
+                      readonly
               />
             </div>
 
@@ -132,8 +134,9 @@
               <button
                       id="request-btn"
                       class="text-white bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-semibold rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 mr-2 mb-2"
-              type="submit">
-              신청
+                      type="submit"
+              >
+                신청
               </button>
               <button
                       class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-semibold rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2"
@@ -143,7 +146,6 @@
               </button>
             </div>
           </div>
-
         </div>
       </form>
     </article>

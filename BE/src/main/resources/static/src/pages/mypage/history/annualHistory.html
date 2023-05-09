@@ -6,11 +6,14 @@
     <link rel="stylesheet" th:href="@{/dist/output.css}" />
     <link rel="stylesheet" href="/dist/output.css" />
     <script src="/src/pages/mypage/history/annualHistory.js" type="module"></script>
+    <!--fontAwesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
 
     <script src="/src/pages/admin/member/adminTab.js" type="module"></script>
     <script th:inline="javascript" th:src="@{/src/pages/mypage/history/annualHistory.js}" ></script>
 </head>
-<body>
+<body class="bg-gray-50">
 
 <div th:replace="~{/fragments/header/header.html :: header}"></div>
 
@@ -19,17 +22,26 @@
 <main class="flex pt-20 mt-2 pl-64  flex-col">
     <div class="relative text-center pt-12">
         <div class="text-slate-600 text-3xl font-bold">
-            <p><span class="text-pink-500">[[${userName}]]</span>의 연차 신청 내역</p>
+            <p><span class="text-blue-500">[[${userName}]]</span>의 연차 신청 내역</p>
         </div>
     </div>
-    <div class="relative py-8">
-        <div>
-            <span class="absolute left-64 top-10 text-xl text-slate-600 font-semibold">휴가 신청/사용 내역</span>
-            <span class="absolute right-80 mr-4 top-12 text-sm font-semibold text-slate-600">사용/잔여 : [[${annualCnt.usageCount}]] / [[${annualCnt.remainCount}]]</span>
+    <div class="relative py-8 pl-64 ">
+        <div class="flex">
+             <span class="absolute text-center text-xl text-slate-600 font-semibold">휴가 신청/사용 내역</span>
+             <div class="absolute right-1/4 top-12 text-sm font-semibold text-slate-600">
+                남은 연차:
+                <span class="text-blue-500"
+                >[[${annualCnt.remainCount}]]</span
+                >
+                일 / 사용한 연차:
+                <span class="text-red-500">[[${annualCnt.usageCount}]]</span
+                >일
+              </div>
         </div>
-        <div class="absolute left-64  top-20 overflow-x-auto shadow-md sm:rounded-lg">
+
+        <div class="absolute text-center  top-20 overflow-x-auto shadow-md sm:rounded-lg">
             <table class="text-sm text-left text-gray-800 ">
-                <thead class="text-sm w-2/3 text-gray-700 uppercase bg-gray-50 ">
+                <thead class="text-sm w-2/3 text-gray-700 uppercase bg-blue-100 text-center ">
                 <tr>
                     <th scope="col" class="px-6 py-3">요청 날짜</th>
                     <th scope="col" class="px-6 py-3">연차 기간</th>
@@ -41,21 +53,23 @@
                 </thead>
 
                 <tbody th:if="${history}">
-                <tr th:each="data : ${history}" class="bg-white border-b  hover:bg-sky-50">
+                <tr th:each="data : ${history}" class="bg-white border-b  hover:bg-sky-50 text-center">
                     <td class="px-6 py-3">[[${data.createTm}]]</td>
                     <td class="px-6 py-3">
                         <span>[[${data.startDate}]]</span> ~
                         <span>[[${data.endDate}]]</span>
                     </td>
                     <td class="px-6 py-3">[[${data.annualType}]]</td>
-                    <td class="px-6 py-3">[[${data.annualStatus}]]</td>
+                    <td class="px-6 py-3">
+                        <span class="mr-2" th:class="|fa fa-circle  ${data.annualStatus eq '승인' ? 'text-green-700' : data.annualStatus eq '반려' ? 'text-gray-300' : data.annualStatus eq '취소' ? 'text-amber-500' : 'text-blue-700'}|"></span>
+                        [[${data.annualStatus}]]</td>
                     <td class="px-6 py-3">[[${data.acceptor}]]</td>
                     <td class="px-6 py-3" >
                         <th:block th:if="${data.annualStatus eq '반려' or data.annualStatus eq '취소'}">
-                            <button disabled class="text-white  py-1 px-2 border rounded-md bg-gray-500">취소</button>
+                            <button disabled class="text-white  py-1 px-2 border rounded-md bg-gray-400 hover:bg-gray-500">취소</button>
                         </th:block>
                         <th:block th:unless="${data.annualStatus eq '반려' or data.annualStatus eq '취소'}">
-                            <button id="cancelBnt" class="text-white  py-1 px-2 border rounded-md bg-blue-500"
+                            <button id="cancelBnt" class="text-white  py-1 px-2 border rounded-md bg-blue-500 hover:bg-blue-700"
                                     th:onclick="cancelAnnual([[${data.annualUid}]], [[${data.annualStatus}]], [[${data.startDate}]], [[${data.endDate}]],[[${data.annualType}]])">취소</button>
                         </th:block>
 

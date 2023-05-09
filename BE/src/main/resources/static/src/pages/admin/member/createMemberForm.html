@@ -9,7 +9,7 @@
   <link rel="stylesheet" th:href="@{/dist/output.css}" />
   <script src="/src/pages/admin/member/adminTab.js" type="module"></script>
 </head>
-<body>
+<body class="bg-gray-50">
 <div th:replace="~{/fragments/header/header.html :: header}"></div>
 
 <div th:replace="~{/fragments/sidebar/sidebar.html :: sidebar}"></div>
@@ -17,7 +17,7 @@
 <main class="flex pt-16 pl-64 flex-col bg-gray-50 h-full">
   <div th:replace="~{/pages/admin/member/adminTab.html :: adminTab}"></div>
   <form method="post" action="/admin/members/new" th:object="${memberServiceDTO}">
-    <div class="flex justify-center mt-10">
+    <div class="flex justify-center ">
       <div class="w-6/12 rounded-lg bg-white overflow-auto shadow-md">
         <div class="px-6 py-4">
           <div class="mb-4">

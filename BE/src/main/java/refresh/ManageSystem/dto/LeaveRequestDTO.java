@@ -15,9 +15,6 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class LeaveRequestDTO {
 
-    @NotBlank(message = "신청인을 입력하세요")
-    private String name; // 신청인
-
     private String leaveType;  // 휴가 종류
 
     @NotNull(message = "시작일을 입력하세요")

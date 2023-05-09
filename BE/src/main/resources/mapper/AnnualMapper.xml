@@ -8,7 +8,8 @@
              (select mem.member_name , member_uid , mem.department_uid, dept.department_name
               from member mem
                        left join department dept on mem.department_uid = dept.department_uid) m
-             on a.member_uid = m.member_uid order by create_tm asc
+             on a.member_uid = m.member_uid
+        order by a.create_tm desc
     </select>
 
     <select id="getAnnualManageListByPage" resultType="AnnualManageVO" parameterType="PageDTO">
@@ -19,6 +20,7 @@
               from member mem
                        left join department dept on mem.department_uid = dept.department_uid) m
              on a.member_uid = m.member_uid
+             order by a.create_tm desc
         limit #{start}, #{perPageNum}
     </select>
 
@@ -43,7 +45,7 @@
                 and <![CDATA[ date_format(create_tm,'%Y-%m-%d') <= date_format(#{endDate} ,'%Y-%m-%d')]]>
             </if>
         </where>
-        ORDER BY create_tm asc
+        ORDER BY create_tm desc
     </select>
 
     <select id="getAnnualSearchList" resultType="AnnualManageVO" parameterType="AnnualSearchDTO">
@@ -68,7 +70,9 @@
                 and <![CDATA[ date_format(create_tm,'%Y-%m-%d') <= date_format(#{endDate} ,'%Y-%m-%d')]]>
             </if>
         </where>
+        ORDER BY create_tm desc
         limit #{pageDTO.start}, #{pageDTO.perPageNum}
+
     </select>
 
     <update id="updateAnnualStatus" parameterType="AnnualStatusDAO">
@@ -88,6 +92,7 @@
         select annual_uid, annual_type, annual_status, start_date, end_date, create_tm, acceptor
         from annual ann
                  inner join (select member_uid , member_id from member where member_id = #{id}) mem
-                            on ann.member_uid = mem.member_uid;
+                            on ann.member_uid = mem.member_uid
+        order by create_tm desc
     </select>
 </mapper>
