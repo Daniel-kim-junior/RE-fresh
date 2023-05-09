@@ -1,4 +1,5 @@
 import { $App } from "./app.js";
+import { memberScrollInit } from './asideMember.js';
 import { render, throttle } from "./hook.js";
 
 
@@ -13,6 +14,7 @@ import { render, throttle } from "./hook.js";
   checkboxForExceptMember.onchange = (e) => {
     aside.innerHTML = '';
     aside.onscroll = null;
+    memberScrollInit();
     const name = input.value;
     if (name === '') return;
 
@@ -30,6 +32,7 @@ import { render, throttle } from "./hook.js";
   aside.onscroll = null;
   input.onkeyup = throttle((e) => {
     const name = e.target.value;
+    memberScrollInit();
     if (name === '') {
       aside.innerHTML = '';
       return;

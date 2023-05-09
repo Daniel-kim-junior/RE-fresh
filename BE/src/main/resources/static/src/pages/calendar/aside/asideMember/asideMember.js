@@ -3,6 +3,11 @@ import { getAnnualListByMember } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
 let scrollEnd = false;
+
+export function memberScrollInit() {
+  scrollEnd = false;
+}
+
 export default function AsideMember() {
   const [annual, setAnnual] = useState([]);
   const [page, setPage] = useState({start: 0, end: 10});
