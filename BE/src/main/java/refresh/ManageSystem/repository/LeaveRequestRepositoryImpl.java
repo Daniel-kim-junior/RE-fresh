@@ -13,8 +13,8 @@ public class LeaveRequestRepositoryImpl implements LeaveRequestRepository {
     SqlSession session;    // sqlsession 주입
 
     @Override
-    public void insertAnnual(LeaveRequestDAO dao) {
+    public int insertAnnual(LeaveRequestDAO dao) {
         String statement = "refresh.ManageSystem.repository.LeaveRequestRepository.insertAnnual";
-        session.insert(statement);
+        return session.insert(statement);
     }
 }

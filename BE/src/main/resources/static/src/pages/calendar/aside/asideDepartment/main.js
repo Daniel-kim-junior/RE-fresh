@@ -1,4 +1,5 @@
 import { $App } from "./app.js";
+import { deptScrollInit } from './asideDepartment.js';
 import { render, optionInit } from "./hook.js";
 
 
@@ -13,6 +14,7 @@ import { render, optionInit } from "./hook.js";
   checkboxForExceptDept.onchange = (e) => {
     aside.innerHTML = '';
     aside.onscroll = null;
+    deptScrollInit();
     optionInit();
     loadingSpinner.style.display = 'none';
     const department = select.value;
@@ -27,6 +29,7 @@ import { render, optionInit } from "./hook.js";
   select.onchange = (e) => {
     aside.innerHTML = '';
     aside.onscroll = null;
+    deptScrollInit();
     optionInit();
     checkboxForExceptDept.checked = false;
     checkboxWrapperDept.style.display = 'block';

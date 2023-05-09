@@ -3,6 +3,12 @@ import { getAnnualtListByDepartment } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
 let scrollEnd = false;
+
+export function deptScrollInit() {
+  scrollEnd = false;
+}
+
+
 export default function AsideDepartment() {
   const asideContents = document.querySelector('#aside-contents');
   const loadingSpinner = document.querySelector('#aside-contents-status');
@@ -11,10 +17,12 @@ export default function AsideDepartment() {
   const { start, end } = page;
   const checked = downChecked();
   const date = new Date();
+  console.log(start, end);
+
   onLoad(async () => {
     if (scrollEnd) return;
     const department = getDepartment();
-    const response = await getAnnualtListByDepartment(department, page.start, page.end);
+    const response = await getAnnualtListByDepartment(department, start, end);
     if (response.length === 0) {
       scrollEnd = true;
       return;

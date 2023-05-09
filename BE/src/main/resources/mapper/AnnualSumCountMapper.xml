@@ -11,4 +11,7 @@
     where annual_date Between #{startDate} and #{endDate}
     and department_uid in (select department_uid from department where department_name = #{departmentName});
   </update>
+  <update id="dropTable">
+    drop table if exists annual_count;
+  </update>
 </mapper>

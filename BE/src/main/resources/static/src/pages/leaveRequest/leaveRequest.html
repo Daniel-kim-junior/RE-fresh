@@ -15,23 +15,26 @@
 <main class="flex">
   <div th:replace="~{/fragments/sidebar/sidebar.html :: sidebar}"></div>
   <section
-          class="h-screen w-screen bg-gradient-to-br from-sky-50 to-gray-200"
+          class="h-screen w-screen bg-gray-100"
   >
     <!-- 연차 신청 폼-->
-    <article class="flex-1 sm:ml-64 sm:mt-48 sm:mx-auto my-56">
+    <article class="flex-1 sm:ml-64 sm:mt-36 sm:mx-auto my-56">
       <form
-              class="max-w-xl mx-auto"
+              class="max-w-sm mx-auto"
               method="post"
               id="leave-request-form"
               action="/leaveRequest/confirmResult"
       >
-        <div class="rounded-lg bg-white overflow-auto shadow-md px-6 py-4">
-          <h2 class="text-3xl font-semibold m-4 flex justify-center">
+        <div class="rounded-lg bg-white overflow-auto shadow-md px-6 py-4 flex flex-col">
+          <h2 class="text-3xl font-semibold sr-only">
             연차 신청 폼
           </h2>
 
-          <div class="flex flex-col mb-4 items-center">
-            <div class="text-2xl font-bold mb-2 sr-only">연차 현황</div>
+<!--          <div class="border-t my-2 mx-40 border-gray-200"></div>-->
+
+
+          <div class="my-4">
+            <div class="font-bold mb-2">연차 현황</div>
             <div>
               남은 연차:
               <span class="text-blue-500"
@@ -44,11 +47,9 @@
           </div>
 
           <!-- 연차 확인 -->
-          <div class="items-center mb-4">
-            <div class="flex flex-col items-center mb-4">
-              <label class="text-gray-700 font-bold mb-2 sr-only"
-              >신청인</label
-              >
+          <div class="items-center mb-4 ">
+            <label class="text-gray-700 font-bold mb-2">신청인</label>
+            <div class=" mb-4">
               <input
                       class="shadow border rounded py-2 px-3 font-bold text-xl text-gray-700 focus:outline-none focus:ring focus:border-blue-50 text-center"
                       type="text"
@@ -59,89 +60,84 @@
               />
             </div>
 
-            <div class="flex flex-col items-center mb-4">
-              <label class="text-gray-700 font-bold mb-2 sr-only">
-                연차 종류
-              </label>
-              <div class="flex space-x-4">
-                <div class="flex items-center">
-                  <input
-                          type="radio"
-                          id="full-day"
-                          name="leaveType"
-                          value="full-day"
-                          class="form-radio h-5 w-5 text-gray-600"
-                  />
-                  <label for="full-day" class="ml-2 text-gray-700"
-                  >연차</label
-                  >
-                </div>
-                <div class="flex items-center">
-                  <input
-                          type="radio"
-                          id="am-half-day"
-                          name="leaveType"
-                          value="am-half-day"
-                          class="form-radio h-5 w-5 text-gray-600"
-                  />
-                  <label for="am-half-day" class="ml-2 text-gray-700"
-                  >오전 반차</label
-                  >
-                </div>
-                <div class="flex items-center">
-                  <input
-                          type="radio"
-                          id="pm-half-day"
-                          name="leaveType"
-                          value="pm-half-day"
-                          class="form-radio h-5 w-5 text-gray-600"
-                  />
-                  <label for="pm-half-day" class="ml-2 text-gray-700"
-                  >오후 반차</label
-                  >
-                </div>
-              </div>
-            </div>
+<!--            <div class="mb-4">-->
+<!--              <label class="text-gray-700 font-bold mb-2">-->
+<!--                연차 종류-->
+<!--              </label>-->
+<!--              <div class="flex space-x-4">-->
+<!--                <div class="flex items-center">-->
+<!--                  <input type="radio" id="full-day" name="leaveType" value="full-day" class="form-radio h-5 w-5 text-gray-600">-->
+<!--                  <label for="full-day" class="ml-2 text-gray-700">연차</label>-->
+<!--                </div>-->
+<!--                <div class="flex items-center">-->
+<!--                  <input type="radio" id="am-half-day" name="leaveType" value="am-half-day" class="form-radio h-5 w-5 text-gray-600">-->
+<!--                  <label for="am-half-day" class="ml-2 text-gray-700">오전 반차</label>-->
+<!--                </div>-->
+<!--                <div class="flex items-center">-->
+<!--                  <input type="radio" id="pm-half-day" name="leaveType" value="pm-half-day" class="form-radio h-5 w-5 text-gray-600">-->
+<!--                  <label for="pm-half-day" class="ml-2 text-gray-700">오후 반차</label>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <div class="mb-6 flex flex-col items-center">
-              <label class="text-gray-700 font-bold mb-2 sr-only">
-                기간
-              </label>
-              <div class="flex">
-                <input
-                        class="shadow border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring focus:border-blue-50"
-                        type="date"
-                        placeholder="시작일을 선택하세요."
-                        id="startDate"
-                        name="startDate"
-                        value=""
-                />
-                <span class="text-2xl font-semibold">~</span>
-                <input
-                        class="shadow border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring focus:border-blue-50"
-                        type="date"
-                        placeholder="종료일을 선택하세요."
-                        id="endDate"
-                        name="endDate"
-                        value=""
-                />
+
+          <div class="mb-4">
+            <label class="text-gray-700 font-bold mb-2">
+                              연차 종류
+                            </label>
+            <div
+                    class="grid w-[20rem] grid-cols-3 space-x-2 rounded-xl bg-gray-200 p-2"
+                    x-data="app"
+            >
+              <div>
+                <input type="radio" name="leaveType" id="full-day" value="full-day" class="peer hidden" checked />
+                <label
+                        for="full-day"
+                        class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white"
+                >연차</label
+                >
+              </div>
+
+              <div>
+                <input type="radio" name="leaveType" id="am-half-day" value="am-half-day"  class="peer hidden" />
+                <label
+                        for="am-half-day"
+                        class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white"
+                >오전 반차</label
+                >
+              </div>
+
+              <div>
+                <input type="radio" name="leaveType" id="pm-half-day" value="pm-half-day" class="peer hidden" />
+                <label
+                        for="pm-half-day"
+                        class="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-blue-500 peer-checked:font-bold peer-checked:text-white"
+                >오후 반차</label
+                >
               </div>
             </div>
           </div>
 
-          <div class="flex justify-center mb-6">
-            <div class="flex">
-              <button
-                      id="request-btn"
-                      class="text-white bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-semibold rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55 mr-2 mb-2"
-                      type="submit"
-              >
+
+            <div class="mb-6 ">
+              <label class="text-gray-700 font-bold mb-2">
+                시작일<span class="ml-32">종료일</span>
+              </label>
+              <div class="flex">
+                <input class="shadow border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring focus:border-blue-50" type="date" placeholder="시작일을 선택하세요." id="startDate" name="startDate" value="">
+                <span class="text-2xl font-semibold mr-6"> </span>
+                <input class="shadow border rounded py-2 px-3 text-gray-700 focus:outline-none focus:ring focus:border-blue-50" type="date" placeholder="종료일을 선택하세요." id="endDate" name="endDate" value="">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="flex justify-end">
+            <div class="">
+              <button id="request-btn" class="text-white bg-[#1da1f2] hover:bg-[#1da1f2]/90 focus:ring-4 focus:outline-none focus:ring-[#1da1f2]/50 font-semibold rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#1da1f2]/55" type="submit">
                 신청
               </button>
-              <button
-                      class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-semibold rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 mr-2 mb-2"
-                      type="reset"
-              >
+              <button class="text-gray-900 bg-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-semibold rounded-lg text-base px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 " type="reset">
                 초기화
               </button>
             </div>
