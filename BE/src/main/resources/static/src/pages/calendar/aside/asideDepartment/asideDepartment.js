@@ -1,5 +1,5 @@
 import { useState, onLoad, getDepartment, waitForRender, downChecked } from './hook.js';
-import { getAnnualtListByDepartment } from '../../../../api/calendarApi.js'
+import { getAnnualListByDepartment } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
 let scrollEnd = false;
@@ -17,33 +17,56 @@ export default function AsideDepartment() {
   const { start, end } = page;
   const checked = downChecked();
   const date = new Date();
-  console.log(start, end);
 
   onLoad(async () => {
     if (scrollEnd) return;
     const department = getDepartment();
-    const response = await getAnnualtListByDepartment(department, start, end);
-    if (response.length === 0) {
-      scrollEnd = true;
-      return;
-    }
-    const list = makeAnnualList(response);
+    const dom = await recursiveList('', department, start, end, 0);
+    const list = parseDom(dom);
     if (start === 0) {
       setAnnual(list);
-    } else if(scrollFlag) {
+    } else if (scrollFlag) {
       setAnnual(annual.concat(list));
       scrollFlag = false;
     }
-  })
+  });
 
+
+  async function recursiveList(str, dept, start, end, innerCount) {
+    let res = await getAnnualListByDepartment(dept, start, end);
+   
+    if (res.length === 0) {
+      scrollEnd = true; 
+      return str;
+    }
+
+    let [dom, cnt] = makeAnnualList(res);
+    if (cnt === 0) return str;
+
+    if (cnt + innerCount >= 10) {
+      return str.concat(dom);
+    }
+    return recursiveList(str.concat(dom), dept, start + 10, 10, cnt + innerCount);
+  }
+
+
+
+
+  function parseDom(dom) {
+    let result = '<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">'
+    result += dom;
+    result += '</ul>';
+
+    return result;
+  }
 
   waitForRender(asideContents, () => {
     asideContents.onscroll = (e) => {
       const el = e.target;
       const scrollHeight = el.scrollHeight;
       const scrollTop = el.scrollTop;
-      const clinetHeight = el.clientHeight;
-      if (scrollHeight - scrollTop === clinetHeight && !scrollEnd) {
+      const clientHeight = el.clientHeight;
+      if (scrollHeight - scrollTop === clientHeight && !scrollEnd) {
         loadingSpinner.style.display = 'block';
         scrollFlag = true;
         setTimeout(() => {
@@ -55,16 +78,16 @@ export default function AsideDepartment() {
     }
   });
   
-
-
   function makeAnnualList(annualList) {
-    let dom = '<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">';
+    let dom = '';
+    let cnt = 0;
     for (let i = 0; i < annualList.length; i++) {
-      if(checked) {
+      if (checked) {
         if (Date.parse(annualList[i].endDate) < Date.parse(date)) {
           continue;
         }
-      }
+      } 
+      cnt++;
       dom += `<li class="pb-3 sm:pb-4">
       <div class="flex items-center space-x-4">
         <div class="flex-shrink-0">
@@ -85,8 +108,7 @@ export default function AsideDepartment() {
       </li>
       `
     }
-    dom += '</ul>';
-    return dom;
+    return [ dom, cnt ];
   }
   return annual;
 }

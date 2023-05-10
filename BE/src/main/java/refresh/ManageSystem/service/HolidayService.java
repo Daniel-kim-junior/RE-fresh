@@ -54,7 +54,6 @@ public class HolidayService {
      */
     @Scheduled(cron = "0 0 0 1 1 *")
     public void getHolidayData() {
-
         try {
             result = new ArrayList<>();
             holidayRepository.removeHolidayTable();

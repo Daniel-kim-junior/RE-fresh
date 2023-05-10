@@ -20,12 +20,9 @@ export default function AsideMember() {
   onLoad(async () => {
     if (scrollEnd) return;
     const memberName = getName();
-    const response = await getAnnualListByMember(memberName, start, end);
-    if (response.length === 0) {
-      scrollEnd = true;
-      return;
-    }
-    const list = makeAnnualList(response);
+    const dom = await recursiveList('', memberName, start, end, 0);
+    const list = parseDom(dom);
+
     if (start === 0) {
       setAnnual(list);
     } else if(scrollFlag) {
@@ -33,6 +30,37 @@ export default function AsideMember() {
       scrollFlag = false;
     }
   });
+  function parseDom(dom) {
+    let result = '<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">'
+    result += dom;
+    result += '</ul>';
+
+    return result;
+  }
+
+
+
+  async function recursiveList(str, member, start, end, innerCount) {
+    let res = await getAnnualListByMember(member, start, end);
+   
+    if (res.length === 0) {
+      scrollEnd = true; 
+      return str;
+    }
+
+    let [dom, cnt] = makeAnnualList(res);
+    if (cnt === 0) return str;
+
+    if (cnt + innerCount >= 10) {
+      return str.concat(dom);
+    }
+    return recursiveList(str.concat(dom), member, start + 10, 10, cnt + innerCount);
+  }
+
+
+
+
+
   waitForRender(asideContents, () => {
     asideContents.onscroll = (e) => {
       const el = e.target;
@@ -52,13 +80,15 @@ export default function AsideMember() {
   
 
   function makeAnnualList(annualList) {
-    let dom = '<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">';
+    let dom = '';
+    let cnt = '';
     for (let i = 0; i < annualList.length; i++) {
       if (checked) {
         if (Date.parse(annualList[i].endDate) < Date.parse(date)) {
           continue;
         }
       }
+      cnt++;
       dom += `<li class="pb-3 sm:pb-4">
       <div class="flex items-center space-x-4">
         <div class="flex-shrink-0">
@@ -79,8 +109,7 @@ export default function AsideMember() {
       </li>
       `
     }
-    dom += '</ul>';
-    return dom;
+    return [dom, cnt];
   }
   return annual;
 }

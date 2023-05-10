@@ -33,8 +33,10 @@ import { render, optionInit } from "./hook.js";
     optionInit();
     checkboxForExceptDept.checked = false;
     checkboxWrapperDept.style.display = 'block';
+
     loadingSpinner.style.display = 'none';
     const department = e.target.value;
+
     if (!checkboxForExceptDept.checked) {
       render($App, aside, department);
     } else {
