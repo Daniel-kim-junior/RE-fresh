@@ -8,16 +8,6 @@ import { $App } from "./app.js";
 
   2023-04-24
 */
-render($App, document.querySelector("#cal-header"));
-/*
-  Daniel Kim
-
-  render 함수를 호출하여 생성한 Dom을 App에 붙여주는 역할
-  rendering()
-
-  2023-04-24
-*/
-
 const main = document.querySelector("#main");
 const departCalHeader = document.querySelector("#depart-cal-header");
 departCalHeader.onchange = (e) => {

@@ -15,9 +15,10 @@ import { render, throttle } from "./hook.js";
     aside.innerHTML = '';
     aside.onscroll = null;
     memberScrollInit();
+
     const name = input.value;
     if (name === '') return;
-
+    
     if (!e.target.checked) {
       render($App, aside, name);
     } else {

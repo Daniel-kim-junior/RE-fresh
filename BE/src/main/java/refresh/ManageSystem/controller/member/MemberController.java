@@ -122,5 +122,5 @@ public class MemberController {
 
         return "/pages/admin/member/memberList";
     }
-    
+
 }

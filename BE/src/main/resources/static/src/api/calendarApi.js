@@ -7,6 +7,8 @@
     
     2023-04-16
 */
+
+
 async function getCalendarData(year, month) { 
   const response = await fetch(`/calendar?year=${year}&month=${month}`);
   return await response.json();
@@ -28,7 +30,7 @@ async function getAnnualListByMember(input, start, end) {
   return await response.json();
 }
 
-async function getAnnualtListByDepartment(input, start, end) {
+async function getAnnualListByDepartment(input, start, end) {
   const response = await fetch(`/annual/department?name=${input}&start=${start}&end=${end}`);
   return await response.json();
 }
@@ -38,4 +40,4 @@ async function getDepartmentInit() {
   return await response.json();
 }
 
-export { getCalendarData, getAnnualListByMember, getAnnualtListByDepartment, getDepartmentNameList, getCalendarDataByDepartment, getDepartmentInit };
+export { getCalendarData, getAnnualListByMember, getAnnualListByDepartment, getDepartmentNameList, getCalendarDataByDepartment, getDepartmentInit };
