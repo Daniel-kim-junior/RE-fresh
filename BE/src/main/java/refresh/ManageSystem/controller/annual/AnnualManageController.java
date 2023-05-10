@@ -52,8 +52,9 @@ public class AnnualManageController {
         model.addAttribute("deptNames",deptNames);
 
         model.addAttribute("searchData", new AnnualSearchDTO());
-
         MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+
+
         String memberId = memberLoginDTO.getId();
         model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
 
@@ -61,7 +62,11 @@ public class AnnualManageController {
     }
 
     @GetMapping("/admin/annualManage/search")
-    public String seach(AnnualSearchDTO dto, int page, Model model) {
+    public String search(AnnualSearchDTO dto, int page, Model model) {
+
+
+
+
 
         PageDTO pageDTO = new PageDTO();
         pageDTO.setPage(page);
@@ -72,6 +77,8 @@ public class AnnualManageController {
         pageDAO.setPageDTO(pageDTO);
         pageDAO.setTotalCount(annualManageService.countAnnualSearchList(dto));
         pageDAO.pageMaker();
+
+
 
         model.addAttribute("annualList", annualManageService.getAnnualManageSearchList(dto));
         model.addAttribute("pageDAO", pageDAO);

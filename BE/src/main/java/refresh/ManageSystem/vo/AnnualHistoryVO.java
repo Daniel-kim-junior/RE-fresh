@@ -19,10 +19,7 @@ public class AnnualHistoryVO {
     private String acceptor;
     private String annualStatus;
 
-    @DateTimeFormat(pattern = "yyy-MM-dd")
-    private Date startDate;
-    @DateTimeFormat(pattern = "yyy-MM-dd")
-    private Date endDate;
-    @DateTimeFormat(pattern = "yyy-MM-dd")
-    private Date createTm;
+    private String startDate;
+    private String endDate;
+    private String createTm;
 }

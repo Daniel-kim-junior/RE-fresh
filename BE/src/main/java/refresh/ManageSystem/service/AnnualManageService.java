@@ -117,9 +117,9 @@ public class AnnualManageService {
                     .departmentName(data.getDepartmentName())
                     .annualType(data.getAnnualType())
                     .annualStatus(data.getAnnualStatus())
-                    .createTm(dateFormat.format(data.getCreateTm()))
-                    .startDate(dateFormat.format(data.getStartDate()))
-                    .endDate(dateFormat.format(data.getEndDate()))
+                    .createTm(data.getCreateTm())
+                    .startDate(data.getStartDate())
+                    .endDate(data.getEndDate())
                     .build());
         };
 
@@ -142,9 +142,9 @@ public class AnnualManageService {
                             .annualType(data.getAnnualType())
                             .annualStatus(data.getAnnualStatus())
                             .acceptor(data.getAcceptor())
-                            .startDate(dateFormat.format(data.getStartDate()))
-                            .endDate(dateFormat.format(data.getEndDate()))
-                            .createTm(dateFormat.format(data.getCreateTm()))
+                            .startDate(data.getStartDate())
+                            .endDate(data.getEndDate())
+                            .createTm(data.getCreateTm())
                             .build());
         }
         return result;
