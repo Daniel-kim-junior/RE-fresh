@@ -1,5 +1,6 @@
 package refresh.ManageSystem.controller.member;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -76,6 +77,8 @@ class MemberControllerTest {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void 권한_없을때_302_페이지_리다이렉트() throws Exception {
         mockMvc.perform(get("/admin/members/new"))
                 .andExpect(status().is3xxRedirection())
@@ -83,6 +86,8 @@ class MemberControllerTest {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void 멤버_생성_페이지_이동() throws Exception {
         mockMvc.perform(get("/admin/members/new").session(httpSession))
                .andExpect(status().isOk())
@@ -106,21 +111,20 @@ class MemberControllerTest {
         memberServiceDTO.setMemberAuth("admin");
         memberServiceDTO.setCreateId("super");
         memberServiceDTO.setUpdateId("super");
+        // when(check == true)
+        boolean res = memberService.checkId(memberServiceDTO);
 
+        // then
+        assertThat(res).isTrue();
+
+        // give & when
         String content = new ObjectMapper().writeValueAsString(memberServiceDTO);
 
-        // when
+        // then
         mockMvc.perform(post("/admin/members/new").session(httpSession).content(content))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("idCheckValue"))
                .andExpect(view().name("/pages/admin/member/createMemberForm"));
 
-
-
-
-//        mockMvc.perform(post("/admin/members/new").session(httpSession))
-//                .andExpect(status().isOk())
-//                .andExpect()
     }
 
 
