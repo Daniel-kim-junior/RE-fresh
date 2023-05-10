@@ -63,11 +63,8 @@
             <if test="memberName != null and memberName !=''">
                 and member_name like '%${memberName}%'
             </if>
-            <if test="startDate !=null and startDate !=''">
-                and <![CDATA[ date_format(create_tm,'%Y-%m-%d') >= date_format(#{startDate} ,'%Y-%m-%d')]]>
-            </if>
-            <if test="endDate !=null and endDate !=''">
-                and <![CDATA[ date_format(create_tm,'%Y-%m-%d') <= date_format(#{endDate} ,'%Y-%m-%d')]]>
+            <if test="startDate !=null and startDate !='' and endDate != null and startDate != ''">
+                and <![CDATA[start_date >= #{startDate} and #{endDate} <= end_date ]]>
             </if>
         </where>
         ORDER BY create_tm desc
