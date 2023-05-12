@@ -15,7 +15,7 @@ import lombok.ToString;
 
 @Getter @ToString
 public class AnnualCntDTO {
-    private Double totalCount =12.0;
+    private Double totalCount = 15.0;
     private Double remainCount ;
     private Double usageCount;
 
