@@ -19,10 +19,10 @@ class HolidayServiceTest {
     private HolidayService holidayService;
 
 
-//    @Test
-//    void 휴일_정보_삽입() {
-//        holidayService.getHolidayData();
-//    }
+    @Test
+    void 휴일_정보_삽입() {
+        holidayService.getHolidayData();
+    }
 
     /**
      * Daniel Kim

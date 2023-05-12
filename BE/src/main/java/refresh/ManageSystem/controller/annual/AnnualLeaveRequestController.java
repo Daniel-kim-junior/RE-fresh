@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import lombok.extern.slf4j.Slf4j;
 import refresh.ManageSystem.dto.LeaveRequestDTO;
 import refresh.ManageSystem.dto.MemberLoginDTO;
 import refresh.ManageSystem.service.LeaveRequestService;
@@ -12,6 +14,7 @@ import refresh.ManageSystem.service.MemberService;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@Slf4j
 public class AnnualLeaveRequestController {
 
     @Autowired
@@ -26,10 +29,12 @@ public class AnnualLeaveRequestController {
     public String requestSuccess(Model model){
         // 모델 객체를 인자로 받아서 leaveRequest 템플릿을 렌더링함
         // 템플릿을 통해 응답
+
+
         model.addAttribute("LeaveRequest", new LeaveRequestDTO());
         // LeaveReqeustDTO 객체를 모델에 추가
-
         MemberLoginDTO member = (MemberLoginDTO) (session.getAttribute("MemberLogin"));
+        log.debug("member : {}", member);
         // 로그인한 아이디 추출
         if(member == null) {
             return "redirect:/";
@@ -50,6 +55,7 @@ public class AnnualLeaveRequestController {
     @PostMapping("/leaveRequest/confirmResult")  // 나는 post할때 이 주소로 받을거야. form에 action을 할 때 action은 어떤 post를 작동시킬꺼니 하는것
     public String leaveDisplayHandle( LeaveRequestDTO leaveRequestDTO){
         MemberLoginDTO member = (MemberLoginDTO) (session.getAttribute("MemberLogin"));
+        log.debug("member : {}", member);
         if(member == null) {
             return "redirect:/";
         }

@@ -6,9 +6,9 @@
     order by day;
   </select>
   <insert id="insertHoliday" parameterType="HolidayApiDAO">
-    INSERT INTO HOLIDAY (date_name, locdate) VALUES (#{dateName}, #{locDate})
+    INSERT INTO holiday (date_name, locdate) VALUES (#{dateName}, #{locDate})
   </insert>
   <delete id="removeHolidayTable">
-    DELETE FROM HOLIDAY
+    DELETE FROM holiday
   </delete>
 </mapper>
