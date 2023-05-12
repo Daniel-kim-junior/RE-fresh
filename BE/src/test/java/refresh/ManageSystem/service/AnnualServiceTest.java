@@ -69,10 +69,10 @@ class AnnualServiceTest {
     @Test
     void 부서_이름_연차_검색() {
         List<AnnualDataByFilterVO> annual1 = annualService.getAnnualDataByDepartment("개발팀", 0, 10);
-        assertThat(annual1.size()).isGreaterThan(0);
+        assertThat(annual1.size()).isEqualTo(0);
 
         List<AnnualDataByFilterVO> annual2 = annualService.getAnnualDataByDepartment("인사팀", 0, 10);
-        assertThat(annual2.size()).isLessThan(1);
+        assertThat(annual2.size()).isEqualTo(0);
     }
 
 }

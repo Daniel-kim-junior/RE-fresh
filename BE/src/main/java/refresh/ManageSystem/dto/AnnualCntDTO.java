@@ -1,8 +1,6 @@
 package refresh.ManageSystem.dto;
 
-import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 /**
@@ -16,7 +14,7 @@ import lombok.ToString;
 @Getter @ToString
 public class AnnualCntDTO {
     private Double totalCount = 15.0;
-    private Double remainCount ;
+    private Double remainCount;
     private Double usageCount;
 
     public AnnualCntDTO(Double remainCount){
