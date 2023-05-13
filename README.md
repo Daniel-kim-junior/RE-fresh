@@ -224,8 +224,6 @@ Jira 이슈넘버로 브랜치 생성하기!
 
 ### Commit 컨벤션  
 
-<optional COMMAND_ARGUMENTS>:  <Contents>
-	
 optional
 - feat: 기능 구현
 - fix: 버그 수정
