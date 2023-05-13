@@ -26,7 +26,7 @@
 ### 📋 기술 스택
 1. 이슈관리 : ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
 
-2. 형상관리 : ![GitHub](https://img.shields.io/badge/github-#181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)
+2. 형상관리 : ![GitHub](https://img.shields.io/badge/github-#181717.svg?style=for-the-badge&logo=github&logoColor=white)
 
 3. 커뮤니케이션 : ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
 
@@ -44,7 +44,7 @@
 		-  ![Gradle](https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white)7.6.1
 	- Frontend
 		-   ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)<img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript" style="zoom:80%;" />(ES6)
-		-   ![TailwindCSS](https://img.shields.io/badge/tailwindcss-#06B6D4.svg?style=for-the-badge&logo=TailwindCSS&logoColor=white)
+		-   ![TailwindCSS](https://img.shields.io/badge/tailwindcss-#06B6D4.svg?style=for-the-badge&logo=tailwindcss&logoColor=white)
 
 <br><br>
 
