@@ -45,33 +45,85 @@
 	- Frontend
 		-   ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)<img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript" style="zoom:80%;" />(ES6)
 		-   ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%230A0FFF.svg?style=for-the-badge&logo=tailwindcss&logoColor=white)
-		-   ![Thymeleaf](https://img.shields.io/badge/thymeleaf-%005F0F.svg?style=for-the-badge&logo=thymeleaf&logoColor=white)
+		-   ![Thymeleaf](https://img.shields.io/badge/thymeleaf-%#005F0F.svg?style=for-the-badge&logo=thymeleaf&logoColor=white)
 
 <br><br>
 
 ## 프로젝트 파일 구조
 - FrontEnd(Thymeleaf)
 src
-    ├── api
-    ├── assets
-    │   └── images
-    ├── auth
-    ├── error
-    ├── fragments
-    │   ├── header
-    │   └── sidebar
-    └── pages
-    │   ├── admin
-    │   ├── annual
-    │   └── member
-    ├── calendar
-    │   ├── aside
-    │       ├── asideDepartment
-    │   │   ├── asideHeader
-    │   │   └── asideMember
-    │   ├── header
-    │   │   └── departmentOption
-    │   └── main
-    ├── leaveRequest
-    │      └── mypage
-    │      └── history
+ ┣ 📂api
+ ┃ ┗ 📜calendarApi.js
+ ┣ 📂assets
+ ┃ ┗ 📂images
+ ┃ ┃ ┣ 📜logo.svg
+ ┃ ┃ ┣ 📜refresh_logo.PNG
+ ┃ ┃ ┗ 📜user.svg
+ ┣ 📂auth
+ ┃ ┗ 📜auth.html
+ ┣ 📂error
+ ┃ ┗ 📜errorPage.html
+ ┣ 📂fragments
+ ┃ ┣ 📂header
+ ┃ ┃ ┗ 📜header.html
+ ┃ ┣ 📂sidebar
+ ┃ ┃ ┗ 📜sidebar.html
+ ┃ ┗ 📜header.html
+ ┣ 📂pages
+ ┃ ┣ 📂admin
+ ┃ ┃ ┣ 📂annual
+ ┃ ┃ ┃ ┣ 📜annualmanage.html
+ ┃ ┃ ┃ ┣ 📜annualmanage.js
+ ┃ ┃ ┃ ┗ 📜annualmodal.html
+ ┃ ┃ ┣ 📂member
+ ┃ ┃ ┃ ┣ 📜adminTab.html
+ ┃ ┃ ┃ ┣ 📜adminTab.js
+ ┃ ┃ ┃ ┣ 📜createMemberForm.html
+ ┃ ┃ ┃ ┗ 📜memberList.html
+ ┃ ┃ ┣ 📜annualmanage.html
+ ┃ ┃ ┣ 📜annualmanage.js
+ ┃ ┃ ┗ 📜annualmodal.html
+ ┃ ┣ 📂calendar
+ ┃ ┃ ┣ 📂aside
+ ┃ ┃ ┃ ┣ 📂asideDepartment
+ ┃ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┃ ┣ 📜asideDepartment.js
+ ┃ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┃ ┗ 📜main.js
+ ┃ ┃ ┃ ┣ 📂asideHeader
+ ┃ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┃ ┣ 📜asideHeader.js
+ ┃ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┃ ┗ 📜main.js
+ ┃ ┃ ┃ ┗ 📂asideMember
+ ┃ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┃ ┣ 📜asideMember.js
+ ┃ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┃ ┗ 📜main.js
+ ┃ ┃ ┣ 📂header
+ ┃ ┃ ┃ ┣ 📂departmentOption
+ ┃ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┃ ┣ 📜departOptionList.js
+ ┃ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┃ ┗ 📜main.js
+ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┣ 📜main.js
+ ┃ ┃ ┃ ┗ 📜optionList.js
+ ┃ ┃ ┣ 📂main
+ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┣ 📜calendar.js
+ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┗ 📜main.js
+ ┃ ┃ ┗ 📜calendar.html
+ ┃ ┣ 📂leaveRequest
+ ┃ ┃ ┗ 📜leaveRequest.html
+ ┃ ┗ 📂mypage
+ ┃ ┃ ┗ 📂history
+ ┃ ┃ ┃ ┣ 📜annualHistory.html
+ ┃ ┃ ┃ ┗ 📜annualHistory.js
+ ┣ 📜error.html
+ ┣ 📜index.html
+ ┗ 📜index.js
+ 
+ - BackEnd(Spring boot)
