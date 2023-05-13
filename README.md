@@ -8,7 +8,6 @@
     - [📋 기술 스택](#-기술-스택)
   - [프로젝트 파일 구조](#프로젝트-파일-구조)
   - [Git](#Git-브랜치-전략)
-  - [산출물](#산출물)
 
  <br><br>
  
@@ -225,7 +224,7 @@ Jira 이슈넘버로 브랜치 생성하기!
 
 ### Commit 컨벤션  
 
-<optional COMMAND_ARGUMENTS>: - <Contents>
+<optional COMMAND_ARGUMENTS>:  <Contents>
 	
 optional
 - feat: 기능 구현
