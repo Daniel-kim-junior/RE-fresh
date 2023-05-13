@@ -73,10 +73,10 @@ class AnnualRestControllerTest {
     void 사원_이름으로_연차_정보_검색() throws Exception {
         String expectByMemberName = "$.[?(@.name == '%s')]";
 
-        mockMvc.perform(get("/annual/member?name=박영&start=0&end=10").session(httpSession))
+        mockMvc.perform(get("/annual/member?name=김민&start=0&end=10").session(httpSession))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath(expectByMemberName, "박영희").exists());
+                .andExpect(jsonPath(expectByMemberName, "김민성").exists());
     }
 
     /**
@@ -94,7 +94,7 @@ class AnnualRestControllerTest {
         mockMvc.perform(get("/annual/department?name=개발팀&start=0&end=10").session(httpSession))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath(expectByMemberName, "박영희").exists());
+                .andExpect(jsonPath(expectByMemberName, "박주희").exists());
     }
 
 }

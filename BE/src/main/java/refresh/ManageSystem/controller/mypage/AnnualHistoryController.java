@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import lombok.extern.slf4j.Slf4j;
 import refresh.ManageSystem.dto.MemberLoginDTO;
 import refresh.ManageSystem.service.AnnualManageService;
 import refresh.ManageSystem.service.DepartmentService;
@@ -17,6 +19,7 @@ import refresh.ManageSystem.vo.AnnualStatusVO;
 import javax.servlet.http.HttpSession;
 
 @Controller
+@Slf4j
 public class AnnualHistoryController {
 
     @Autowired
@@ -31,6 +34,7 @@ public class AnnualHistoryController {
     @GetMapping("/mypage/history")
     public String getAnnualHistory(Model model){
         MemberLoginDTO member = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        log.debug("memberLogin : {}", member);
         if(!isVerify()) return "redirect:/";
         else {
             String id = member.getId();
@@ -51,6 +55,7 @@ public class AnnualHistoryController {
     public boolean cancleAnnualHistory(@RequestBody AnnualStatusVO status){
         if(!isVerify()) return false;
         MemberLoginDTO member = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
+        log.debug("memberLogin : {}", member);
         Optional<String> departmentName = departmentService.getDepartmentNameById(member.getId());
         return annualManageService.cancelAnnualRequest(status, departmentName.get());
     }

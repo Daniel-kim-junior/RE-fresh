@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import lombok.extern.slf4j.Slf4j;
 import refresh.ManageSystem.dao.PageDAO;
 import refresh.ManageSystem.dto.AnnualSearchDTO;
 import refresh.ManageSystem.dto.MemberLoginDTO;
@@ -22,6 +24,7 @@ import java.util.List;
  * 2023-05-03
  *  * */
 @Controller
+@Slf4j
 public class AnnualManageController {
     @Autowired
     private AnnualManageService annualManageService;
@@ -54,7 +57,7 @@ public class AnnualManageController {
         model.addAttribute("searchData", new AnnualSearchDTO());
         MemberLoginDTO memberLoginDTO = (MemberLoginDTO)(session.getAttribute("MemberLogin"));
 
-
+        log.debug("memberLoginDTO : {}", memberLoginDTO);
         String memberId = memberLoginDTO.getId();
         model.addAttribute("memberInfoVO", memberService.getMemberInfo(memberId));
 
