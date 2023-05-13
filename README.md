@@ -45,7 +45,7 @@
 	- Frontend
 		-   ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)<img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript" style="zoom:80%;" />(ES6)
 		-   ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%230A0FFF.svg?style=for-the-badge&logo=tailwindcss&logoColor=white)
-		-   ![Thymeleaf](https://img.shields.io/badge/thymeleaf-%#005F0F.svg?style=for-the-badge&logo=thymeleaf&logoColor=white)
+		-   ![Thymeleaf](https://img.shields.io/badge/thymeleaf-%005F0F.svg?style=for-the-badge&logo=thymeleaf&logoColor=white)
 
 <br><br>
 
