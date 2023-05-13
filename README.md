@@ -26,7 +26,7 @@
 ### 📋 기술 스택
 1. 이슈관리 : ![Jira](https://img.shields.io/badge/jira-%230A0FFF.svg?style=for-the-badge&logo=jira&logoColor=white)
 
-2. 형상관리 : ![GitHub](https://img.shields.io/badge/github-%181717.svg?style=for-the-badge&logo=github&logoColor=white)
+2. 형상관리 : ![GitHub](https://img.shields.io/badge/github-%23000000.svg?style=for-the-badge&logo=github&logoColor=white)
 
 3. 커뮤니케이션 : ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)
 
