@@ -289,12 +289,6 @@ RBDE-15-FE-Calendar-UI
 
 ---
 
-*VSCode*  
-
-컴포넌트/페이지 파일명 : PascalCase
-컴포넌트 외 파일명 : camelCase
-
----
 	
 *HTML*  
 가급적 Semantic 태그를 사용한다. (ex : div(x) -> header, nav, section, main ...(o))
