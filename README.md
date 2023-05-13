@@ -224,7 +224,7 @@ Jira 이슈넘버로 브랜치 생성하기!
 
 
 ### Commit 컨벤션  
-Jira Smart Commit
+
 <optional COMMAND_ARGUMENTS>: - <Contents>
 	
 optional
@@ -262,6 +262,8 @@ RBDE-15-FE-Calendar-UI
 ---
 	
 ### 코딩 컨벤션  
+---
+
 *백엔드*
 
 파일명: PascalCase (ex: UserRepository)
@@ -271,7 +273,8 @@ RBDE-15-FE-Calendar-UI
 메소드 : camelCase (ex : getId, userPassword)
 상수: SNAKE_CASE (ex: FILE_NUMBER)
 	
-	
+---
+
 *프론트엔드*
 
 변수: camelCase (ex. variableBoolean)
@@ -280,10 +283,14 @@ RBDE-15-FE-Calendar-UI
 
 상수: SNAKE_CASE
 
+---
+
 *VSCode*  
 
 컴포넌트/페이지 파일명 : PascalCase
 컴포넌트 외 파일명 : camelCase
 
+---
+	
 *HTML*  
 가급적 Semantic 태그를 사용한다. (ex : div(x) -> header, nav, section, main ...(o))
