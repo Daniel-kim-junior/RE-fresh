@@ -214,6 +214,7 @@ ManageSystem
 <br><br>
 
 <br>
+
 ## Git 브랜치 전략
 
 소스코드 작성 및 Git 작업을 시작하기 전에 JIRA 이슈 생성하기
