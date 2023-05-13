@@ -51,6 +51,79 @@
 
 ## 프로젝트 파일 구조
 - FrontEnd(Thymeleaf)
-
+📦src
+ ┣ 📂api
+ ┃ ┗ 📜calendarApi.js
+ ┣ 📂assets
+ ┃ ┗ 📂images
+ ┃ ┃ ┣ 📜logo.svg
+ ┃ ┃ ┣ 📜refresh_logo.PNG
+ ┃ ┃ ┗ 📜user.svg
+ ┣ 📂auth
+ ┃ ┗ 📜auth.html
+ ┣ 📂error
+ ┃ ┗ 📜errorPage.html
+ ┣ 📂fragments
+ ┃ ┣ 📂header
+ ┃ ┃ ┗ 📜header.html
+ ┃ ┣ 📂sidebar
+ ┃ ┃ ┗ 📜sidebar.html
+ ┃ ┗ 📜header.html
+ ┣ 📂pages
+ ┃ ┣ 📂admin
+ ┃ ┃ ┣ 📂annual
+ ┃ ┃ ┃ ┣ 📜annualmanage.html
+ ┃ ┃ ┃ ┣ 📜annualmanage.js
+ ┃ ┃ ┃ ┗ 📜annualmodal.html
+ ┃ ┃ ┣ 📂member
+ ┃ ┃ ┃ ┣ 📜adminTab.html
+ ┃ ┃ ┃ ┣ 📜adminTab.js
+ ┃ ┃ ┃ ┣ 📜createMemberForm.html
+ ┃ ┃ ┃ ┗ 📜memberList.html
+ ┃ ┃ ┣ 📜annualmanage.html
+ ┃ ┃ ┣ 📜annualmanage.js
+ ┃ ┃ ┗ 📜annualmodal.html
+ ┃ ┣ 📂calendar
+ ┃ ┃ ┣ 📂aside
+ ┃ ┃ ┃ ┣ 📂asideDepartment
+ ┃ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┃ ┣ 📜asideDepartment.js
+ ┃ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┃ ┗ 📜main.js
+ ┃ ┃ ┃ ┣ 📂asideHeader
+ ┃ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┃ ┣ 📜asideHeader.js
+ ┃ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┃ ┗ 📜main.js
+ ┃ ┃ ┃ ┗ 📂asideMember
+ ┃ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┃ ┣ 📜asideMember.js
+ ┃ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┃ ┗ 📜main.js
+ ┃ ┃ ┣ 📂header
+ ┃ ┃ ┃ ┣ 📂departmentOption
+ ┃ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┃ ┣ 📜departOptionList.js
+ ┃ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┃ ┗ 📜main.js
+ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┣ 📜main.js
+ ┃ ┃ ┃ ┗ 📜optionList.js
+ ┃ ┃ ┣ 📂main
+ ┃ ┃ ┃ ┣ 📜app.js
+ ┃ ┃ ┃ ┣ 📜calendar.js
+ ┃ ┃ ┃ ┣ 📜hook.js
+ ┃ ┃ ┃ ┗ 📜main.js
+ ┃ ┃ ┗ 📜calendar.html
+ ┃ ┣ 📂leaveRequest
+ ┃ ┃ ┗ 📜leaveRequest.html
+ ┃ ┗ 📂mypage
+ ┃ ┃ ┗ 📂history
+ ┃ ┃ ┃ ┣ 📜annualHistory.html
+ ┃ ┃ ┃ ┗ 📜annualHistory.js
+ ┣ 📜error.html
+ ┣ 📜index.html
+ ┗ 📜index.js
  
 - BackEnd(Spring boot)
