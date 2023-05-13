@@ -51,6 +51,7 @@
 
 ## 프로젝트 파일 구조
 - FrontEnd(Thymeleaf)
+```
 📦src
  ┣ 📂api
  ┃ ┗ 📜calendarApi.js
@@ -125,5 +126,5 @@
  ┣ 📜error.html
  ┣ 📜index.html
  ┗ 📜index.js
- 
+ ```
 - BackEnd(Spring boot)
