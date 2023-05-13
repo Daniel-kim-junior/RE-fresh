@@ -1,6 +1,6 @@
 # T-KO (Techin-Kosa)
-`더욱 편리한 연차 관리를 위해`  `직장인들의 재충전을 응원합니다`
-![refresh](https://github.com/TKO-RE-fresh/RE-fresh/assets/67178562/34615cd0-9788-4351-9769-21ef9feef135)
+`재충전`  `칼퇴`  
+![refresh](https://github.com/TKO-RE-fresh/RE-fresh/assets/67178562/34615cd0-9788-4351-9769-21ef9feef135)  
 **대한민국의 모든 직장인들을 위한 작지만 빠르고 효율적인 연차 관리 시스템을 추구합니다**
 
 > 아직도 한글이나 엑셀로 연차를 관리하시나요?<br>
