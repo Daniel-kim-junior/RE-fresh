@@ -59,10 +59,13 @@ src
  ┃ ┃ ┣ 📜logo.svg
  ┃ ┃ ┣ 📜refresh_logo.PNG
  ┃ ┃ ┗ 📜user.svg
+ 
  ┣ 📂auth
  ┃ ┗ 📜auth.html
+ 
  ┣ 📂error
  ┃ ┗ 📜errorPage.html
+ 
  ┣ 📂fragments
  ┃ ┣ 📂header
  ┃ ┃ ┗ 📜header.html
