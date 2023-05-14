@@ -85,13 +85,11 @@ function debounceFrame(callback) {
     2023-04-16
   */
   const _render = debounceFrame(() => {
-    const { root, rootComponent, checked } = options;
+    const { root, rootComponent } = options;
     if (!root || !rootComponent) return;
-    waitForRender(root, () => {
-      root.innerHTML = rootComponent(checked);
-      options.currentStateKey = 0;
-      options.renderCount += 1;
-    })    
+    root.innerHTML = rootComponent();
+    options.currentStateKey = 0;
+    options.renderCount += 1;    
   });
 
    function waitForRender(elem, callback) {

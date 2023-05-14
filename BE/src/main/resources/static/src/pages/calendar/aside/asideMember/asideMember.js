@@ -20,8 +20,8 @@ export default function AsideMember() {
   onLoad(async () => {
     if (scrollEnd) return;
     const memberName = getName();
-    const dom = await recursiveList('', memberName, start, end, 0);
-    const list = parseDom(dom);
+    const list = await recursiveList('', memberName, start, end, 0);
+
 
     if (start === 0) {
       setAnnual(list);
@@ -30,13 +30,7 @@ export default function AsideMember() {
       scrollFlag = false;
     }
   });
-  function parseDom(dom) {
-    let result = '<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">'
-    result += dom;
-    result += '</ul>';
-
-    return result;
-  }
+  
 
 
 
@@ -81,7 +75,7 @@ export default function AsideMember() {
 
   function makeAnnualList(annualList) {
     let dom = '';
-    let cnt = '';
+    let cnt = 0;
     for (let i = 0; i < annualList.length; i++) {
       if (checked) {
         if (Date.parse(annualList[i].endDate) < Date.parse(date)) {
@@ -89,7 +83,7 @@ export default function AsideMember() {
         }
       }
       cnt++;
-      dom += `<li class="pb-3 sm:pb-4">
+      dom += `<div class="pb-3 sm:pb-4">
       <div class="flex items-center space-x-4">
         <div class="flex-shrink-0">
           <img class="w-8 h-8 rounded-full" src="/src/assets/images/user.svg" alt="Neil image">
@@ -106,7 +100,7 @@ export default function AsideMember() {
          ${annualList[i].startDate} ~ ${annualList[i].endDate}
         </div>
       </div>
-      </li>
+      </div>
       `
     }
     return [dom, cnt];

@@ -40,6 +40,7 @@ import { render, optionInit } from "./hook.js";
     if (!checkboxForExceptDept.checked) {
       render($App, aside, department);
     } else {
+      
       render($App, aside, department, true);
     }
     aside.style.display = 'block';
