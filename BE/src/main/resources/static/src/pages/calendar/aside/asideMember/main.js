@@ -1,6 +1,7 @@
 import { $App } from "./app.js";
 import { memberScrollInit } from './asideMember.js';
-import { render, throttle } from "./hook.js";
+import { render } from "../hook/hook.js";
+import { throttle } from '../hook/util.js';
 
 
 

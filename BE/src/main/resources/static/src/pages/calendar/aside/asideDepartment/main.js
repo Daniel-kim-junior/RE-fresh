@@ -1,6 +1,6 @@
 import { $App } from "./app.js";
 import { deptScrollInit } from './asideDepartment.js';
-import { render, optionInit } from "./hook.js";
+import { render, initState } from "../hook/hook.js";
 
 
 
@@ -15,7 +15,7 @@ import { render, optionInit } from "./hook.js";
     aside.innerHTML = '';
     aside.onscroll = null;
     deptScrollInit();
-    optionInit();
+//    initState();
     loadingSpinner.style.display = 'none';
     const department = select.value;
     if (!e.target.checked) {
@@ -30,7 +30,7 @@ import { render, optionInit } from "./hook.js";
     aside.innerHTML = '';
     aside.onscroll = null;
     deptScrollInit();
-    optionInit();
+//     initState();
     checkboxForExceptDept.checked = false;
     checkboxWrapperDept.style.display = 'block';
 

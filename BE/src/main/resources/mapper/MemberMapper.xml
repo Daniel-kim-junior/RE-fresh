@@ -76,7 +76,7 @@
         select department.department_name, member.annual_count, count(case when annual.annual_status = '승인' then 1 end) annualRequest from member
         left join department on member.department_uid = department.department_uid
         left join annual on member.member_uid = annual.member_uid
-        where member.member_id = #{memberId}
+        where member.member_id = #{memberId} group by department.department_name, member.annual_count;
     </select>
 
     <update id="updateAnnulCount" parameterType="AnnualCountDAO" >

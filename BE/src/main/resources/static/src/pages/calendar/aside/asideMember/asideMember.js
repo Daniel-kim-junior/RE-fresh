@@ -1,4 +1,5 @@
-import { useState, onLoad, getName, waitForRender, optionChecked } from './hook.js';
+import { useState, getName, getChecked } from '../hook/hook.js';
+import { onLoad, waitForRender} from '../hook/util.js';
 import { getAnnualListByMember } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
@@ -14,15 +15,13 @@ export default function AsideMember() {
   const { start, end } = page;
   const asideContents = document.querySelector('#aside-contents');
   const loadingSpinner = document.querySelector('#aside-contents-status');
-  const checked = optionChecked();
+  const checked = getChecked();
   const date = new Date();
 
   onLoad(async () => {
     if (scrollEnd) return;
     const memberName = getName();
-    const dom = await recursiveList('', memberName, start, end, 0);
-    const list = parseDom(dom);
-
+    const list = await recursiveList('', memberName, start, end, 0);
     if (start === 0) {
       setAnnual(list);
     } else if(scrollFlag) {
@@ -30,13 +29,7 @@ export default function AsideMember() {
       scrollFlag = false;
     }
   });
-  function parseDom(dom) {
-    let result = '<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">'
-    result += dom;
-    result += '</ul>';
-
-    return result;
-  }
+  
 
 
 
@@ -56,8 +49,6 @@ export default function AsideMember() {
     }
     return recursiveList(str.concat(dom), member, start + 10, 10, cnt + innerCount);
   }
-
-
 
 
 
@@ -81,7 +72,7 @@ export default function AsideMember() {
 
   function makeAnnualList(annualList) {
     let dom = '';
-    let cnt = '';
+    let cnt = 0;
     for (let i = 0; i < annualList.length; i++) {
       if (checked) {
         if (Date.parse(annualList[i].endDate) < Date.parse(date)) {
@@ -89,7 +80,7 @@ export default function AsideMember() {
         }
       }
       cnt++;
-      dom += `<li class="pb-3 sm:pb-4">
+      dom += `<div class="pb-3 sm:pb-4">
       <div class="flex items-center space-x-4">
         <div class="flex-shrink-0">
           <img class="w-8 h-8 rounded-full" src="/src/assets/images/user.svg" alt="Neil image">
@@ -106,7 +97,7 @@ export default function AsideMember() {
          ${annualList[i].startDate} ~ ${annualList[i].endDate}
         </div>
       </div>
-      </li>
+      </div>
       `
     }
     return [dom, cnt];

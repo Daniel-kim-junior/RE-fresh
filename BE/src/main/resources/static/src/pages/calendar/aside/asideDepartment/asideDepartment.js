@@ -1,4 +1,5 @@
-import { useState, onLoad, getDepartment, waitForRender, downChecked } from './hook.js';
+import { useState, getDepartment, getChecked } from '../hook/hook.js';
+import { onLoad, waitForRender } from '../hook/util.js';
 import { getAnnualListByDepartment } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
@@ -15,14 +16,13 @@ export default function AsideDepartment() {
   const [annual, setAnnual] = useState([]);
   const [page, setPage] = useState({ start: 0, end: 10 });
   const { start, end } = page;
-  const checked = downChecked();
+  const checked = getChecked();
   const date = new Date();
-
+  
   onLoad(async () => {
     if (scrollEnd) return;
     const department = getDepartment();
-    const dom = await recursiveList('', department, start, end, 0);
-    const list = parseDom(dom);
+    const list = await recursiveList('', department, start, end, 0);
     if (start === 0) {
       setAnnual(list);
     } else if (scrollFlag) {
@@ -34,9 +34,8 @@ export default function AsideDepartment() {
 
   async function recursiveList(str, dept, start, end, innerCount) {
     let res = await getAnnualListByDepartment(dept, start, end);
-   
     if (res.length === 0) {
-      scrollEnd = true; 
+      scrollEnd = true;
       return str;
     }
 
@@ -50,15 +49,6 @@ export default function AsideDepartment() {
   }
 
 
-
-
-  function parseDom(dom) {
-    let result = '<ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">'
-    result += dom;
-    result += '</ul>';
-
-    return result;
-  }
 
   waitForRender(asideContents, () => {
     asideContents.onscroll = (e) => {
@@ -88,7 +78,7 @@ export default function AsideDepartment() {
         }
       } 
       cnt++;
-      dom += `<li class="pb-3 sm:pb-4">
+      dom += `<div class="pb-3 sm:pb-4">
       <div class="flex items-center space-x-4">
         <div class="flex-shrink-0">
           <img class="w-8 h-8 rounded-full" src="/src/assets/images/user.svg" alt="Neil image">
@@ -105,7 +95,7 @@ export default function AsideDepartment() {
          ${annualList[i].startDate} ~ ${annualList[i].endDate}
         </div>
       </div>
-      </li>
+      </div>
       `
     }
     return [ dom, cnt ];
