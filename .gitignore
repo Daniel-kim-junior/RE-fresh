@@ -6,7 +6,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 application-API-KEY.properties
-application-AWS-DB.properties
+application-NCP-DB.properties
 jacoco
 
 
