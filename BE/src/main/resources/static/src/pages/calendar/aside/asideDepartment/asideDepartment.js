@@ -1,4 +1,5 @@
-import { useState, onLoad, getDepartment, waitForRender, downChecked } from './hook.js';
+import { useState, getDepartment, getChecked } from '../hook/hook.js';
+import { onLoad, waitForRender } from '../hook/util.js';
 import { getAnnualListByDepartment } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
@@ -15,7 +16,7 @@ export default function AsideDepartment() {
   const [annual, setAnnual] = useState([]);
   const [page, setPage] = useState({ start: 0, end: 10 });
   const { start, end } = page;
-  const checked = downChecked();
+  const checked = getChecked();
   const date = new Date();
   
   onLoad(async () => {

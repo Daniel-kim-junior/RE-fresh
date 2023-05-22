@@ -1,4 +1,5 @@
-import { useState, onLoad, getName, waitForRender, optionChecked } from './hook.js';
+import { useState, getName, getChecked } from '../hook/hook.js';
+import { onLoad, waitForRender} from '../hook/util.js';
 import { getAnnualListByMember } from '../../../../api/calendarApi.js'
 
 let scrollFlag = false;
@@ -14,15 +15,13 @@ export default function AsideMember() {
   const { start, end } = page;
   const asideContents = document.querySelector('#aside-contents');
   const loadingSpinner = document.querySelector('#aside-contents-status');
-  const checked = optionChecked();
+  const checked = getChecked();
   const date = new Date();
 
   onLoad(async () => {
     if (scrollEnd) return;
     const memberName = getName();
     const list = await recursiveList('', memberName, start, end, 0);
-
-
     if (start === 0) {
       setAnnual(list);
     } else if(scrollFlag) {
@@ -50,8 +49,6 @@ export default function AsideMember() {
     }
     return recursiveList(str.concat(dom), member, start + 10, 10, cnt + innerCount);
   }
-
-
 
 
 

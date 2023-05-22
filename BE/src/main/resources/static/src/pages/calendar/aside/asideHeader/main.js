@@ -1,6 +1,6 @@
 import { $App } from "./app.js";
-import { render } from "./hook.js";
-import { optionInit } from "../asideDepartment/hook.js";
+import { render } from "../hook/hook.js";
+import { initState } from "../hook/hook.js";
 import { memberScrollInit } from '../asideMember/asideMember.js';
 const INIT_LENGTH = 0;
 
@@ -30,7 +30,7 @@ const INIT_LENGTH = 0;
     checkboxForExceptDept.checked = false;
     checkboxForExceptMember.checked = false;
     if (e.target.value === 'department') {
-      optionInit();
+//      initState();
       departmentSelect.value = '부서 선택';
       department.style.display = 'block';
       if (select.childNodes.length === INIT_LENGTH) {
